@@ -1,7 +1,14 @@
+// Dep
 import express from 'express';
 import dotenv from 'dotenv';
 dotenv.config();
 import config from 'config';
+
+// Files
+import routes from './routes';
+
+// Utils
+import logger from './utils/logger';
 
 const port = config.get<number>('port');
 
@@ -12,8 +19,7 @@ if (process.env.NODE_ENV === 'production') {
     console.log('node in production');
 }
 
-app.get('/healthcheck', (req, res) => {
-    return res.sendStatus(200);
+app.listen(port, async () => {
+    logger.info(`App is running at http://localhost:${port}`);
+    routes(app);
 });
-
-app.listen(port, () => console.log(`App is listening on http://localhost:${port}`));
