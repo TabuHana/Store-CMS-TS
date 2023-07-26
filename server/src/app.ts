@@ -9,6 +9,7 @@ import routes from './routes';
 
 // Utils
 import logger from './utils/logger';
+import sequelize from './utils/connect';
 
 const port = config.get<number>('port');
 
@@ -19,7 +20,9 @@ if (process.env.NODE_ENV === 'production') {
     console.log('node in production');
 }
 
-app.listen(port, async () => {
-    logger.info(`App is running at http://localhost:${port}`);
-    routes(app);
+sequelize.sync().then(() => {
+    app.listen(port, () => {
+        logger.info(`App is running at http://localhost:${port}`);
+        routes(app);
+    });
 });
