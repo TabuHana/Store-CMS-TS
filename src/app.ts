@@ -5,7 +5,7 @@ const port = 5000;
 const app = express();
 app.use(express.json());
 
-app.get('/', (req, res) => {
+app.get('/healthcheck', (req, res) => {
     return res.sendStatus(200);
 });
 
