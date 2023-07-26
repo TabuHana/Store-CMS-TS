@@ -4,7 +4,7 @@ const app = express()
 
 const PORT = 5000;
 
-app.get('/healthcheck', (req, res) => {
+app.get('/', (req, res) => {
     return res.sendStatus(200)
 })
 
