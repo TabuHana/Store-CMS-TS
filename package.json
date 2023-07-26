@@ -2,14 +2,14 @@
   "name": "store-cms-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "",
   "scripts": {
     "client": "cd client && npm run dev",
     "server": "cd server && npm run dev",
     "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "keywords": [],
-  "author": "",
+  "author": "tabuHana",
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.0"

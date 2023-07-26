@@ -9,7 +9,7 @@
     "start": "node build/src/app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "tabuHana",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
