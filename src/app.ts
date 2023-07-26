@@ -8,6 +8,10 @@ const port = config.get<number>('port');
 const app = express();
 app.use(express.json());
 
+if (process.env.NODE_ENV === 'production') {
+    console.log('node in production');
+}
+
 app.get('/healthcheck', (req, res) => {
     return res.sendStatus(200);
 });
