@@ -1,6 +1,9 @@
 import express from 'express';
+import dotenv from 'dotenv';
+dotenv.config();
+import config from 'config';
 
-const port = 5000;
+const port = config.get<number>('port');
 
 const app = express();
 app.use(express.json());
