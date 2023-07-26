@@ -1,27 +1,30 @@
-# React + TypeScript + Vite
+---
+title: Vite + React
+description: The default Vite + React starter, utilizing `serve` to serve the built app
+tags:
+    - node
+    - vite
+    - react
+---
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Vite + React + Serve
 
-Currently, two official plugins are available:
+This is a [Vite + React](https://vitejs.dev/guide/#trying-vite-online) starter that uses [serve](https://www.npmjs.com/package/serve).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## Expanding the ESLint configuration
+-   Vite + React
+-   Serve
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 💁‍♀️ How to use
 
-- Configure the top-level `parserOptions` property like this:
+-   Install required dependencies with `npm install`
+-   Start the server for local development `npm run dev`
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+## ❓ Why use `serve`
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+By default Railway will use the `start` script defined in package.json to run your app, the default Vite + React starter project does not come with any `start` script, so I have added `serve` as the start script, there are many benefits to using serve over just running the vite command.
+
+-   `serve` is more suited to run single page apps
+-   Uses less ram than `vite` or `vite preview` (<100mb)
+-   Far more performant and stable
