@@ -21,8 +21,14 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 sequelize.sync().then(() => {
-    app.listen(port, () => {
+    app.listen(port, async () => {
         logger.info(`App is running at http://localhost:${port}`);
+        try {
+            await sequelize.authenticate();
+            logger.info('Connection has been established successfully.');
+          } catch (error) {
+            logger.info('Unable to connect to the database:', error);
+          }
         routes(app);
     });
 });
