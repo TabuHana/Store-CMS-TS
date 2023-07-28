@@ -1,15 +1,17 @@
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import config from 'config';
-import logger from './logger'
+import logger from './logger';
 
-const user = config.get<string>('username')
-const pass = config.get<string>('password')
-const db = config.get<string>('database')
+import User from '../models/user.model';
+
+const user = config.get<string>('username');
+const pass = config.get<string>('password');
+const db = config.get<string>('database');
 
 const sequelize = new Sequelize(db, user, pass, {
-    host: 'localhost',
     dialect: 'mysql',
-    logging: msg => logger.debug(msg),
+    logging: (msg) => logger.debug(msg),
+    models: [User],
 });
 
 export default sequelize;

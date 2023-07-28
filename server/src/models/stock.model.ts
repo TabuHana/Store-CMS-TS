@@ -82,4 +82,6 @@ Stock.init(
         tableName: 'stock',
     }
 );
+
+console.log('stock found')
 export default Stock;
