@@ -1,36 +1,23 @@
-import { Model, DataTypes } from 'sequelize';
-import sequelize from '../utils/connect';
+import { Table, Model, Column, DataType, AllowNull, Default, CreatedAt, UpdatedAt } from 'sequelize-typescript';
 
-export interface CategoryAttributes {
-    id: number;
+export interface CategoryInput {
     name: string;
 }
 
-class Category extends Model<CategoryAttributes> implements CategoryAttributes {
-    declare id: number;
-    declare name: string;
-    static associate(models: any) {}
+interface CategoryAttributes extends CategoryInput {
+    id: number;
 }
 
-Category.init(
-    {
-        id: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true,
-            autoIncrement: true,
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-    },
-    {
-        sequelize,
-        timestamps: true,
-        freezeTableName: true,
-        underscored: true,
-        tableName: 'category',
-    }
-);
+@Table({
+    tableName: 'user',
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true
+})
+export class Category extends Model<CategoryAttributes> {
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    name!: string;
+}
+
 export default Category;

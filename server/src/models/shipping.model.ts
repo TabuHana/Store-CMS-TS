@@ -1,57 +1,55 @@
-import { Model, DataTypes, CreationOptional } from 'sequelize';
+import { Table, Model, Column, DataType, AllowNull, Default, PrimaryKey, CreatedAt, UpdatedAt } from 'sequelize-typescript';
 import { customAlphabet } from 'nanoid';
-import sequelize from '../utils/connect';
+import { Optional } from 'sequelize';
 
 const nanoid = customAlphabet('abcdefg0123456789', 10);
 
-export interface ShippingAttributes {
-    id: string;
+export interface ShippingInput {
     name: string;
     price: number;
     personal_cost: number;
+}
+
+interface ShippingAttributes extends ShippingInput {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
-class Shipping extends Model<ShippingAttributes> implements ShippingAttributes {
-    declare id: string;
-    declare name: string;
-    declare price: number;
-    declare personal_cost: number;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-    static associate(models: any) {}
+interface ShippingCreationAttributes extends Optional<ShippingAttributes, 'createdAt' | 'updatedAt'> {}
+
+@Table({
+    tableName: 'shipping',
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true,
+})
+export class Shipping extends Model<ShippingAttributes, ShippingCreationAttributes> {
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    @PrimaryKey
+    @Default(() => `shipping_${nanoid()}`)
+    id!: string;
+
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    name!: string;
+
+    @Column(DataType.INTEGER)
+    @AllowNull(false)
+    price!: number;
+
+    @Column(DataType.INTEGER)
+    @AllowNull(false)
+    personal_cost!: number;
+
+    @CreatedAt
+    @Column
+    createdAt!: Date;
+
+    @UpdatedAt
+    @Column
+    updatedAt!: Date;
 }
 
-Shipping.init(
-    {
-        id: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            primaryKey: true,
-            defaultValue: () => nanoid(),
-        },
-        name: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        price: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        personal_cost: {
-            type: DataTypes.FLOAT,
-            allowNull: false,
-        },
-        createdAt: DataTypes.DATE,
-        updatedAt: DataTypes.DATE,
-    },
-    {
-        sequelize,
-        timestamps: true,
-        freezeTableName: true,
-        underscored: true,
-        tableName: 'shipping',
-    }
-);
 export default Shipping;

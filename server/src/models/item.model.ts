@@ -1,77 +1,61 @@
-import { Model, DataTypes, CreationOptional } from 'sequelize';
-import sequelize from '../utils/connect';
+import { Table, Model, Column, DataType, AllowNull, Default, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+import { Optional } from 'sequelize';
 
-export interface ItemAttributes {
-    id: number;
+export interface ItemInput {
     name: string;
     price: number;
     description: string;
-    price_per_unit: string;
+    price_per_unit: number;
     category_id: number;
+}
+
+interface ItemAttributes extends ItemInput {
+    id: number;
     createdAt: Date;
     updatedAt: Date;
 }
 
-class Item extends Model<ItemAttributes> implements ItemAttributes {
-    declare id: number;
-    declare name: string;
-    declare price: number;
-    declare description: string;
-    declare price_per_unit: string;
-    declare category_id: number;
-    declare createdAt: CreationOptional<Date>
-    declare updatedAt: CreationOptional<Date>
-    static associate(models: any) {}
+interface ItemCreationAttributes extends Optional<ItemAttributes, 'createdAt' | 'updatedAt'> {}
+
+@Table({
+    tableName: 'item',
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true,
+})
+export class Item extends Model<ItemAttributes, ItemCreationAttributes> {
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    name!: string;
+
+    @Column(DataType.INTEGER)
+    @AllowNull(false)
+    price!: number;
+
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    description!: string;
+
+    @Column(DataType.INTEGER)
+    @AllowNull(true)
+    @Default(0)
+    price_per_unit!: number;
+
+    @CreatedAt
+    @Column
+    createdAt!: Date;
+
+    @UpdatedAt
+    @Column
+    updatedAt!: Date;
 }
 
-Item.init(
-    {
-        id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          primaryKey: true,
-          autoIncrement: true,
-        },
-        name: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        price: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
-        description: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        price_per_unit: {
-          type: DataTypes.STRING,
-          allowNull: true,
-          defaultValue: "0",
-        },
-        category_id: {
-          type: DataTypes.INTEGER,
-          allowNull: true,
-          references: {
-            model: "category",
-            key: "id",
-          },
-        },
-        createdAt: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-        updatedAt: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-      },
-    {
-        sequelize,
-        timestamps: true,
-        freezeTableName: true,
-        underscored: true,
-        tableName: 'item',
-    }
-);
+// category_id: {
+//     type: DataTypes.INTEGER,
+//     allowNull: true,
+//     references: {
+//         model: 'category',
+//         key: 'id',
+//     },
+
 export default Item;

@@ -1,105 +1,110 @@
-import { Model, DataTypes, CreationOptional } from 'sequelize';
-import sequelize from '../utils/connect';
+import {
+    Table,
+    Model,
+    Column,
+    DataType,
+    AllowNull,
+    Default,
+    CreatedAt,
+    UpdatedAt,
+    PrimaryKey,
+} from 'sequelize-typescript';
+import { Optional } from 'sequelize';
+import { customAlphabet } from 'nanoid';
 
-export interface OrderAttributes {
-    id: string;
+const nanoid = customAlphabet('abcdefg0123456789', 10);
+
+export interface OrderInput {
     name: string;
     price: number;
     size: string;
     address: string;
     order_number: string;
     order_status: boolean;
-    category_name: string;
     shipping_id: number;
     user_id: number;
     createdAt: Date;
     updatedAt: Date;
 }
 
-class Order extends Model<OrderAttributes> implements OrderAttributes {
-    declare id: string;
-    declare name: string;
-    declare price: number;
-    declare size: string;
-    declare address: string;
-    declare order_number: string;
-    declare order_status: boolean;
-    declare category_name: string;
-    declare shipping_id: number;
-    declare user_id: number;
-    declare createdAt: CreationOptional<Date>;
-    declare updatedAt: CreationOptional<Date>;
-    static associate(models: any) {}
+interface OrderAttributes extends OrderInput {
+    id: string;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
-Order.init(
-    {
-        id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          primaryKey: true,
-          autoIncrement: true,
-        },
-        name: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        price: {
-          type: DataTypes.FLOAT,
-          allowNull: false,
-        },
-        size: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        address: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        order_number: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        order_status: {
-          type: DataTypes.BOOLEAN,
-          defaultValue: false,
-        },
-        category_name: {
-          type: DataTypes.STRING,
-          allowNull: true,
-          defaultValue: "none",
-        },
-        shipping_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          references: {
-            model: "shipping",
-            key: "id",
-          },
-        },
-        user_id: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-          references: {
-            model: "user",
-            key: "id",
-          },
-        },
-        updatedAt: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-        createdAt: {
-          type: DataTypes.DATE,
-          allowNull: false,
-        },
-      },
-    {
-        sequelize,
-        timestamps: true,
-        freezeTableName: true,
-        underscored: true,
-        tableName: 'order',
-    }
-);
+interface OrderCreationAttributes extends Optional<OrderAttributes, 'createdAt' | 'updatedAt'> {}
+
+@Table({
+    timestamps: true,
+    tableName: 'order',
+    freezeTableName: true,
+    underscored: true,
+})
+export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
+    @Column
+    @PrimaryKey
+    @AllowNull(false)
+    @Default(() => `order_${nanoid()}`)
+    id!: string;
+
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    name!: string;
+
+    @Column(DataType.FLOAT)
+    @AllowNull(false)
+    price!: string;
+
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    size!: string;
+
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    address!: string;
+
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    order_number!: string;
+
+    @Column(DataType.BOOLEAN)
+    @AllowNull(false)
+    order_status!: boolean;
+
+    @CreatedAt
+    @Column
+    createdAt!: Date;
+
+    @UpdatedAt
+    @Column
+    updatedAt!: Date;
+}
+
+//         shipping_id: {
+//             type: DataTypes.INTEGER,
+//             allowNull: false,
+//             references: {
+//                 model: 'shipping',
+//                 key: 'id',
+//             },
+//         },
+//         user_id: {
+//             type: DataTypes.INTEGER,
+//             allowNull: false,
+//             references: {
+//                 model: 'user',
+//                 key: 'id',
+//             },
+//         },
+//         updatedAt: {
+//             type: DataTypes.DATE,
+//             allowNull: false,
+//         },
+//         createdAt: {
+//             type: DataTypes.DATE,
+//             allowNull: false,
+//         },
+//     },
+
 export default Order;

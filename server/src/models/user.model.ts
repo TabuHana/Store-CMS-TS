@@ -1,50 +1,63 @@
 // import { Model, DataTypes, CreationOptional } from 'sequelize';
-import { Table, Model, Column, DataType, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+import {
+    Table,
+    Model,
+    Column,
+    DataType,
+    CreatedAt,
+    UpdatedAt,
+    AllowNull,
+    IsEmail,
+    Length,
+    PrimaryKey,
+    Default,
+    BeforeCreate,
+} from 'sequelize-typescript';
+import { Optional } from 'sequelize';
 import { customAlphabet } from 'nanoid';
-import sequelize from '../utils/connect';
 import bcrypt from 'bcrypt';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
-export interface UserAttributes {
-    id: string;
+export interface UserInput {
     name: string;
     email: string;
     password: string;
+}
+
+interface UserAttributes extends UserInput {
+    id: string;
     createdAt: Date;
     updatedAt: Date;
 }
 
+interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 'updatedAt'> {}
+
 @Table({
-    timestamps: true,
     tableName: 'user',
-    freezeTableName: true
+    timestamps: true,
+    freezeTableName: true,
+    underscored: true
 })
-export class User extends Model<UserAttributes> {
-    @Column({
-        type: DataType.STRING,
-        allowNull: false,
-        primaryKey: true,
-        defaultValue: () => nanoid()
-    })
+export class User extends Model<UserAttributes, UserCreationAttributes> {
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    @PrimaryKey
+    @Default(() => nanoid())
     id!: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
+    @Column(DataType.STRING)
+    @AllowNull(false)
     name!: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    @IsEmail
     email!: string;
 
-    @Column({
-        type: DataType.STRING,
-        allowNull: false
-    })
+    @Column(DataType.STRING)
+    @AllowNull(false)
+    @Length({ min: 8 })
     password!: string;
 
     @CreatedAt
@@ -55,66 +68,15 @@ export class User extends Model<UserAttributes> {
     @Column
     updatedAt!: Date;
 
+    @BeforeCreate
+    static beforeCreateHook(instance: User): void {
+        async (user: User) => {
+            const salt = await bcrypt.genSalt(10);
+            const hash = bcrypt.hashSync(user.password, salt);
 
+            user.password = hash;
+        };
+    }
 }
-
-
-
-// class User extends Model<UserAttributes> implements UserAttributes {
-//     declare id: string;
-//     declare name: string;
-//     declare email: string;
-//     declare password: string;
-//     declare createdAt: CreationOptional<Date>;
-//     declare updatedAt: CreationOptional<Date>;
-//     static associate(models: any) {}
-// }
-
-// User.init(
-//     {
-//         id: {
-//             type: DataTypes.STRING,
-//             allowNull: false,
-//             primaryKey: true,
-//             defaultValue: () => nanoid(),
-//         },
-//         name: {
-//             type: DataTypes.STRING,
-//             allowNull: false,
-//         },
-//         email: {
-//             type: DataTypes.STRING,
-//             allowNull: false,
-//             unique: true,
-//             validate: {
-//                 isEmail: true,
-//             },
-//         },
-//         password: {
-//             type: DataTypes.STRING,
-//             allowNull: false,
-//             validate: {
-//                 min: 8,
-//             },
-//         },
-//         createdAt: DataTypes.DATE,
-//         updatedAt: DataTypes.DATE,
-//     },
-//     {
-//         hooks: {
-//             beforeCreate: async (user) => {
-//                 const salt = await bcrypt.genSalt(10);
-//                 const hash = bcrypt.hashSync(user.password, salt);
-
-//                 user.password = hash;
-//             },
-//         },
-//         sequelize,
-//         timestamps: true,
-//         freezeTableName: true,
-//         underscored: true,
-//         tableName: 'user',
-//     }
-// );
 
 export default User;
