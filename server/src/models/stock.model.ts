@@ -1,4 +1,4 @@
-import { Table, Model, Column, DataType, AllowNull, Default, HasOne } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, AllowNull, Default, HasOne, ForeignKey } from 'sequelize-typescript';
 import Item from './item.model';
 
 export interface StockInput {
@@ -21,31 +21,34 @@ interface StockAttributes extends StockInput {
     underscored: true,
 })
 export class Stock extends Model<StockAttributes> {
-    @Column(DataType.INTEGER)
     @AllowNull(false)
     @Default(0)
+    @Column(DataType.INTEGER)
     xs!: number;
 
-    @Column(DataType.INTEGER)
     @AllowNull(false)
     @Default(0)
+    @Column(DataType.INTEGER)
     s!: number;
 
-    @Column(DataType.INTEGER)
     @AllowNull(false)
     @Default(0)
+    @Column(DataType.INTEGER)
     m!: number;
 
-    @Column(DataType.INTEGER)
     @AllowNull(false)
     @Default(0)
+    @Column(DataType.INTEGER)
     l!: number;
 
-    @Column(DataType.INTEGER)
     @AllowNull(false)
     @Default(0)
+    @Column(DataType.INTEGER)
     xl!: number;
 
+    @ForeignKey(()=> Item)
+    @Column(DataType.INTEGER)
+    item_id!: string;
     @HasOne(() => Item, 'item_id')
     item!: Item;
 }

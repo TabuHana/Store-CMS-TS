@@ -1,8 +1,8 @@
-import { Table, Model, Column, DataType, AllowNull, BelongsToMany } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, AllowNull, BelongsToMany, ForeignKey, HasMany } from 'sequelize-typescript';
 import Item from './item.model';
 
 export interface ColorInput {
-    name: string;
+    color: string;
     items: Item[];
 }
 
@@ -17,12 +17,13 @@ interface ColorAttributes extends ColorInput {
     underscored: true,
 })
 export class Color extends Model<ColorAttributes> {
-    @Column(DataType.STRING)
     @AllowNull(false)
-    name!: string;
+    @Column(DataType.STRING)
+    color!: string;
 
-    @BelongsToMany(() => Item, 'item_id')
-    items?: Item[];
+
+    // @HasMany(() => Item)
+    // items?: Item[];
 }
 
 export default Color;

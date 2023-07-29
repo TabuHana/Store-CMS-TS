@@ -12,6 +12,8 @@ import {
     Default,
     BeforeCreate,
     HasMany,
+    BeforeValidate,
+    ForeignKey,
 } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import { customAlphabet } from 'nanoid';
@@ -28,6 +30,7 @@ export interface UserInput {
 
 interface UserAttributes extends UserInput {
     id: string;
+    purchases: Order[]
     createdAt: Date;
     updatedAt: Date;
 }
@@ -42,23 +45,23 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 
 })
 export class User extends Model<UserAttributes, UserCreationAttributes> {
     @PrimaryKey
-    @Column(DataType.STRING)
     @AllowNull(false)
     @Default(() => nanoid())
+    @Column(DataType.STRING)
     id!: string;
 
-    @Column(DataType.STRING)
     @AllowNull(false)
+    @Column(DataType.STRING)
     name!: string;
 
-    @Column(DataType.STRING)
     @AllowNull(false)
     @IsEmail
+    @Column(DataType.STRING)
     email!: string;
 
-    @Column(DataType.STRING)
     @AllowNull(false)
     @Length({ min: 8 })
+    @Column(DataType.STRING)
     password!: string;
 
     @CreatedAt
@@ -69,17 +72,27 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     @Column
     updatedAt!: Date;
 
-    @HasMany(() => Order)
-    orders?: Order[];
+    @ForeignKey(() => Order)
+    @Column(DataType.STRING)
+    order_id!: Order;
+    @HasMany(() => Order, 'order_id')
+    purchases?: Order[];
 
     @BeforeCreate
-    static beforeCreateHook(instance: User): void {
-        async (user: User) => {
+    static beforeCreateHook(user: User): void {
+        async () => {
             const salt = await bcrypt.genSalt(10);
             const hash = bcrypt.hashSync(user.password, salt);
 
             user.password = hash;
         };
+    }
+
+    @BeforeValidate
+    static passwordCompare(user: User, candiditepassword: string) {
+        async () => {
+            bcrypt.compare(candiditepassword, user.password).catch((e) => false)
+        }
     }
 }
 

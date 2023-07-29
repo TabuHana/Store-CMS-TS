@@ -10,24 +10,23 @@ import {
     PrimaryKey,
     BelongsTo,
     BelongsToMany,
+    ForeignKey,
 } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import { customAlphabet } from 'nanoid';
 import User from './user.model';
 import Item from './item.model';
-import orderedItems from './orderedItems.model';
+import OrderedItems from './orderedItems.model';
 
 const nanoid = customAlphabet('abcdefg0123456789', 10);
 
 export interface OrderInput {
     total: number;
-    items: Item[];
+    cart: Item[];
     shipping_address: string;
     billing_address: string;
     order_status: boolean;
     user_id: number;
-    createdAt: Date;
-    updatedAt: Date;
 }
 
 interface OrderAttributes extends OrderInput {
@@ -46,36 +45,36 @@ interface OrderCreationAttributes extends Optional<OrderAttributes, 'createdAt' 
 })
 export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
     @PrimaryKey
-    @Column(DataType.STRING)
     @AllowNull(false)
     @Default(() => `order_${nanoid()}`)
+    @Column(DataType.STRING)
     id!: string;
 
-    @Column(DataType.FLOAT)
     @AllowNull(false)
+    @Column(DataType.FLOAT)
     total!: string;
 
-    @BelongsToMany(() => Item, () => orderedItems)
-    @AllowNull(false)
-    items!: Item[];
+    @BelongsToMany(() => Item, () => OrderedItems)
+    cart!: Item[];
 
-    @Column(DataType.STRING)
     @AllowNull(false)
+    @Column(DataType.STRING)
     shipping_address!: string;
 
-    @Column(DataType.STRING)
     @AllowNull(false)
+    @Column(DataType.STRING)
     billing_address!: string;
 
-    @Column(DataType.BOOLEAN)
     @AllowNull(false)
     @Default(false)
+    @Column(DataType.BOOLEAN)
     order_status!: boolean;
 
-    @BelongsTo(() => User, 'id')
+    @ForeignKey(()=> User)
     @Column(DataType.STRING)
-    @AllowNull(false)
     user_id!: string;
+    @BelongsTo(() => User, 'id')
+    user!: string;
 
     @CreatedAt
     @Column

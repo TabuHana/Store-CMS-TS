@@ -11,13 +11,13 @@ import routes from './routes';
 import logger from './utils/logger';
 import sequelize from './sequelize';
 
+// Testing
 import User from './models/user.model';
+import Order from './models/order.model';
+import Item from './models/item.model';
+import OrderedItems from './models/orderedItems.model';
 import Stock from './models/stock.model';
-import shipping from './models/user.model';
-import order from './models/user.model';
-import item from './models/user.model';
-import color from './models/user.model';
-import category from './models/user.model';
+import Color from './models/color.model';
 
 const port = config.get<number>('port');
 
@@ -33,9 +33,13 @@ app.listen(port, async () => {
     try {
         await sequelize.authenticate();
         await sequelize.sync({ force: true });
-        console.log(User === sequelize.models.User);
-        console.log(Stock === sequelize.models.Stock);
         logger.info('Connection has been established successfully.');
+        console.log(User === sequelize.models.User);
+        console.log(Order === sequelize.models.Order);
+        console.log(Item === sequelize.models.Item);
+        console.log(OrderedItems === sequelize.models.OrderedItems);
+        console.log(Stock === sequelize.models.Stock);
+        console.log(Color === sequelize.models.Color);
     } catch (error) {
         logger.info('Unable to connect to the database:', error);
     }

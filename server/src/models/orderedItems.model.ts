@@ -1,8 +1,8 @@
 import { Table, Model, Column, DataType, ForeignKey } from 'sequelize-typescript';
 import Item from './item.model';
-import Category from './category.model';
+import Order from './order.model';
 
-interface orderedItemsAttributes {
+interface OrderedItemsAttributes {
     id: number;
     item_id: number;
     category_id: number;
@@ -14,14 +14,14 @@ interface orderedItemsAttributes {
     freezeTableName: true,
     underscored: true,
 })
-export class orderedItems extends Model<orderedItemsAttributes> {
+export class OrderedItems extends Model<OrderedItemsAttributes> {
     @ForeignKey(() => Item)
     @Column(DataType.INTEGER)
     item_id!: number;
 
-    @ForeignKey(() => Category)
+    @ForeignKey(() => Order)
     @Column(DataType.INTEGER)
-    category_id!: number;
+    order_id!: number;
 }
 
-export default orderedItems;
+export default OrderedItems;

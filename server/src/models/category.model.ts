@@ -1,4 +1,4 @@
-import { Table, Model, Column, DataType, AllowNull, BelongsToMany } from 'sequelize-typescript';
+import { Table, Model, Column, DataType, AllowNull, BelongsToMany, ForeignKey } from 'sequelize-typescript';
 import Item from './item.model';
 import ItemCategory from './itemCategories.model';
 
@@ -18,12 +18,11 @@ interface CategoryAttributes extends CategoryInput {
     underscored: true,
 })
 export class Category extends Model<CategoryAttributes> {
-    @Column(DataType.STRING)
     @AllowNull(false)
+    @Column(DataType.STRING)
     name!: string;
 
     @BelongsToMany(() => Item, () => ItemCategory)
-    @Column(DataType.INTEGER)
     items?: Item[];
 }
 

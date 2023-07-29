@@ -9,13 +9,15 @@ import {
     UpdatedAt,
     HasOne,
     BelongsToMany,
+    ForeignKey,
+    BelongsTo,
 } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import Category from './category.model';
 import Color from './color.model';
 import Stock from './stock.model';
 import ItemCategory from './itemCategories.model';
-import orderedItems from './orderedItems.model';
+import OrderedItems from './orderedItems.model';
 import Order from './order.model';
 
 export interface ItemInput {
@@ -28,7 +30,7 @@ export interface ItemInput {
     categories: Category[];
     color: Color;
     stock: Stock;
-    order: Order;
+    orders: Order[];
 }
 
 interface ItemAttributes extends ItemInput {
@@ -46,38 +48,38 @@ interface ItemCreationAttributes extends Optional<ItemAttributes, 'createdAt' | 
     underscored: true,
 })
 export class Item extends Model<ItemAttributes, ItemCreationAttributes> {
-    @Column(DataType.STRING)
     @AllowNull(false)
+    @Column(DataType.STRING)
     name!: string;
 
-    @Column(DataType.STRING)
     @AllowNull(false)
+    @Column(DataType.STRING)
     description!: string;
 
-    @Column(DataType.INTEGER)
     @AllowNull(false)
+    @Column(DataType.INTEGER)
     price!: number;
 
-    @Column(DataType.INTEGER)
     @AllowNull(true)
     @Default(0)
+    @Column(DataType.INTEGER)
     price_per_unit!: number;
 
-    @BelongsToMany(() => Category, () => ItemCategory)
-    @Column(DataType.INTEGER)
-    categories?: Category[];
+    // @BelongsToMany(() => Category, () => ItemCategory)
+    // categories?: Category[];
 
-    @HasOne(() => Color, 'color_id')
-    @Column(DataType.INTEGER)
-    color!: Color;
+    // @ForeignKey(() => Color)
+    // @Column(DataType.INTEGER)
+    // color_id!: number;
+    
+    // @BelongsTo(() => Color, 'color_id')
+    // color!: Color;
 
-    @HasOne(() => Stock, 'stock_id')
-    @Column(DataType.INTEGER)
-    stock!: Stock;
+    // @HasOne(() => Stock, 'stock_id')
+    // @Column(DataType.INTEGER)
+    // stock!: Stock;
 
-    @BelongsToMany(() => Order, () => orderedItems)
-    @AllowNull(false)
-    @Default(0)
+    @BelongsToMany(() => Order, () => OrderedItems)
     orders?: Order[];
 
     @CreatedAt
