@@ -10,6 +10,7 @@ import {
     BeforeCreate,
     HasMany, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
+import { IsEmail, Min } from '@sequelize/validator.js';
 import { customAlphabet } from 'nanoid';
 import bcrypt from 'bcrypt';
 import { Order } from './order.model';
@@ -41,9 +42,11 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     declare name: string;
 
     @Attribute(DataTypes.STRING)
+    @IsEmail
     declare email: string;
 
     @Attribute(DataTypes.STRING)
+    @Min(6)
     declare password: string;
 
     @Attribute(DataTypes.DATE)

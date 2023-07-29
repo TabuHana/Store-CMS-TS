@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@sequelize/core": "^7.0.0-alpha.27",
+    "@sequelize/validator.js": "^7.0.0-alpha.27",
     "bcrypt": "^5.1.0",
     "config": "^3.3.9",
     "cors": "^2.8.5",
