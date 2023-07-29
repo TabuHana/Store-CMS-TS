@@ -1,4 +1,3 @@
-// import { Model, DataTypes, CreationOptional } from 'sequelize';
 import {
     Table,
     Model,
@@ -12,10 +11,12 @@ import {
     PrimaryKey,
     Default,
     BeforeCreate,
+    HasMany,
 } from 'sequelize-typescript';
 import { Optional } from 'sequelize';
 import { customAlphabet } from 'nanoid';
 import bcrypt from 'bcrypt';
+import Order from './order.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
@@ -37,12 +38,12 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 
     tableName: 'user',
     timestamps: true,
     freezeTableName: true,
-    underscored: true
+    underscored: true,
 })
 export class User extends Model<UserAttributes, UserCreationAttributes> {
+    @PrimaryKey
     @Column(DataType.STRING)
     @AllowNull(false)
-    @PrimaryKey
     @Default(() => nanoid())
     id!: string;
 
@@ -67,6 +68,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     @UpdatedAt
     @Column
     updatedAt!: Date;
+
+    @HasMany(() => Order)
+    orders?: Order[];
 
     @BeforeCreate
     static beforeCreateHook(instance: User): void {
