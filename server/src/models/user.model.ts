@@ -1,92 +1,40 @@
-import {
-    Table,
-    Model,
-    Column,
-    DataType,
-    CreatedAt,
-    UpdatedAt,
-    AllowNull,
-    IsEmail,
-    Length,
-    PrimaryKey,
-    Default,
-    BeforeCreate,
-    HasMany,
-    BeforeValidate,
-    ForeignKey,
-} from 'sequelize-typescript';
-import { Optional } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
+//@ts-ignore
+import { Attribute, PrimaryKey, NotNull, Default, Table, CreatedAt, UpdatedAt, HasMany } from '@sequelize/core/decorators-legacy';
 import { customAlphabet } from 'nanoid';
-import bcrypt from 'bcrypt';
-import Order from './order.model';
+import { Order } from './order.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
-export interface UserInput {
-    name: string;
-    email: string;
-    password: string;
-}
-
-export interface UserAttributes extends UserInput {
-    id: string;
-    purchases: Order[]
-    createdAt: Date;
-    updatedAt: Date;
-}
-
- interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 'updatedAt'> {}
 
 @Table({
     tableName: 'user',
     timestamps: true,
-    freezeTableName: true,
-    underscored: true,
+    freezeTableNames: true,
+    underscored: true
 })
-export class User extends Model<UserInput> {
-    @PrimaryKey
-    @AllowNull(false)
-    @Default(() => nanoid())
-    @Column(DataType.STRING)
-    id!: string;
+export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+  @Attribute(DataTypes.STRING)
+  @PrimaryKey
+  @NotNull
+  @Default(() => nanoid())
+  declare id: string;
 
-    @AllowNull(false)
-    @Column(DataType.STRING)
-    name!: string;
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare name: string;
 
-    @AllowNull(false)
-    @IsEmail
-    @Column(DataType.STRING)
-    email!: string;
+  @Attribute(DataTypes.STRING)
+  declare email: string;
 
-    @AllowNull(false)
-    @Length({ min: 8 })
-    @Column(DataType.STRING)
-    password!: string;
+  @Attribute(DataTypes.DATE)
+  @CreatedAt
+  declare createdAt: CreationOptional<Date>
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @Attribute(DataTypes.DATE)
+  @UpdatedAt
+  declare updatedAt: CreationOptional<Date>
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
-
-    @ForeignKey(() => Order)
-    @Column(DataType.STRING)
-    purchases!: Order;
-    @HasMany(() => Order, 'purchaes')
-    order?: Order[];
-
-    @BeforeCreate
-    static beforeCreateHook(user: User): void {
-        async () => {
-            const salt = await bcrypt.genSalt(10);
-            const hash = bcrypt.hashSync(user.password, salt);
-
-            user.password = hash;
-        };
-    }
+  @HasMany(() => Order, 'user_id')
+  declare orders: Order[]
 }
-
-export default User;

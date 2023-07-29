@@ -9,15 +9,7 @@ import routes from './routes';
 
 // Utils
 import logger from './utils/logger';
-import sequelize from './sequelize';
-
-// Testing
-import User from './models/user.model';
-import Order from './models/order.model';
-import Item from './models/item.model';
-import OrderedItems from './models/orderedItems.model';
-import Stock from './models/stock.model';
-import Color from './models/color.model';
+import connect from './utils/connect';
 
 const port = config.get<number>('port');
 
@@ -30,12 +22,8 @@ if (process.env.NODE_ENV === 'production') {
 
 app.listen(port, async () => {
     logger.info(`App is running at http://localhost:${port}`);
-    try {
-        await sequelize.authenticate();
-        await sequelize.sync({ force: true });
-        logger.info('Connection has been established successfully.');
-    } catch (error) {
-        logger.info('Unable to connect to the database:', error);
-    }
+    
+    await connect();
+
     routes(app);
 });

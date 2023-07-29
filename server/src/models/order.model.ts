@@ -1,82 +1,51 @@
-import {
-    Table,
-    Model,
-    Column,
-    DataType,
-    AllowNull,
-    Default,
-    CreatedAt,
-    UpdatedAt,
-    PrimaryKey,
-    BelongsTo,
-    BelongsToMany,
-    ForeignKey,
-} from 'sequelize-typescript';
-import { Optional } from 'sequelize';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
+//@ts-ignore
+import { Attribute, PrimaryKey, NotNull, Default, Table, CreatedAt, UpdatedAt, AutoIncrement } from '@sequelize/core/decorators-legacy';
 import { customAlphabet } from 'nanoid';
-import User from './user.model';
-import Item from './item.model';
-import OrderedItems from './orderedItems.model';
 
 const nanoid = customAlphabet('abcdefg0123456789', 10);
 
-export interface OrderInput {
-    total: string;
-    cart: Item[];
-    shipping_address: string;
-    billing_address: string;
-    order_status: boolean;
-    user_id: number;
-}
-
-interface OrderAttributes extends OrderInput {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-}
-
-interface OrderCreationAttributes extends Optional<OrderAttributes, 'createdAt' | 'updatedAt'> {}
 
 @Table({
     tableName: 'order',
     timestamps: true,
-    freezeTableName: true,
-    underscored: true,
+    underscored: true
 })
-export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
-    @AllowNull(false)
-    @Column(DataType.STRING)
-    total!: string;
+export class Order extends Model<InferAttributes<Order>, InferCreationAttributes<Order>> {
+  @Attribute(DataTypes.INTEGER)
+  @PrimaryKey
+  @AutoIncrement
+  declare id: CreationOptional<number>;
 
-    @BelongsToMany(() => Item, () => OrderedItems)
-    cart!: Item[];
+  @Attribute(DataTypes.FLOAT)
+  @NotNull
+  declare sub_total: number;
 
-    @AllowNull(false)
-    @Column(DataType.STRING)
-    shipping_address!: string;
+  @Attribute(DataTypes.FLOAT)
+  @NotNull
+  declare total: string;
 
-    @AllowNull(false)
-    @Column(DataType.STRING)
-    billing_address!: string;
+//   @Attribute(DataTypes.STRING)
+//   @NotNull
+//   declare shipping_address: string;
 
-    @AllowNull(false)
-    @Default(false)
-    @Column(DataType.BOOLEAN)
-    order_status!: boolean;
+//   @Attribute(DataTypes.STRING)
+//   @NotNull
+//   declare billing_address: string;
 
-    @ForeignKey(() => User)
-    @Column(DataType.STRING)
-    user_id!: string;
-    @BelongsTo(() => User, 'id')
-    user!: string;
+//   @Attribute(DataTypes.BOOLEAN)
+//   @Default(false)
+//   declare status: boolean;
+  
+  @Attribute(DataTypes.DATE)
+  @CreatedAt
+  declare createdAt: CreationOptional<Date>
 
-    @CreatedAt
-    @Column
-    createdAt!: Date;
+  @Attribute(DataTypes.DATE)
+  @UpdatedAt
+  declare updatedAt: CreationOptional<Date>
 
-    @UpdatedAt
-    @Column
-    updatedAt!: Date;
+  @Attribute(DataTypes.STRING)
+  @NotNull
+  declare user_id: string;
 }
-
-export default Order;
