@@ -8,9 +8,10 @@ import {
     CreatedAt,
     UpdatedAt,
     BeforeCreate,
+    Unique,
     HasMany, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import { IsEmail, Min } from '@sequelize/validator.js';
+import { IsEmail, Min, Not } from '@sequelize/validator.js';
 import { customAlphabet } from 'nanoid';
 import bcrypt from 'bcrypt';
 import { Order } from './order.model';
@@ -62,9 +63,12 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
 
     @Attribute(DataTypes.STRING)
     @IsEmail
+    @Unique
+    @NotNull
     declare email: string;
 
     @Attribute(DataTypes.STRING)
+    @NotNull
     @Min(6)
     declare password: string;
 
