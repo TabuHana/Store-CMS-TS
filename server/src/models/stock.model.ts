@@ -58,19 +58,15 @@ export class Stock extends Model<InferAttributes<Stock>, InferCreationAttributes
     /**
      * Associations
      */
-    declare inventory_id?: NonAttribute<Item>;
-
-    declare inventory: NonAttribute<number>;
-
     @Attribute(DataTypes.INTEGER)
     @ForeignKey
     @NotNull
-    declare item_id: string;
-
-    @Attribute(DataTypes.STRING)
+    declare item_id: number;
+    
+    @Attribute(DataTypes.INTEGER)
     @ForeignKey
     @NotNull
-    declare user_id: string;
+    declare color_id: number;
 }
 
 export default Stock;

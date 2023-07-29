@@ -39,13 +39,8 @@ export class Color extends Model<InferAttributes<Color>, InferCreationAttributes
     declare name: string;
 
     // Associations
-    @HasOne(() => Stock, 'stock_id')
-    declare color_stock?: NonAttribute<Stock>;
-
-    @BelongsToMany(() => Item, {
-        through: 'itemColor',
-    })
-    declare item_color?: NonAttribute<Item[]>;
+    @HasOne(() => Stock, 'color_id')
+    declare stock: NonAttribute<Stock>;
 }
 
 export default Color;

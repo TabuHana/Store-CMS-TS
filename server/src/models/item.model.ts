@@ -8,6 +8,7 @@ import {
     AutoIncrement,
     HasOne,
     BelongsToMany,
+    ForeignKey,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { Order } from './order.model';
@@ -60,25 +61,19 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
     /**
      * Associations
      */
-    declare cart?: NonAttribute<Order[]>;
-
-    @HasOne(() => Stock, {
-        foreignKey: 'item_id',
-        inverse: {
-            as: 'inventory_id',
-        },
-    })
-    declare inventory: NonAttribute<Stock>;
+    @HasOne(() => Stock, 'item_id')
+    declare stock: NonAttribute<Stock>;
 
     @BelongsToMany(() => Category, {
-        through: 'itemCategory',
+        through: 'item_category',
     })
-    declare item_category?: NonAttribute<Category[]>
+    declare item_category_id?: NonAttribute<Category[]>
 
     @BelongsToMany(() => Color, {
-        through: 'itemColor',
+        through: 'item_color',
     })
-    declare item_color?: NonAttribute<Color[]>
+    declare item_color_id?: NonAttribute<Color[]>
+    
 }
 
 export default Item

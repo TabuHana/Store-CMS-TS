@@ -37,11 +37,6 @@ export class Category extends Model<InferAttributes<Category>, InferCreationAttr
     declare name: string;
 
     // Associations
-
-    @BelongsToMany(() => Item, {
-        through: 'itemCategory'
-    })
-    declare item_category?: NonAttribute<Item[]>;
 }
 
 export default Category;

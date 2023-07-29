@@ -29,10 +29,7 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
     /**
      * Attribute
      */
-    @Attribute(DataTypes.STRING)
-    @ForeignKey
-    @NotNull
-    declare user_id: string;
+
 
     @Attribute(DataTypes.BOOLEAN)
     @Default(true)
@@ -48,6 +45,14 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
     @Attribute(DataTypes.DATE)
     @UpdatedAt
     declare updatedAt: CreationOptional<Date>;
+
+    /**
+     * Associations
+     */
+    @Attribute(DataTypes.STRING)
+    @ForeignKey
+    @NotNull
+    declare user_id: string;
 }
 
 export default Session

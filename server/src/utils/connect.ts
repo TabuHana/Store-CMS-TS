@@ -19,7 +19,7 @@ export const sequelize = new Sequelize({
     port: dbPort,
     dialect: 'mysql',
     logging: (msg) => logger.debug(msg),
-    models: [User, Order, Session, Item, Stock],
+    models: [Category, Color, Item, Order, Session, Stock, User],
 });
 
 async function connect() {

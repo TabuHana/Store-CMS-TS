@@ -77,12 +77,9 @@ export class Order extends Model<InferAttributes<Order>, InferCreationAttributes
     declare user_id: string;
 
     @BelongsToMany(() => Item, {
-        through: 'ItemOrders',
-        inverse: {
-            as: 'cart',
-        },
+        through: 'order_cart',
     })
-    declare itemOrders?: NonAttribute<Item[]>
+    declare orderCart?: NonAttribute<Item[]>
 }
 
 export default Order

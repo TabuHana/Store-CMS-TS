@@ -60,11 +60,11 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     /**
      * Associations
      */
-    @HasMany(() => Order, 'user_id')
-    declare orders: Order[];
-
     @HasMany(() => Session, 'user_id')
     declare sessions: Session[];
+
+    @HasMany(() => Order, 'user_id')
+    declare orders: Order[];
 
     /**
      * Methods
