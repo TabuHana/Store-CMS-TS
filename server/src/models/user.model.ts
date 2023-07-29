@@ -28,14 +28,14 @@ export interface UserInput {
     password: string;
 }
 
-interface UserAttributes extends UserInput {
+export interface UserAttributes extends UserInput {
     id: string;
     purchases: Order[]
     createdAt: Date;
     updatedAt: Date;
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 'updatedAt'> {}
+ interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 'updatedAt'> {}
 
 @Table({
     tableName: 'user',
@@ -43,7 +43,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'createdAt' | 
     freezeTableName: true,
     underscored: true,
 })
-export class User extends Model<UserAttributes, UserCreationAttributes> {
+export class User extends Model<UserInput> {
     @PrimaryKey
     @AllowNull(false)
     @Default(() => nanoid())
@@ -74,9 +74,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
 
     @ForeignKey(() => Order)
     @Column(DataType.STRING)
-    order_id!: Order;
-    @HasMany(() => Order, 'order_id')
-    purchases?: Order[];
+    purchases!: Order;
+    @HasMany(() => Order, 'purchaes')
+    order?: Order[];
 
     @BeforeCreate
     static beforeCreateHook(user: User): void {
@@ -86,13 +86,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
 
             user.password = hash;
         };
-    }
-
-    @BeforeValidate
-    static passwordCompare(user: User, candiditepassword: string) {
-        async () => {
-            bcrypt.compare(candiditepassword, user.password).catch((e) => false)
-        }
     }
 }
 

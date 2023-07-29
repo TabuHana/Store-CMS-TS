@@ -21,7 +21,7 @@ import OrderedItems from './orderedItems.model';
 const nanoid = customAlphabet('abcdefg0123456789', 10);
 
 export interface OrderInput {
-    total: number;
+    total: string;
     cart: Item[];
     shipping_address: string;
     billing_address: string;
@@ -38,20 +38,14 @@ interface OrderAttributes extends OrderInput {
 interface OrderCreationAttributes extends Optional<OrderAttributes, 'createdAt' | 'updatedAt'> {}
 
 @Table({
-    timestamps: true,
     tableName: 'order',
+    timestamps: true,
     freezeTableName: true,
     underscored: true,
 })
 export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
-    @PrimaryKey
     @AllowNull(false)
-    @Default(() => `order_${nanoid()}`)
     @Column(DataType.STRING)
-    id!: string;
-
-    @AllowNull(false)
-    @Column(DataType.FLOAT)
     total!: string;
 
     @BelongsToMany(() => Item, () => OrderedItems)
@@ -70,7 +64,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
     @Column(DataType.BOOLEAN)
     order_status!: boolean;
 
-    @ForeignKey(()=> User)
+    @ForeignKey(() => User)
     @Column(DataType.STRING)
     user_id!: string;
     @BelongsTo(() => User, 'id')

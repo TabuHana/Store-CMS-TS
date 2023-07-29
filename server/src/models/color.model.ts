@@ -22,8 +22,8 @@ export class Color extends Model<ColorAttributes> {
     color!: string;
 
 
-    // @HasMany(() => Item)
-    // items?: Item[];
+    @HasMany(() => Item)
+    items?: Item[];
 }
 
 export default Color;

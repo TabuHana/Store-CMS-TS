@@ -34,12 +34,6 @@ app.listen(port, async () => {
         await sequelize.authenticate();
         await sequelize.sync({ force: true });
         logger.info('Connection has been established successfully.');
-        console.log(User === sequelize.models.User);
-        console.log(Order === sequelize.models.Order);
-        console.log(Item === sequelize.models.Item);
-        console.log(OrderedItems === sequelize.models.OrderedItems);
-        console.log(Stock === sequelize.models.Stock);
-        console.log(Color === sequelize.models.Color);
     } catch (error) {
         logger.info('Unable to connect to the database:', error);
     }

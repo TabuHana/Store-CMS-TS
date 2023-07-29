@@ -13,7 +13,7 @@ interface CategoryAttributes extends CategoryInput {
 
 @Table({
     tableName: 'category',
-    timestamps: true,
+    timestamps: false,
     freezeTableName: true,
     underscored: true,
 })

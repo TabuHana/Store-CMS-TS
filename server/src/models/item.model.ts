@@ -65,19 +65,21 @@ export class Item extends Model<ItemAttributes, ItemCreationAttributes> {
     @Column(DataType.INTEGER)
     price_per_unit!: number;
 
-    // @BelongsToMany(() => Category, () => ItemCategory)
-    // categories?: Category[];
+    @BelongsToMany(() => Category, () => ItemCategory)
+    categories?: Category[];
 
-    // @ForeignKey(() => Color)
-    // @Column(DataType.INTEGER)
-    // color_id!: number;
-    
-    // @BelongsTo(() => Color, 'color_id')
-    // color!: Color;
+    @ForeignKey(() => Color)
+    @Column(DataType.INTEGER)
+    color_id!: number;
 
-    // @HasOne(() => Stock, 'stock_id')
-    // @Column(DataType.INTEGER)
-    // stock!: Stock;
+    @BelongsTo(() => Color, 'color_id')
+    color!: Color;
+
+    @ForeignKey(() => Stock)
+    @Column(DataType.INTEGER)
+    stock_id!: Stock;
+    @HasOne(() => Stock, 'stock_id')
+    stock?: Stock[];
 
     @BelongsToMany(() => Order, () => OrderedItems)
     orders?: Order[];
