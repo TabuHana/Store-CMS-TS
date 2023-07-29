@@ -18,13 +18,32 @@ import { Session } from './session.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
+// export type UserInput = {
+//     name: string;
+//     email: string;
+//     password: string;
+// }
+
+type UserAttributes = {
+    user_id: string;
+    name: string;
+    email: string;
+    password: string;
+    createdAt: Date;
+    updatedAt: Date;
+    comparePassword(candidatePassword: string, user: User): Promise<boolean>;
+};
+
+export type UserCreationAttributes = Omit<UserAttributes, 'user_id' | 'createdAt' | 'updatedAt' | 'comparePassword'>;
+
 @Table({
     tableName: 'user',
     timestamps: true,
     freezeTableNames: true,
     underscored: true,
 })
-export class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
+// <InferAttributes<User>, InferCreationAttributes<User>
+export class User extends Model<UserAttributes, UserCreationAttributes> {
     /**
      * PK
      */

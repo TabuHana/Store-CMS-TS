@@ -1,4 +1,4 @@
-import { TypeOf, object, string } from 'zod';
+import { TypeOf, number, object, string } from 'zod';
 
 export const createUserSchema = object({
     body: object({
@@ -20,4 +20,10 @@ export const createUserSchema = object({
     }),
 });
 
+export const filterUserSchema = object({
+    limit: number().default(1),
+    page: number().default(10),
+});
+
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, 'body.passwordConfirmation'>;
+export type filterUserQuery = Omit<TypeOf<typeof filterUserSchema>, 'body.passwordConfirmation'>;
