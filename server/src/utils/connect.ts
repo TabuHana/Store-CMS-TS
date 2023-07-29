@@ -1,8 +1,9 @@
-import { Sequelize } from '@sequelize/core';
+import { Sequelize, importModels } from '@sequelize/core';
 import config from 'config';
 import logger from './logger';
-import { User } from '../models/user.model';
-import { Order } from '../models/order.model';
+
+// Models
+import { User, Order, Session, Item, Stock } from '../models/index.model';
 
 const user = config.get<string>('username');
 const pass = config.get<string>('password');
@@ -17,14 +18,14 @@ export const sequelize = new Sequelize({
     host: host,
     port: dbPort,
     dialect: 'mysql',
-    models: [User, Order],
     logging: (msg) => logger.debug(msg),
+    models: [User, Order, Session, Item, Stock],
 });
 
 async function connect() {
     try {
         await sequelize.authenticate();
-        await sequelize.sync();
+        await sequelize.sync({ force: true });
         logger.info('Connection has been established successfully.');
     } catch (error: any) {
         logger.info('Unable to connect to the database:', error);

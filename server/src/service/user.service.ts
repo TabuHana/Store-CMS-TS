@@ -1,8 +1,7 @@
 import { omit } from 'lodash';
-import User, { UserInput, UserAttributes } from '../models/user.model';
-import { passwordCompare } from '../utils/passwordCompare';
+import User from '../models/user.model';
 
-export async function createUser(input: UserInput) {
+export async function createUser(input: any) {
     try {
         const user = await User.create(input);
         return omit(user.toJSON(), 'password');
@@ -18,7 +17,7 @@ export async function validatePassword({ email, password }: { email: string; pas
         return false;
     }
 
-    const isValid = passwordCompare(user.password, password);
+    const isValid = User.comparePassword(password, user);
 
     if (!isValid) {
         return false;
