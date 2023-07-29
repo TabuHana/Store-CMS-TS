@@ -7,10 +7,13 @@ import {
     UpdatedAt,
     AutoIncrement,
     HasOne,
+    BelongsToMany,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { Order } from './order.model';
 import { Stock } from './stock.model';
+import Category from './category.model';
+import Color from './color.model';
 
 @Table({
     tableName: 'item',
@@ -67,7 +70,15 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
     })
     declare inventory: NonAttribute<Stock>;
 
-    // Missing associations to category(m - m) and color(o - m)
+    @BelongsToMany(() => Category, {
+        through: 'itemCategory',
+    })
+    declare item_category?: NonAttribute<Category[]>
+
+    @BelongsToMany(() => Color, {
+        through: 'itemColor',
+    })
+    declare item_color?: NonAttribute<Color[]>
 }
 
 export default Item

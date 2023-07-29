@@ -31,7 +31,7 @@ export class User extends Model<InferAttributes<User>, InferCreationAttributes<U
     @PrimaryKey
     @NotNull
     @Default(() => nanoid())
-    declare user_id: string;
+    declare user_id: CreationOptional<string>;
 
     /**
      * Attributes

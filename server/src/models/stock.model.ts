@@ -1,4 +1,11 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
+import {
+    DataTypes,
+    Model,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+    NonAttribute,
+} from '@sequelize/core';
 import {
     Attribute,
     PrimaryKey,
@@ -8,7 +15,6 @@ import {
     ForeignKey,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import { Order } from './order.model';
 import { Item } from './item.model';
 
 @Table({
@@ -24,8 +30,8 @@ export class Stock extends Model<InferAttributes<Stock>, InferCreationAttributes
     @Attribute(DataTypes.INTEGER)
     @PrimaryKey
     @AutoIncrement
-    declare stock_id: number;
-    
+    declare stock_id: CreationOptional<number>;
+
     /**
      * Attributes
      */
@@ -52,13 +58,19 @@ export class Stock extends Model<InferAttributes<Stock>, InferCreationAttributes
     /**
      * Associations
      */
-    declare inventory_id?: NonAttribute<Item>
+    declare inventory_id?: NonAttribute<Item>;
 
     declare inventory: NonAttribute<number>;
-    
+
     @Attribute(DataTypes.INTEGER)
+    @ForeignKey
     @NotNull
     declare item_id: string;
+
+    @Attribute(DataTypes.STRING)
+    @ForeignKey
+    @NotNull
+    declare user_id: string;
 }
 
-export default Stock
+export default Stock;

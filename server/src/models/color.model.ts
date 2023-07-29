@@ -1,29 +1,51 @@
-// import { Table, Model, Column, DataType, AllowNull, BelongsToMany, ForeignKey, HasMany } from 'sequelize-typescript';
-// import Item from './item.model';
+import {
+    DataTypes,
+    Model,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+    NonAttribute,
+} from '@sequelize/core';
+import {
+    Attribute,
+    PrimaryKey,
+    Table,
+    AutoIncrement,
+    HasOne,
+    BelongsToMany, //@ts-expect-error
+} from '@sequelize/core/decorators-legacy';
+import Item from './item.model';
+import Stock from './stock.model';
 
-// export interface ColorInput {
-//     color: string;
-//     items: Item[];
-// }
+@Table({
+    tableName: 'color',
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+})
+export class Color extends Model<InferAttributes<Color>, InferCreationAttributes<Color>> {
+    /**
+     * PK
+     */
+    @Attribute(DataTypes.INTEGER)
+    @PrimaryKey
+    @AutoIncrement
+    declare color_id: CreationOptional<number>;
 
-// interface ColorAttributes extends ColorInput {
-//     id: number;
-// }
+    /**
+     * Attribute
+     */
+    @Attribute(DataTypes.STRING)
+    declare name: string;
 
-// @Table({
-//     tableName: 'color',
-//     timestamps: true,
-//     freezeTableName: true,
-//     underscored: true,
-// })
-// export class Color extends Model<ColorAttributes> {
-//     @AllowNull(false)
-//     @Column(DataType.STRING)
-//     color!: string;
+    // Associations
+    @HasOne(() => Stock, 'stock_id')
+    declare color_stock?: NonAttribute<Stock>;
 
+    @BelongsToMany(() => Item, {
+        through: 'itemColor',
+    })
+    declare item_color?: NonAttribute<Item[]>;
+}
 
-//     @HasMany(() => Item)
-//     items?: Item[];
-// }
-
-// export default Color;
+export default Color;

@@ -1,29 +1,47 @@
-// import { Table, Model, Column, DataType, AllowNull, BelongsToMany, ForeignKey } from 'sequelize-typescript';
-// import Item from './item.model';
-// import ItemCategory from './itemCategories.model';
+import {
+    DataTypes,
+    Model,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+    NonAttribute,
+} from '@sequelize/core';
+import {
+    Attribute,
+    PrimaryKey,
+    Table,
+    AutoIncrement,
+    BelongsToMany, //@ts-expect-error
+} from '@sequelize/core/decorators-legacy';
+import Item from './item.model';
 
-// export interface CategoryInput {
-//     name: string;
-//     items: Item[];
-// }
+@Table({
+    tableName: 'category',
+    timestamps: false,
+    freezeTableName: true,
+    underscored: true,
+})
+export class Category extends Model<InferAttributes<Category>, InferCreationAttributes<Category>> {
+    /**
+     * PK
+     */
+    @Attribute(DataTypes.INTEGER)
+    @PrimaryKey
+    @AutoIncrement
+    declare category_id: CreationOptional<number>;
 
-// interface CategoryAttributes extends CategoryInput {
-//     id: number;
-// }
+    /**
+     * Attribute
+     */
+    @Attribute(DataTypes.STRING)
+    declare name: string;
 
-// @Table({
-//     tableName: 'category',
-//     timestamps: false,
-//     freezeTableName: true,
-//     underscored: true,
-// })
-// export class Category extends Model<CategoryAttributes> {
-//     @AllowNull(false)
-//     @Column(DataType.STRING)
-//     name!: string;
+    // Associations
 
-//     @BelongsToMany(() => Item, () => ItemCategory)
-//     items?: Item[];
-// }
+    @BelongsToMany(() => Item, {
+        through: 'itemCategory'
+    })
+    declare item_category?: NonAttribute<Item[]>;
+}
 
-// export default Category;
+export default Category;

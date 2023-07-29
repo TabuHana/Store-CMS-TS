@@ -35,7 +35,7 @@ export class Order extends Model<InferAttributes<Order>, InferCreationAttributes
     @PrimaryKey
     @NotNull
     @Default(() => nanoid())
-    declare order_id: string;
+    declare order_id: CreationOptional<string>;
 
     /**
      * Attributes

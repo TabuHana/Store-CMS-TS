@@ -3,7 +3,7 @@ import config from 'config';
 import logger from './logger';
 
 // Models
-import { User, Order, Session, Item, Stock } from '../models/index.model';
+import { Category, Color, Item, Order, Session, Stock, User } from '../models/index.model';
 
 const user = config.get<string>('username');
 const pass = config.get<string>('password');

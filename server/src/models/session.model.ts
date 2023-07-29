@@ -24,7 +24,7 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
     @Attribute(DataTypes.INTEGER)
     @PrimaryKey
     @AutoIncrement
-    declare session_id: number;
+    declare session_id: CreationOptional<number>;
 
     /**
      * Attribute
