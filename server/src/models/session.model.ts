@@ -11,13 +11,24 @@ import {
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 
+type SessionAttributes = {
+    session_id: number;
+    valid: boolean;
+    userAgent: string;
+    createdAt: Date;
+    updatedAt: Date;
+    user_id: string;
+};
+
+export type SessionCreationAttributes = Omit<SessionAttributes, 'session_id' | 'valid' | 'createdAt' | 'updatedAt'>;
+
 @Table({
     tableName: 'sessions',
     timestamps: true,
     freezeTableNames: true,
     underscored: true,
 })
-export class Session extends Model<InferAttributes<Session>, InferCreationAttributes<Session>> {
+export class Session extends Model<SessionAttributes, SessionCreationAttributes> {
     /**
      * PK
      */
@@ -29,8 +40,6 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
     /**
      * Attribute
      */
-
-
     @Attribute(DataTypes.BOOLEAN)
     @Default(true)
     declare valid: boolean;
@@ -55,4 +64,4 @@ export class Session extends Model<InferAttributes<Session>, InferCreationAttrib
     declare user_id: string;
 }
 
-export default Session
+export default Session;

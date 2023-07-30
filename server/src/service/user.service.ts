@@ -28,5 +28,5 @@ export async function validatePassword({ email, password }: { email: string; pas
 }
 
 export async function findUser(query: filterUserQuery) {
-    return User.findOne(query);
+    return User.findOne({ where: { email: query.body.email, password: query.body.password } });
 }

@@ -21,8 +21,14 @@ export const createUserSchema = object({
 });
 
 export const filterUserSchema = object({
-    limit: number().default(1),
-    page: number().default(10),
+    body: object({
+        email: string({
+            required_error: 'Email is required',
+        }),
+        password: string({
+            required_error: 'Password is required',
+        }),
+    }),
 });
 
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, 'body.passwordConfirmation'>;

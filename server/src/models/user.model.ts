@@ -19,12 +19,6 @@ import { Session } from './session.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
-// export type UserInput = {
-//     name: string;
-//     email: string;
-//     password: string;
-// }
-
 type UserAttributes = {
     user_id: string;
     name: string;
