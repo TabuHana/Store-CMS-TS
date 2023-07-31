@@ -8,14 +8,24 @@ import requireUser from './middleware/requireUser';
 
 function routes(app: Express) {
     app.get('/healthcheck', (req: Request, res: Response) => {
-        return res.sendStatus(200);
+        res.status(200).json({
+            status: 'success',
+            message: 'Service is online',
+        });
+    });
+
+    app.all('*', (req: Request, res: Response) => {
+        res.status(404).json({
+            status: 'fail',
+            message: `Route ${req.originalUrl} does not exist`,
+        });
     });
 
     app.post('/api/users', validateResource(createUserSchema), createUserHandler);
 
-    app.post ('/api/sessions', validateResource(createSessionSchema), createUserSessionHandler)
+    app.post('/api/sessions', validateResource(createSessionSchema), createUserSessionHandler);
 
-    app.get('/api/sessions', requireUser, getUserSessionHandler)
+    app.get('/api/sessions', requireUser, getUserSessionHandler);
 }
 
 export default routes;

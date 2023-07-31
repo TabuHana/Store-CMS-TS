@@ -12,19 +12,35 @@ export async function createUser(input: UserCreationAttributes) {
 }
 
 export async function validatePassword({ email, password }: { email: string; password: string }) {
-    const user = await User.findOne({ attributes: [email] });
+    // try {
+    //     const user = await User.findOne({ attributes: [email] });
 
-    if (!user) {
-        return false;
+    //     const isValid = User.comparePassword(password, user);
+
+    //     if (!isValid) {
+    //         return false;
+    //     }
+
+    // } catch (error) {
+    //     throw new Error(error);
+    // }
+    // return omit(user.toJSON(), 'password');
+
+    let user: User | null
+    try {
+        user = await User.findOne({ attributes: [email] });
+        
+    } catch (err) {
+        console.log(err)
     }
 
-    const isValid = User.comparePassword(password, user);
+    const isValid = User.comparePassword(password, user: User);
 
     if (!isValid) {
-        return false;
+        return null;
     }
 
-    return omit(user.toJSON(), 'password');
+    return user
 }
 
 export async function findUser(query: filterUserQuery) {
