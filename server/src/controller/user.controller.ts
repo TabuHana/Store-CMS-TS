@@ -10,10 +10,10 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
         const user = await createUser(req.body);
         return res.send(omit(user, 'password'));
     } catch (error: any) {
-        if (error === 'Sequelize') {
-            return res.status(409).send({ status: 'fail', message: 'Email already in use!' });
+        if (error.message === 'SequelizeUniqueConstraintError: Validation error') {
+            return res.status(409).send({ status: 'Failure', message: 'Email already in use!' });
         } else {
-            return res.status(500).send({ status: 'fail', message: 'Server Error' });
+            return res.status(500).send({ status: 'Failure', message: 'Server Error' });
         }
     }
 }

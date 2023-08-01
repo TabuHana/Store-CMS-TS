@@ -11,7 +11,7 @@ import {
     Unique,
     HasMany, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import { IsEmail, Min, Not } from '@sequelize/validator.js';
+import { IsEmail, Min } from '@sequelize/validator.js';
 import { customAlphabet } from 'nanoid';
 import bcrypt from 'bcrypt';
 import { Order } from './order.model';
@@ -93,14 +93,12 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     /**
      * Hooks
      */
-    @BeforeCreate
-    static beforeCreateHook(user: User): void {
-        async () => {
-            const salt = await bcrypt.genSalt(10);
-            const hash = bcrypt.hashSync(user.password, salt);
 
-            user.password = hash;
-        };
+    @BeforeCreate
+    static async beforeCreateHook(user: User) {
+        const salt = await bcrypt.genSalt(10);
+        const hash = bcrypt.hashSync(user.password, salt);
+        user.password = hash;
     }
 }
 

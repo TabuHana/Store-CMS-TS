@@ -10,9 +10,9 @@ export async function createUser(input: UserCreationAttributes) {
         throw new Error(error);
     }
 }
-
+// { email, password }: { email: string; password: string }
 export async function validatePassword({ email, password }: { email: string; password: string }) {
-    const user = await User.findOne({ attributes: [email] });
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
         return false;

@@ -1,10 +1,11 @@
 import { Request, Response } from 'express';
 import { findUser, validatePassword } from '../service/user.service';
-import { createSession, updateSession } from '../service/session.service';
+import { createSession, findSessions, updateSession } from '../service/session.service';
 import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
+import { CreateSessionInput } from '../schema/session.schema';
 
-export async function createUserSessionHandler(res: Response, req: Request) {
+export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body);
 
     // Validate the user's password
@@ -28,8 +29,12 @@ export async function createUserSessionHandler(res: Response, req: Request) {
     return res.status(400).send({ accessToken, refreshToken });
 }
 
-export async function getUserSessionHandler(res: Response, req: Request) {
-    console.log('get user session');
+export async function getUserSessionHandler(req: Request, res: Response) {
+    const userId = res.locals.user.user_id;
+
+    const sessions = await findSessions(userId);
+
+    return res.send(sessions);
 }
 
 export async function deleteSessionHandler(req: Request, res: Response) {

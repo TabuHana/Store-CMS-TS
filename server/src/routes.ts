@@ -10,15 +10,8 @@ import { createUserSessionHandler, getUserSessionHandler } from './controller/se
 function routes(app: Express) {
     app.get('/healthcheck', (req: Request, res: Response) => {
         res.status(200).json({
-            status: 'success',
+            status: 'Success',
             message: 'Service is online',
-        });
-    });
-
-    app.all('*', (req: Request, res: Response) => {
-        res.status(404).json({
-            status: 'fail',
-            message: `Route ${req.originalUrl} does not exist`,
         });
     });
 
@@ -26,7 +19,14 @@ function routes(app: Express) {
 
     app.post('/api/sessions', validateResource(createSessionSchema), createUserSessionHandler);
 
-    app.get('/api/sessions', requireUser, getUserSessionHandler);
+    app.get('/api/sessions', getUserSessionHandler);
+
+    app.all('*', (req: Request, res: Response) => {
+        res.status(404).json({
+            status: 'Failure',
+            message: `Route ${req.originalUrl} does not exist`,
+        });
+    });
 }
 
 export default routes;
