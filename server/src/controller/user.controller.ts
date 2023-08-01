@@ -3,28 +3,29 @@ import { omit } from 'lodash';
 import logger from '../utils/logger';
 import { CreateUserInput } from '../schema/user.schema';
 import { createUser } from '../service/user.service';
+import User from '../models/user.model';
 
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
     try {
         const user = await createUser(req.body);
-        res.status(201).json({
-            status: 'success',
-            data: {
-                user: omit(user, 'password'),
-            },
-        });
+        return res.send(omit(user, 'password'));
     } catch (error: any) {
-        logger.error(error);
-        if (error.name === 'SequelizeUniqueConstraintError') {
-            res.status(409).json({
-                status: 'failed',
-                message: 'User already exists with that email',
-            });
+        if (error === 'Sequelize') {
+            return res.status(409).send({ status: 'fail', message: 'Email already in use!' });
+        } else {
+            return res.status(500).send({ status: 'fail', message: 'Server Error' });
         }
-
-        res.status(500).json({
-            status: 'error',
-            message: error.message,
-        });
     }
+}
+
+export async function getUserHandler(req: Request, res: Response) {
+    console.log('get user');
+}
+
+export async function getUserId(req: Request, res: Response) {
+    console.log('get user id');
+}
+
+export async function validatePassword(req: Request, res: Response) {
+    console.log('validate password');
 }

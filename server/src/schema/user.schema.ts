@@ -22,12 +22,9 @@ export const createUserSchema = object({
 
 export const filterUserSchema = object({
     body: object({
-        email: string({
-            required_error: 'Email is required',
-        }),
-        password: string({
-            required_error: 'Password is required',
-        }),
+        id: string({
+            required_error: 'User_Id is required',
+        })
     }),
 });
 

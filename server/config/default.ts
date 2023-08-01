@@ -5,4 +5,9 @@ export default {
     database: '',
     host: '',
     dbport: '',
-}
+    publicKey: '',
+    privateKey: '',
+    accessTokenTtl: '',
+    refreshTokenTtl: '',
+    saltWorkerFactor: '',
+};

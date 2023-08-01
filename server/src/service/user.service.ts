@@ -12,37 +12,22 @@ export async function createUser(input: UserCreationAttributes) {
 }
 
 export async function validatePassword({ email, password }: { email: string; password: string }) {
-    // try {
-    //     const user = await User.findOne({ attributes: [email] });
+    const user = await User.findOne({ attributes: [email] });
 
-    //     const isValid = User.comparePassword(password, user);
-
-    //     if (!isValid) {
-    //         return false;
-    //     }
-
-    // } catch (error) {
-    //     throw new Error(error);
-    // }
-    // return omit(user.toJSON(), 'password');
-
-    let user: User | null
-    try {
-        user = await User.findOne({ attributes: [email] });
-        
-    } catch (err) {
-        console.log(err)
+    if (!user) {
+        return false;
     }
 
-    const isValid = User.comparePassword(password, user: User);
+    const isValid = User.comparePassword(password, user);
 
     if (!isValid) {
-        return null;
+        return false;
+    } else {
+        return omit(user.toJSON(), 'password');
     }
-
-    return user
 }
 
-export async function findUser(query: filterUserQuery) {
-    return User.findOne({ where: { email: query.body.email, password: query.body.password } });
+// change to expect PK
+export async function findUser(id: string) {
+    return User.findByPk(id);
 }
