@@ -15,7 +15,7 @@ export async function createSession(id: string, userAgent: string) {
 }
 
 export async function findSessions(query: filterSessionQuery) {
-    return Session.findAll({ where: { user_id: query } });
+    return Session.findAll({ where: { user_id: query, valid: true } });
 }
 
 export async function updateSession(query: any, update: any) {
