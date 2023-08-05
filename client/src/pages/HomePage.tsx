@@ -5,14 +5,14 @@ import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import Chart from './Chart';
-import Deposits from './Deposits';
-import Orders from './Orders';
+import Stats from '../components/Stats';
+import Deposits from '../components/Deposits';
+import Orders from '../components/Orders';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 
-export default function Dashboard() {
+const HomePage = () => {
     const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -46,7 +46,7 @@ export default function Dashboard() {
                                     height: 240,
                                 }}
                             >
-                                <Chart />
+                                <Stats />
                             </Paper>
                         </Grid>
                         {/* Recent Deposits */}
@@ -74,4 +74,5 @@ export default function Dashboard() {
             </Box>
         </Box>
     );
-}
+};
+export default HomePage;

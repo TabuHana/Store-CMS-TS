@@ -1,8 +1,7 @@
 import { Divider, IconButton, List, Toolbar, styled } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from '../incoming/listItems';
+import { mainItems, secondaryItems } from './listItems';
 import MuiDrawer from '@mui/material/Drawer';
-
 
 type NavProps = {
     open: boolean;
@@ -10,7 +9,6 @@ type NavProps = {
 };
 
 const drawerWidth: number = 240;
-
 
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(({ theme, open }) => ({
     '& .MuiDrawer-paper': {
@@ -36,8 +34,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     },
 }));
 
-const Nav: React.FC<NavProps> = ({open, toggle}) => {
-
+const Nav: React.FC<NavProps> = ({ open, toggle }) => {
     return (
         <Drawer variant='permanent' open={open}>
             <Toolbar
@@ -54,9 +51,9 @@ const Nav: React.FC<NavProps> = ({open, toggle}) => {
             </Toolbar>
             <Divider />
             <List component='nav'>
-                {mainListItems}
+                {mainItems}
                 <Divider sx={{ my: 1 }} />
-                {secondaryListItems}
+                {secondaryItems}
             </List>
         </Drawer>
     );

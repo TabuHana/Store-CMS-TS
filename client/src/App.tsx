@@ -1,9 +1,9 @@
-import Dashboard from './incoming/Dashboard'
+import HomePage from './pages/HomePage';
 
 function App() {
 
   return (
-    <Dashboard />
+    <HomePage />
   )
 }
 
