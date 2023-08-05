@@ -2,7 +2,6 @@ import { Badge, IconButton, Toolbar, Typography, styled } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { useState } from 'react';
 
 const drawerWidth: number = 240;
 
@@ -30,11 +29,10 @@ const AppBar = styled(MuiAppBar, {
 
 type HeaderProps = {
     open: boolean;
-    toggle: () => void
-}
+    toggle: () => void;
+};
 
-const Header: React.FC<HeaderProps> = ({ open, toggle}) => {
-
+const Header: React.FC<HeaderProps> = ({ open, toggle }) => {
     return (
         <AppBar position='absolute' open={open}>
             <Toolbar
