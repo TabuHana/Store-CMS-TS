@@ -1,7 +1,6 @@
-import { Badge, IconButton, Toolbar, Typography, styled } from '@mui/material';
+import {  IconButton, Toolbar, Typography, styled } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const drawerWidth: number = 240;
 
