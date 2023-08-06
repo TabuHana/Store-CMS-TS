@@ -1,12 +1,13 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import NotFound from './pages/NotFound';
-import InventoryPage from './pages/InventoryPage';
-import CustomersPage from './pages/CustomersPage';
-import OrdersPage from './pages/OrdersPage';
-import StatisticsPage from './pages/StatisticsPage';
-import SettingsPage from './pages/SettingsPage';
-import AboutPage from './pages/AboutPage';
+import HomePage from './pages/dashboard';
+import NotFound from './pages/notFound';
+import InventoryPage from './pages/inventory';
+import CustomersPage from './pages/customers';
+import OrdersPage from './pages/orders';
+import StatisticsPage from './pages/statistics';
+import SettingsPage from './pages/settings';
+import AboutPage from './pages/about';
+import Login from './pages/auth/Login';
 
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                 <Route path='/statistics' element={<StatisticsPage />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} />
+                <Route path='/login' element={<Login />} />
                 <Route path='/*' element={<NotFound />} />
             </Routes>
         </Router>
