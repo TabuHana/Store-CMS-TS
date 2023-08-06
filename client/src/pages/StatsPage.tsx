@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 
-const StatisticsPage = () => {
+const StatsPage = () => {
     const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -42,4 +42,4 @@ const StatisticsPage = () => {
         </Box>
     );
 };
-export default StatisticsPage;
+export default StatsPage;

@@ -12,7 +12,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 
-const HomePage = () => {
+const DashboardPage = () => {
     const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -75,4 +75,4 @@ const HomePage = () => {
         </Box>
     );
 };
-export default HomePage;
+export default DashboardPage;
