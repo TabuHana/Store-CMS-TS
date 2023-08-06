@@ -3,3 +3,14 @@
 a {
     all: unset;
 }
+
+a:hover {
+    cursor: pointer;
+}
+
+.not-found {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

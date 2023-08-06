@@ -1,6 +1,7 @@
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
+import { Link as LinkTo } from 'react-router-dom';
 
 function preventDefault(event: React.MouseEvent) {
     event.preventDefault();
@@ -9,7 +10,7 @@ function preventDefault(event: React.MouseEvent) {
 const Deposits = () => {
     return (
         <>
-            <Title>Recent Deposits</Title>
+            <Title>Total Revenue</Title>
             <Typography component='p' variant='h4'>
                 $3,024.00
             </Typography>
@@ -18,7 +19,7 @@ const Deposits = () => {
             </Typography>
             <div>
                 <Link color='primary' href='#' onClick={preventDefault}>
-                    View balance
+                    <LinkTo to='/statistics'>View Statistics</LinkTo>
                 </Link>
             </div>
         </>

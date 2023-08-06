@@ -16,7 +16,7 @@ const Stats: React.FC<StatsProps> = () => {
 
     return (
         <>
-            <Title>Today</Title>
+            <Title>Monthly Revenue</Title>
             <ResponsiveContainer>
                 <BarChart
                     data={data}
