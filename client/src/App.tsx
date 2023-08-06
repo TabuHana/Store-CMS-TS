@@ -8,8 +8,9 @@ import StatsPage from './pages/StatsPage';
 import SettingsPage from './pages/SettingsPage';
 import AboutPage from './pages/AboutPage';
 import Login from './pages/auth/Login';
+import Register from './pages/auth/Register';
 
-function App() {
+const App = () => {
     return (
         <Router>
             <Routes>
@@ -21,10 +22,11 @@ function App() {
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} />
                 <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
                 <Route path='/*' element={<NotFound />} />
             </Routes>
         </Router>
     );
-}
+};
 
 export default App;
