@@ -54,11 +54,6 @@ const Header: React.FC<HeaderProps> = ({ open, toggle }) => {
                 <Typography component='h1' variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
                     Welcome
                 </Typography>
-                {/* <IconButton color='inherit'>
-                    <Badge badgeContent={12} color='secondary'>
-                        <NotificationsIcon />
-                    </Badge>
-                </IconButton> */}
             </Toolbar>
         </AppBar>
     );
