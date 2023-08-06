@@ -1,13 +1,12 @@
 import { Link, Typography } from '@mui/material';
 
-const Footer = (props: any) => {
+const Footer = () => {
     return (
         <footer>
-            <Typography variant='body1' color='text.primary' align='center' {...props}>
-                {/* {'Copyright © '} */}
+            <Typography variant='body1' color='text.primary' align='center' sx={{ pt: 4 }}>
                 <Link color='inherit' href='https://github.com/TabuHana'>
-                    Made with ❤️ by Tabu
-                </Link>{' '}
+                    Made with ❤️
+                </Link>
             </Typography>
         </footer>
     );

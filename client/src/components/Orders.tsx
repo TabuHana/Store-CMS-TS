@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Link from '@mui/material/Link';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -24,9 +23,9 @@ function preventDefault(event: React.MouseEvent) {
     event.preventDefault();
 }
 
-export default function Orders() {
+const Orders = () => {
     return (
-        <React.Fragment>
+        <>
             <Title>Recent Orders</Title>
             <Table size='small'>
                 <TableHead>
@@ -53,6 +52,8 @@ export default function Orders() {
             <Link color='primary' href='#' onClick={preventDefault} sx={{ mt: 3 }}>
                 See more orders
             </Link>
-        </React.Fragment>
+        </>
     );
-}
+};
+
+export default Orders;

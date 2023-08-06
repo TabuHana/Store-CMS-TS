@@ -69,7 +69,7 @@ const HomePage = () => {
                             </Paper>
                         </Grid>
                     </Grid>
-                    <Footer sx={{ pt: 4 }} />
+                    <Footer />
                 </Container>
             </Box>
         </Box>

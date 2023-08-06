@@ -11,7 +11,7 @@ function createData(time: string, amount?: number) {
 
 const data = [createData('00:00', 2000), createData('01:00', 5000)];
 
-const Stats: React.FC<StatsProps> = ({}) => {
+const Stats: React.FC<StatsProps> = () => {
     const theme = useTheme();
 
     return (

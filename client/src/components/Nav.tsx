@@ -1,6 +1,6 @@
 import { Divider, IconButton, List, Toolbar, styled } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainItems, secondaryItems } from './listItems';
+import { navigationItems, userItems, appItems } from './listItems';
 import MuiDrawer from '@mui/material/Drawer';
 
 type NavProps = {
@@ -51,9 +51,11 @@ const Nav: React.FC<NavProps> = ({ open, toggle }) => {
             </Toolbar>
             <Divider />
             <List component='nav'>
-                {mainItems}
+                {navigationItems}
                 <Divider sx={{ my: 1 }} />
-                {secondaryItems}
+                {userItems}
+                <Divider sx={{ my: 1 }} />
+                {appItems}
             </List>
         </Drawer>
     );
