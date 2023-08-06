@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Footer from '../../components/Footer';
+import { useForm } from 'react-hook-form';
 
 const RegisterPage = () => {
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -66,9 +67,19 @@ const RegisterPage = () => {
                         label='Password'
                         type='password'
                         id='password'
-                        autoComplete='current-password'
+                        autoComplete='user-password'
                     />
-                    <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
+                    <TextField
+                        margin='normal'
+                        required
+                        fullWidth
+                        name='passwordConfirmation'
+                        label='Confirm Password'
+                        type='password'
+                        id='passwordConfirmation'
+                        autoComplete='user-passwordConfirmation'
+                    />
+                    <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Stay Signed In' />
                     <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                         Sign Up
                     </Button>

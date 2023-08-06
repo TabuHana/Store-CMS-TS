@@ -21,8 +21,8 @@ const App = () => {
                 <Route path='/statistics' element={<StatsPage />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} />
-                <Route path='/login' element={<LoginPage />} />
-                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/auth/login' element={<LoginPage />} />
+                <Route path='/auth/register' element={<RegisterPage />} />
                 <Route path='/*' element={<NotFoundPage />} />
             </Routes>
         </Router>
