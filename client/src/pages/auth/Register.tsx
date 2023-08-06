@@ -16,10 +16,16 @@ const RegisterPage = () => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         console.log({
+            name: data.get('name'),
             email: data.get('email'),
             password: data.get('password'),
+            passwordConfirmation: data.get('passwordConfirmation')
         });
     };
+
+    const {
+        register,
+    } = useForm();
 
     return (
         <Container maxWidth='xs'>
@@ -45,9 +51,9 @@ const RegisterPage = () => {
                         fullWidth
                         id='name'
                         label='Username'
-                        name='name'
                         autoComplete='name'
                         autoFocus
+                        {...register('name')}
                     />
                     <TextField
                         margin='normal'
@@ -55,31 +61,31 @@ const RegisterPage = () => {
                         fullWidth
                         id='email'
                         label='Email Address'
-                        name='email'
                         autoComplete='email'
                         autoFocus
+                        {...register('email')}
                     />
                     <TextField
                         margin='normal'
                         required
                         fullWidth
-                        name='password'
                         label='Password'
                         type='password'
                         id='password'
                         autoComplete='user-password'
+                        {...register('password')}
                     />
                     <TextField
                         margin='normal'
                         required
                         fullWidth
-                        name='passwordConfirmation'
                         label='Confirm Password'
                         type='password'
                         id='passwordConfirmation'
                         autoComplete='user-passwordConfirmation'
+                        {...register('passwordConfirmation')}
                     />
-                    <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Stay Signed In' />
+                    <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
                     <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                         Sign Up
                     </Button>
