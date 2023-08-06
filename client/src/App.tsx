@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import DashboardPage from './pages/DashboardPage';
-import NotFound from './pages/NotFound';
-import InventoryPage from './pages/InventoryPage';
-import CustomersPage from './pages/CustomersPage';
-import OrdersPage from './pages/OrdersPage';
-import StatsPage from './pages/StatsPage';
-import SettingsPage from './pages/SettingsPage';
-import AboutPage from './pages/AboutPage';
-import Login from './pages/auth/Login';
-import Register from './pages/auth/Register';
+import DashboardPage from './pages/dashboard';
+import NotFoundPage from './pages/NotFound';
+import InventoryPage from './pages/inventory';
+import CustomersPage from './pages/customers';
+import OrdersPage from './pages/orders';
+import StatsPage from './pages/statistics';
+import SettingsPage from './pages/settings';
+import AboutPage from './pages/about';
+import LoginPage from './pages/auth/Login';
+import RegisterPage from './pages/auth/Register';
 
 const App = () => {
     return (
@@ -21,9 +21,9 @@ const App = () => {
                 <Route path='/statistics' element={<StatsPage />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} />
-                <Route path='/login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='/*' element={<NotFound />} />
+                <Route path='/login' element={<LoginPage />} />
+                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/*' element={<NotFoundPage />} />
             </Routes>
         </Router>
     );

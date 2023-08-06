@@ -9,7 +9,7 @@ import Nav from '../components/Nav';
 import { Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const NotFound = () => {
+const NotFoundPage = () => {
     const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -44,4 +44,4 @@ const NotFound = () => {
         </Box>
     );
 };
-export default NotFound;
+export default NotFoundPage;
