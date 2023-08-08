@@ -15,11 +15,19 @@ export async function createSession(id: string, userAgent: string) {
 }
 
 export async function findSessions(query: filterSessionQuery) {
-    return Session.findAll({ where: { user_id: query, valid: true } });
+    const session = await Session.findAll({ where: { user_id: query, valid: true } });
+
+    return session;
 }
 
 export async function updateSession(query: any, update: any) {
-    return Session.update(query, update);
+    try {
+        return Session.update(update, {
+            where: query,
+        });
+    } catch (error: any) {
+        throw new Error(error);
+    }
 }
 
 export async function reIssueAccessToken({ refreshToken }: { refreshToken: string }) {

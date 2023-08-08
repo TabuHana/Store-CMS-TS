@@ -27,7 +27,6 @@ export async function validatePassword({ email, password }: { email: string; pas
     }
 }
 
-// change to expect PK
 export async function findUser(id: string) {
     return User.findByPk(id);
 }
