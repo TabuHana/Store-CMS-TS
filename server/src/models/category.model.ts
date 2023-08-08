@@ -1,17 +1,9 @@
-import {
-    DataTypes,
-    Model,
-    InferAttributes,
-    InferCreationAttributes,
-    CreationOptional,
-    NonAttribute,
-} from '@sequelize/core';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
 import {
     Attribute,
     PrimaryKey,
     Table,
-    AutoIncrement,
-    BelongsToMany, //@ts-expect-error
+    AutoIncrement, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import Item from './item.model';
 

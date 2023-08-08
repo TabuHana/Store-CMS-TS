@@ -11,10 +11,8 @@ import {
     PrimaryKey,
     Table,
     AutoIncrement,
-    HasOne,
-    BelongsToMany, //@ts-expect-error
+    HasOne, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import Item from './item.model';
 import Stock from './stock.model';
 
 @Table({
