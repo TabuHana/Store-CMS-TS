@@ -14,17 +14,25 @@ import {
 import { IsEmail } from '@sequelize/validator.js';
 import { Order } from './order.model';
 
-type CustomerAttributes = {
-    customer_id: string;
+export type CustomerUpdate = {
     name: string;
     email: string;
     billing_address: string;
     shipping_address: string;
+}
+
+type CustomerAttributes = {
+    customer_id: number
+    name: string;
+    email: string;
+    billing_address: string;
+    shipping_address: string;
+    user_id: string
     createdAt: Date;
     updatedAt: Date;
 };
 
-export type CustomerCreationAttributes = Omit<CustomerAttributes, 'createdAt' | 'updatedAt'>;
+export type CustomerCreationAttributes = Omit<CustomerAttributes, 'customer_id' | 'createdAt' | 'updatedAt'>;
 
 @Table({
     tableName: 'customer',
@@ -40,7 +48,7 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     @Attribute(DataTypes.INTEGER)
     @PrimaryKey
     @AutoIncrement
-    declare customer_id: CreationOptional<string>;
+    declare customer_id: CreationOptional<number>;
 
     /**
      * Attributes

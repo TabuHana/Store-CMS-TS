@@ -1,7 +1,6 @@
 import { omit } from 'lodash';
 import User, { UserCreationAttributes } from '../models/user.model';
 import bcrypt from 'bcrypt';
-import config from 'config';
 import Order from '../models/order.model';
 
 export async function createUser(input: UserCreationAttributes) {

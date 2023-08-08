@@ -1,4 +1,4 @@
-import { TypeOf, ZodTypeAny, number, object, string } from 'zod';
+import { TypeOf, object, string } from 'zod';
 
 export const createSessionSchema = object({
     body: object({
