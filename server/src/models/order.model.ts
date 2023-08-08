@@ -76,6 +76,11 @@ export class Order extends Model<InferAttributes<Order>, InferCreationAttributes
     @NotNull
     declare user_id: string;
 
+    @Attribute(DataTypes.STRING)
+    @ForeignKey
+    @NotNull
+    declare customer_id: string;
+
     @BelongsToMany(() => Item, {
         through: 'order_cart',
     })

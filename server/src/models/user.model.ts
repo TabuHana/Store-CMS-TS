@@ -16,6 +16,7 @@ import { customAlphabet } from 'nanoid';
 import bcrypt from 'bcrypt';
 import { Order } from './order.model';
 import { Session } from './session.model';
+import Customer from './customer.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
@@ -83,6 +84,9 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
 
     @HasMany(() => Order, 'user_id')
     declare orders: Order[];
+
+    @HasMany(() => Customer, 'user_id')
+    declare customer: Customer[];
 
     /**
      * Methods
