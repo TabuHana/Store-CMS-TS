@@ -88,7 +88,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
      * Methods
      */
     static comparePassword = async function (candaditepassword: string, user: User): Promise<boolean> {
-        return bcrypt.compare(candaditepassword, user.password).catch((e) => false);
+        return await bcrypt.compare(candaditepassword, user.password).catch((e) => false);
     };
 
     /**

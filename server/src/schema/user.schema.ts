@@ -23,10 +23,19 @@ export const createUserSchema = object({
 export const findUserSchema = object({
     body: object({
         user_id: string({
-            required_error: 'User_Id is required'
-        })
-    })
-})
+            required_error: 'User_Id is required',
+        }),
+    }),
+});
+
+export const updateUserPasswordSchema = object({
+    body: object({
+        password: string({
+            required_error: 'Password is required',
+        }),
+    }),
+});
 
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, 'body.passwordConfirmation'>;
-export type FindUserInput = TypeOf<typeof findUserSchema>
+export type FindUserInput = TypeOf<typeof findUserSchema>;
+export type UpdateUserPasswordInput = TypeOf<typeof updateUserPasswordSchema>;
