@@ -1,14 +1,14 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DashboardPage from './pages/dashboard';
-import NotFoundPage from './pages/NotFound';
+import NotFoundPage from './pages/notFound';
 import InventoryPage from './pages/inventory';
 import CustomersPage from './pages/customers';
 import OrdersPage from './pages/orders';
 import StatsPage from './pages/statistics';
 import SettingsPage from './pages/settings';
 import AboutPage from './pages/about';
-import LoginPage from './pages/auth/Login';
-import RegisterPage from './pages/auth/Register';
+import LoginPage from './pages/auth/login';
+import RegisterPage from './pages/auth/register';
 
 const App = () => {
     return (

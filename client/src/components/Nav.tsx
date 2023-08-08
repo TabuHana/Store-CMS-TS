@@ -1,6 +1,6 @@
 import { Divider, IconButton, List, Toolbar, styled } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { navigationItems, userItems, appItems } from './listItems';
+import { navigationItems, userItems, appItems } from './ListItems';
 import MuiDrawer from '@mui/material/Drawer';
 
 type NavProps = {

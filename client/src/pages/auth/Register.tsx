@@ -10,22 +10,54 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Footer from '../../components/Footer';
 import { useForm } from 'react-hook-form';
+import { object, string, TypeOf } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+
+console.log(`env ${import.meta.env.VITE_SERVER_ENDPOINT}`);
+
+const createUserSchema = object({
+    name: string().nonempty({
+        message: 'Name is required',
+    }),
+    password: string().min(6, 'Password too short - must be 6 characters long').nonempty({
+        message: 'Password is required',
+    }),
+    passwordConfirmation: string({
+        required_error: 'Password confirmation is required',
+    }),
+    email: string({
+        required_error: 'Email is required',
+    })
+        .email('Not a valid email')
+        .nonempty({ message: 'Email is required' }),
+}).refine((data) => data.password === data.passwordConfirmation, {
+    message: 'Passwords do not match',
+    path: ['passwordConfirmation'],
+});
+
+type CreateUserInput = TypeOf<typeof createUserSchema>;
 
 const RegisterPage = () => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            name: data.get('name'),
-            email: data.get('email'),
-            password: data.get('password'),
-            passwordConfirmation: data.get('passwordConfirmation')
-        });
+    const submitForm = async (values: CreateUserInput) => {
+        try {
+            await axios.post(`/api/users`, values)
+
+        } catch (e) {
+            console.log(e);
+        }
+        console.log({ values });
     };
 
     const {
         register,
-    } = useForm();
+        formState: { errors },
+        handleSubmit,
+    } = useForm<CreateUserInput>({
+        resolver: zodResolver(createUserSchema),
+    });
+
+    console.log(errors)
 
     return (
         <Container maxWidth='xs'>
@@ -44,13 +76,14 @@ const RegisterPage = () => {
                 <Typography component='h1' variant='h5'>
                     Sign up
                 </Typography>
-                <Box component='form' onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+                <Box component='form' onSubmit={handleSubmit(submitForm)} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin='normal'
                         required
                         fullWidth
                         id='name'
-                        label='Username'
+                        type='text'
+                        label='Name'
                         autoComplete='name'
                         autoFocus
                         {...register('name')}
@@ -60,6 +93,7 @@ const RegisterPage = () => {
                         required
                         fullWidth
                         id='email'
+                        type='email'
                         label='Email Address'
                         autoComplete='email'
                         autoFocus
