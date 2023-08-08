@@ -45,6 +45,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     @Attribute(DataTypes.STRING)
     @PrimaryKey
     @NotNull
+    @Unique
     @Default(() => nanoid())
     declare user_id: CreationOptional<string>;
 

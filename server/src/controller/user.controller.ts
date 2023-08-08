@@ -1,9 +1,7 @@
 import { Request, Response } from 'express';
 import { omit } from 'lodash';
-import logger from '../utils/logger';
-import { CreateUserInput } from '../schema/user.schema';
-import { createUser } from '../service/user.service';
-import User from '../models/user.model';
+import { CreateUserInput, FindUserInput } from '../schema/user.schema';
+import { createUser, findUser } from '../service/user.service';
 
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
     try {
@@ -19,7 +17,21 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
 }
 
 export async function getUserHandler(req: Request, res: Response) {
-    console.log('get user');
+    const user = res.locals.user.user_id;
+
+    if (!user) {
+        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+    }
+
+    const FullUser = await findUser(user);
+
+    if (!FullUser) {
+        return res
+            .status(409)
+            .send({ status: 'Failure', message: 'Current user is not in the database! Error with server!' });
+    }
+
+    return res.send(omit(FullUser, 'password'));
 }
 
 export async function getUserId(req: Request, res: Response) {

@@ -20,13 +20,13 @@ export const createUserSchema = object({
     }),
 });
 
-export const filterUserSchema = object({
+export const findUserSchema = object({
     body: object({
-        id: string({
-            required_error: 'User_Id is required',
+        user_id: string({
+            required_error: 'User_Id is required'
         })
-    }),
-});
+    })
+})
 
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, 'body.passwordConfirmation'>;
-export type filterUserQuery = Omit<TypeOf<typeof filterUserSchema>, 'body.passwordConfirmation'>;
+export type FindUserInput = TypeOf<typeof findUserSchema>

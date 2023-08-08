@@ -1,6 +1,6 @@
 import { omit } from 'lodash';
 import User, { UserCreationAttributes } from '../models/user.model';
-import { filterUserQuery } from '../schema/user.schema';
+import Order from '../models/order.model';
 
 export async function createUser(input: UserCreationAttributes) {
     try {
@@ -10,7 +10,22 @@ export async function createUser(input: UserCreationAttributes) {
         throw new Error(error);
     }
 }
-// { email, password }: { email: string; password: string }
+
+export async function findUser(query: string) {
+    const user = await User.findOne({
+        where: {
+            user_id: query,
+        },
+        include: [{ model: Order }],
+    });
+
+    if (!user) {
+        return false;
+    }
+
+    return omit(user.toJSON(), 'password');
+}
+
 export async function validatePassword({ email, password }: { email: string; password: string }) {
     const user = await User.findOne({ where: { email } });
 
@@ -25,8 +40,4 @@ export async function validatePassword({ email, password }: { email: string; pas
     } else {
         return omit(user.toJSON(), 'password');
     }
-}
-
-export async function findUser(id: string) {
-    return User.findByPk(id);
 }
