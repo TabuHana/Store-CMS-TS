@@ -19,6 +19,15 @@ import {
     getSingleCustomerHandler,
     updateCustomerHandler,
 } from './controller/customer.controller';
+import { createOrderSchema, deleteOrderSchema, getOrderSchema, updateOrderSchema } from './schema/order.schema';
+import { createStockSchema, deleteStockSchema, getStockSchema, updateStockSchema } from './schema/stock.schema';
+import { createColorSchema, deleteColorSchema, getColorSchema, updateColorSchema } from './schema/color.schema';
+import {
+    createCategorySchema,
+    deleteCategorySchema,
+    getCategorySchema,
+    updateCategorySchema,
+} from './schema/category.schema';
 
 function routes(app: Express) {
     app.get('/healthcheck', (req: Request, res: Response) => {
@@ -87,7 +96,7 @@ function routes(app: Express) {
 
     app.post('/api/orders', [requireUser, validateResource(createOrderSchema)], createOrderHandler);
 
-    app.put('/api/items/:orderId', [requireUser, validateResource(updateOrderrSchema)], updateOrderHandler);
+    app.put('/api/items/:orderId', [requireUser, validateResource(updateOrderSchema)], updateOrderHandler);
 
     app.delete('/api/items/:orderId', [requireUser, validateResource(deleteOrderSchema)], deleteOrderHandler);
 

@@ -1,4 +1,4 @@
-import { Sequelize, importModels } from '@sequelize/core';
+import { Sequelize } from '@sequelize/core';
 import config from 'config';
 import logger from './logger';
 
