@@ -7,83 +7,83 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import { Link } from 'react-router-dom';
+import { Link as Linker } from 'react-router-dom';
 
 export const navigationItems = (
     <>
-        <Link to='/'>
+        <Linker to='/'>
             <ListItemButton>
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary='Dashboard' />
             </ListItemButton>
-        </Link>
-        <Link to='/inventory'>
+        </Linker>
+        <Linker to='/inventory'>
             <ListItemButton>
                 <ListItemIcon>
                     <InventoryIcon />
                 </ListItemIcon>
                 <ListItemText primary='Inventory' />
             </ListItemButton>
-        </Link>
-        <Link to='/customers'>
+        </Linker>
+        <Linker to='/customers'>
             <ListItemButton>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary='Customers' />
             </ListItemButton>
-        </Link>
-        <Link to='/orders'>
+        </Linker>
+        <Linker to='/orders'>
             <ListItemButton>
                 <ListItemIcon>
                     <LocalShippingIcon />
                 </ListItemIcon>
                 <ListItemText primary='Orders' />
             </ListItemButton>
-        </Link>
-        <Link to='/statistics'>
+        </Linker>
+        <Linker to='/statistics'>
             <ListItemButton>
                 <ListItemIcon>
                     <BarChartIcon />
                 </ListItemIcon>
                 <ListItemText primary='Statistics' />
             </ListItemButton>
-        </Link>
+        </Linker>
     </>
 );
 
 export const userItems = (
     <>
-        <Link to='/settings'>
+        <Linker to='/settings'>
             <ListItemButton>
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText primary='Settings' />
             </ListItemButton>
-        </Link>
-        <Link to='/logout'>
+        </Linker>
+        <Linker to='/logout'>
             <ListItemButton>
                 <ListItemIcon>
                     <LogoutIcon />
                 </ListItemIcon>
                 <ListItemText primary='Logout' />
             </ListItemButton>
-        </Link>
+        </Linker>
     </>
 );
 
 export const appItems = (
     <>
-        <Link to='/about'>
+        <Linker to='/about'>
             <ListItemButton>
                 <ListItemIcon>
                     <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary='About' />
             </ListItemButton>
-        </Link>
+        </Linker>
     </>
 );

@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import { Button } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link as Linker } from 'react-router-dom';
 
 const NotFoundPage = () => {
     const [open, setOpen] = useState(true);
@@ -34,9 +34,9 @@ const NotFoundPage = () => {
                 <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
                     <div className='not-found'>
                         <h1>Page Not Found!</h1>
-                        <Link to='/'>
+                        <Linker to='/dashboard'>
                             <Button variant='contained'>Return Home</Button>
-                        </Link>
+                        </Linker>
                     </div>
                 </Container>
                 <Footer />

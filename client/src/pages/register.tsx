@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Footer from '../../components/Footer';
+import Footer from '../components/Footer';
 import { useForm } from 'react-hook-form';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -41,8 +41,7 @@ type CreateUserInput = TypeOf<typeof createUserSchema>;
 const RegisterPage = () => {
     const submitForm = async (values: CreateUserInput) => {
         try {
-            await axios.post(`/api/users`, values)
-
+            await axios.post(`/api/users`, values);
         } catch (e) {
             console.log(e);
         }
@@ -57,7 +56,7 @@ const RegisterPage = () => {
         resolver: zodResolver(createUserSchema),
     });
 
-    console.log(errors)
+    console.log(errors);
 
     return (
         <Container maxWidth='xs'>
