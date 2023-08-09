@@ -1,11 +1,7 @@
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
-import { Link as LinkTo } from 'react-router-dom';
-
-function preventDefault(event: React.MouseEvent) {
-    event.preventDefault();
-}
+import { Link as RouterLink } from 'react-router-dom';
 
 const Deposits = () => {
     return (
@@ -18,8 +14,8 @@ const Deposits = () => {
                 on 15 March, 2019
             </Typography>
             <div>
-                <Link color='primary' href='#' onClick={preventDefault}>
-                    <LinkTo to='/statistics'>View Statistics</LinkTo>
+                <Link component={RouterLink} to='/statistics'>
+                    View Statistics
                 </Link>
             </div>
         </>

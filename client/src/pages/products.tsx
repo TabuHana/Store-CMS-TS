@@ -7,7 +7,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 
-const InventoryPage = () => {
+const ProductsPage = () => {
     const [open, setOpen] = useState(true);
     const toggleDrawer = () => {
         setOpen(!open);
@@ -30,11 +30,11 @@ const InventoryPage = () => {
             >
                 <Toolbar />
                 <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
-                    <div>Inventory Page </div>
+                    <div>Products Page </div>
                     <Footer />
                 </Container>
             </Box>
         </Box>
     );
 };
-export default InventoryPage;
+export default ProductsPage;

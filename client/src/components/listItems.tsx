@@ -7,83 +7,84 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import { Link as Linker } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import Link from '@mui/material/Link';
 
 export const navigationItems = (
     <>
-        <Linker to='/'>
+        <Link component={RouterLink} to='/dashboard' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <DashboardIcon />
                 </ListItemIcon>
                 <ListItemText primary='Dashboard' />
             </ListItemButton>
-        </Linker>
-        <Linker to='/inventory'>
+        </Link>
+        <Link component={RouterLink} to='/products' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <InventoryIcon />
                 </ListItemIcon>
-                <ListItemText primary='Inventory' />
+                <ListItemText primary='Products' />
             </ListItemButton>
-        </Linker>
-        <Linker to='/customers'>
+        </Link>
+        <Link component={RouterLink} to='/customers' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <PeopleIcon />
                 </ListItemIcon>
                 <ListItemText primary='Customers' />
             </ListItemButton>
-        </Linker>
-        <Linker to='/orders'>
+        </Link>
+        <Link component={RouterLink} to='/orders' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <LocalShippingIcon />
                 </ListItemIcon>
                 <ListItemText primary='Orders' />
             </ListItemButton>
-        </Linker>
-        <Linker to='/statistics'>
+        </Link>
+        <Link component={RouterLink} to='/statisitcs' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <BarChartIcon />
                 </ListItemIcon>
                 <ListItemText primary='Statistics' />
             </ListItemButton>
-        </Linker>
+        </Link>
     </>
 );
 
 export const userItems = (
     <>
-        <Linker to='/settings'>
+        <Link component={RouterLink} to='/settings' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <SettingsIcon />
                 </ListItemIcon>
                 <ListItemText primary='Settings' />
             </ListItemButton>
-        </Linker>
-        <Linker to='/logout'>
+        </Link>
+        <Link component={RouterLink} to='/logout' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <LogoutIcon />
                 </ListItemIcon>
                 <ListItemText primary='Logout' />
             </ListItemButton>
-        </Linker>
+        </Link>
     </>
 );
 
 export const appItems = (
     <>
-        <Linker to='/about'>
+        <Link component={RouterLink} to='/aboutme' underline='none' color='inherit'>
             <ListItemButton>
                 <ListItemIcon>
                     <AssignmentIcon />
                 </ListItemIcon>
                 <ListItemText primary='About' />
             </ListItemButton>
-        </Linker>
+        </Link>
     </>
 );

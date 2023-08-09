@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { CreateColorInput, GetColorInput } from '../schema/color.schema';
 import { createColor, deleteColor, getColor, getColorAndUpdate, getSingleColor } from '../service/color.service';
 
 export async function createColorHandler(req: Request, res: Response) {

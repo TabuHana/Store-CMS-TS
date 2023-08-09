@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,16 +10,39 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
-import { Link as Linker } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { object, string, TypeOf } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import axios from 'axios';
+
+const loginUserSchema = object({
+    email: string().email('Not a valid email').nonempty({ message: 'Email is required' }),
+    password: string().nonempty({ message: 'Password is required' }),
+});
+
+type LoginUserInput = TypeOf<typeof loginUserSchema>;
 
 const LoginPage = () => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+    const {
+        register,
+        formState: { errors },
+        handleSubmit,
+    } = useForm<LoginUserInput>({
+        resolver: zodResolver(loginUserSchema),
+    });
+
+    const formSubmit = async (values: LoginUserInput) => {
+        try {
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/session`, values);
+        } catch (e: any) {
+            console.log(e);
+        }
+    };
+
+    const demoSubmit = {
+        email: 'asdf@test.com',
+        password: 'password123',
     };
 
     return (
@@ -45,7 +67,7 @@ const LoginPage = () => {
                         }}
                     >
                         <Avatar sx={{ my: 1, mr: 1, bgcolor: 'primary.main', width: 40, height: 40 }}>
-                            <LayersIcon sx={{ width: 20, height: 20 }} />
+                            <LayersIcon sx={{ width: 25, height: 25 }} />
                         </Avatar>
 
                         <Typography component='h1' variant='h4' sx={{ fontWeight: 'bold' }}>
@@ -60,35 +82,35 @@ const LoginPage = () => {
                         component='section'
                         sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 6 }}
                     >
-                        <Typography component='h3' variant='body1' sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Typography sx={{ height: 1, width: 135, mr: 1 }}>
+                        <Typography component='h3' sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box sx={{ height: 1, width: 135, mr: 1 }}>
                                 <hr />
-                            </Typography>
+                            </Box>
                             Login
-                            <Typography sx={{ height: 1, width: 135, ml: 1 }}>
+                            <Box sx={{ height: 1, width: 135, ml: 1 }}>
                                 <hr />
-                            </Typography>
+                            </Box>
                         </Typography>
-                        <Box component='form' noValidate onSubmit={handleSubmit}>
+                        <Box component='form' noValidate onSubmit={handleSubmit(formSubmit)}>
                             <TextField
                                 margin='normal'
                                 required
                                 fullWidth
                                 id='email'
                                 label='Email Address'
-                                name='email'
                                 autoComplete='email'
                                 autoFocus
+                                {...register('email')}
                             />
                             <TextField
                                 margin='normal'
                                 required
                                 fullWidth
-                                name='password'
                                 label='Password'
                                 type='password'
                                 id='password'
                                 autoComplete='current-password'
+                                {...register('password')}
                             />
                             <FormControlLabel
                                 control={<Checkbox value='remember' color='primary' />}
@@ -99,18 +121,30 @@ const LoginPage = () => {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Linker to='#'>
-                                        <Link variant='body2'>Forgot password?</Link>
-                                    </Linker>
+                                    <Link component={RouterLink} to='/' variant='body2'>
+                                        Forgot password?
+                                    </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Linker to='/register'>
-                                        <Link variant='body2'>Don't have an account? Sign Up</Link>
-                                    </Linker>
+                                    {/* <Linker to='/register'> */}
+                                    <Link component={RouterLink} to='/register' variant='body2'>
+                                        Don't have an account? Sign Up
+                                    </Link>
+                                    {/* </Linker> */}
                                 </Grid>
                             </Grid>
                         </Box>
                     </Box>
+                </Box>
+                <Box sx={{ m: 'auto', width: 200 }}>
+                    <Button
+                        onSubmit={handleSubmit(formSubmit)}
+                        fullWidth
+                        variant='contained'
+                        sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
+                    >
+                        Demo the Site!
+                    </Button>
                 </Box>
             </Grid>
             <Grid

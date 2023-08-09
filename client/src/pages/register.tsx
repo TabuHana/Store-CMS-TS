@@ -5,7 +5,7 @@ import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import Footer from '../components/Footer';
@@ -69,8 +69,8 @@ const RegisterPage = () => {
                     alignItems: 'center',
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                <Avatar sx={{ my: 1, mr: 1, bgcolor: 'primary.main', width: 40, height: 40 }}>
+                    <LayersIcon sx={{ width: 25, height: 25 }} />
                 </Avatar>
                 <Typography component='h1' variant='h5'>
                     Sign up

@@ -1,10 +1,18 @@
 import { Link, Typography } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Footer = () => {
     return (
         <footer className='footer'>
             <Typography variant='body1' color='text.primary' align='center' sx={{ pt: 4 }}>
-                <Link color='inherit' href='https://github.com/TabuHana'>
+                <Link
+                    component={RouterLink}
+                    to='https://github.com/TabuHana'
+                    target='_blank'
+                    rel='noreferrer'
+                    underline='always'
+                    color='inherit'
+                >
                     Made with ❤️
                 </Link>
             </Typography>
