@@ -51,7 +51,6 @@ function routes(app: Express) {
     /**
      * Customer Routes
      */
-
     app.get('/api/customers', requireUser, getCustomersHandler);
 
     app.get('/api/customers/:customerId', [requireUser, validateResource(getCustomerSchema)], getSingleCustomerHandler);
@@ -69,7 +68,6 @@ function routes(app: Express) {
     /**
      * Item Routes
      */
-
     app.get('/api/items', requireUser, getCustomersHandler);
 
     app.get('/api/items/:itemId', [requireUser, validateResource(getCustomerSchema)], getSingleCustomerHandler);
@@ -78,28 +76,67 @@ function routes(app: Express) {
 
     app.put('/api/items/:itemId', [requireUser, validateResource(updateCustomerSchema)], updateCustomerHandler);
 
-    app.delete(
-        '/api/items/:itemId',
-        [requireUser, validateResource(deleteCustomerSchema)],
-        deleteCustomerHandler
-    );
+    app.delete('/api/items/:itemId', [requireUser, validateResource(deleteCustomerSchema)], deleteCustomerHandler);
 
     /**
      * Order Routes
      */
+    app.get('/api/orders', requireUser, getOrdersHandler);
+
+    app.get('/api/items/:orderId', [requireUser, validateResource(getOrderSchema)], getSingleOrderHandler);
+
+    app.post('/api/orders', [requireUser, validateResource(createOrderSchema)], createOrderHandler);
+
+    app.put('/api/items/:orderId', [requireUser, validateResource(updateOrderrSchema)], updateOrderHandler);
+
+    app.delete('/api/items/:orderId', [requireUser, validateResource(deleteOrderSchema)], deleteOrderHandler);
 
     /**
      * Stock Routes
      */
+    app.get('/api/stock', requireUser, getStockHandler);
+
+    app.get('/api/stock/:stockId', [requireUser, validateResource(getStockSchema)], getSingleStockHandler);
+
+    app.post('/api/stock', [requireUser, validateResource(createStockSchema)], createStockHandler);
+
+    app.put('/api/stock/:stockId', [requireUser, validateResource(updateStockSchema)], updateStockHandler);
+
+    app.delete('/api/stock/:stockId', [requireUser, validateResource(deleteStockSchema)], deleteStockHandler);
 
     /**
      * Color Routes
      */
+    app.get('/api/color', requireUser, getColorHandler);
+
+    app.get('/api/color/:colorId', [requireUser, validateResource(getColorSchema)], getSingleColorHandler);
+
+    app.post('/api/color', [requireUser, validateResource(createColorSchema)], createColorHandler);
+
+    app.put('/api/color/:colorId', [requireUser, validateResource(updateColorSchema)], updateColorHandler);
+
+    app.delete('/api/color/:colorId', [requireUser, validateResource(deleteColorSchema)], deleteColorHandler);
 
     /**
      * Category Routes
      */
+    app.get('/api/category', requireUser, getCategoryHandler);
 
+    app.get('/api/category/:categoryId', [requireUser, validateResource(getCategorySchema)], getSingleCategoryHandler);
+
+    app.post('/apicategory', [requireUser, validateResource(createCategorySchema)], createCategoryHandler);
+
+    app.put('/api/category/:categoryId', [requireUser, validateResource(updateCategorySchema)], updateCategoryHandler);
+
+    app.delete(
+        '/api/category/:categoryId',
+        [requireUser, validateResource(deleteCategorySchema)],
+        deleteCategoryHandler
+    );
+
+    /**
+     * Catch-all Route
+     */
     app.all('*', (req: Request, res: Response) => {
         res.status(404).json({
             status: 'Failure',
