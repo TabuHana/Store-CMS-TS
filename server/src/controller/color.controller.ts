@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateColorInput, GetColorInput } from '../schema/color.schema';
+import { createColor, deleteColor, getColor, getColorAndUpdate, getSingleColor } from '../service/color.service';
 
 export async function createColorHandler(req: Request<{}, {}, CreateColorInput['body']>, res: Response) {
     const user: string = res.locals.user.user_id;

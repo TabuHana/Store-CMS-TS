@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateItemInput, GetItemInput } from '../schema/item.schema';
+import { createItem, deleteItem, getItem, getItemAndUpdate, getSingleItem } from '../service/item.service';
 
 export async function createItemHandler(req: Request<{}, {}, CreateItemInput['body']>, res: Response) {
     const user: string = res.locals.user.user_id;

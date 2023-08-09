@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateCategoryInput, GetCategoryInput } from '../schema/category.schema';
+import { createCategory, deleteCategory, getCategory, getCategoryAndUpdate, getSingleCategory } from '../service/category.service';
 
 export async function createCategoryHandler(req: Request<{}, {}, CreateCategoryInput['body']>, res: Response) {
     const user: string = res.locals.user.user_id;
