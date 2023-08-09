@@ -5,8 +5,8 @@ import config from 'config';
 
 // Utils
 import createServer from './utils/server';
-import logger from './utils/logger';
 import connect from './utils/connect';
+import logger from './utils/logger';
 
 const port = config.get<number>('port');
 
@@ -17,3 +17,6 @@ app.listen(port, async () => {
 
     await connect();
 });
+
+
+// Later add ability to add employees, needs to have user permissions on viewing info etc etc

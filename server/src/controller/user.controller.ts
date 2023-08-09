@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { omit } from 'lodash';
-import { CreateUserInput, FindUserInput, UpdateUserPasswordInput } from '../schema/user.schema';
+import { CreateUserInput, FindUserInput, UpdateUserInput } from '../schema/user.schema';
 import { createUser, findUser, updateUserPassword } from '../service/user.service';
 
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
