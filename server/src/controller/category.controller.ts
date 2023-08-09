@@ -1,8 +1,7 @@
 import { Request, Response } from 'express';
-import { CreateCategoryInput, GetCategoryInput } from '../schema/category.schema';
 import { createCategory, deleteCategory, getCategory, getCategoryAndUpdate, getSingleCategory } from '../service/category.service';
 
-export async function createCategoryHandler(req: Request<{}, {}, CreateCategoryInput['body']>, res: Response) {
+export async function createCategoryHandler(req: Request, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
@@ -28,7 +27,7 @@ export async function getCategorysHandler(req: Request, res: Response) {
     return res.send(category);
 }
 
-export async function getSingleCategoryHandler(req: Request<GetCategoryInput['params']>, res: Response) {
+export async function getSingleCategoryHandler(req: Request, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
@@ -37,7 +36,7 @@ export async function getSingleCategoryHandler(req: Request<GetCategoryInput['pa
 
     const category_id = req.params.categoryId;
 
-    const category = await getSingleCategory(user, category_id);
+    const category = await getSingleCategory(user);
 
     return res.send(category);
 }
@@ -53,7 +52,7 @@ export async function updateCategoryHandler(req: Request, res: Response) {
 
     const { update } = req.body;
 
-    const category = await getCategoryAndUpdate(user, category_id, update);
+    const category = await getCategoryAndUpdate(user);
 
     return res.send(category);
 }
@@ -67,7 +66,7 @@ export async function deleteCategoryHandler(req: Request, res: Response) {
 
     const category_id = req.params.categoryId;
 
-    const category = await deleteCategory(user, category_id);
+    const category = await deleteCategory(user);
 
     return res.sendStatus(200).send(category);
 }

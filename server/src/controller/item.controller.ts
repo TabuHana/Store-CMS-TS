@@ -35,9 +35,9 @@ export async function getSingleItemHandler(req: Request<GetItemInput['params']>,
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
     }
 
-    const item_id = req.params.itemId;
+   
 
-    const item = await getSingleItem(user, item_id);
+    const item = await getSingleItem(user);
 
     return res.send(item);
 }
@@ -49,11 +49,11 @@ export async function updateItemHandler(req: Request, res: Response) {
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
     }
 
-    const item_id = req.params.itemId;
+
 
     const { update } = req.body;
 
-    const item = await getItemAndUpdate(user, item_id, update);
+    const item = await getItemAndUpdate(user);
 
     return res.send(item);
 }
@@ -65,9 +65,8 @@ export async function deleteItemHandler(req: Request, res: Response) {
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
     }
 
-    const item_id = req.params.itemId;
 
-    const item = await deleteItem(user, item_id);
+    const item = await deleteItem(user);
 
     return res.sendStatus(200).send(item);
 }

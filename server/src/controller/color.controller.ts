@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { CreateColorInput, GetColorInput } from '../schema/color.schema';
 import { createColor, deleteColor, getColor, getColorAndUpdate, getSingleColor } from '../service/color.service';
 
-export async function createColorHandler(req: Request<{}, {}, CreateColorInput['body']>, res: Response) {
+export async function createColorHandler(req: Request, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
@@ -28,7 +28,7 @@ export async function getColorsHandler(req: Request, res: Response) {
     return res.send(color);
 }
 
-export async function getSingleColorHandler(req: Request<GetColorInput['params']>, res: Response) {
+export async function getSingleColorHandler(req: Request, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
@@ -37,7 +37,7 @@ export async function getSingleColorHandler(req: Request<GetColorInput['params']
 
     const color_id = req.params.colorId;
 
-    const color = await getSingleColor(user, color_id);
+    const color = await getSingleColor(user);
 
     return res.send(color);
 }
@@ -53,7 +53,7 @@ export async function updateColorHandler(req: Request, res: Response) {
 
     const { update } = req.body;
 
-    const color = await getColorAndUpdate(user, color_id, update);
+    const color = await getColorAndUpdate(user);
 
     return res.send(color);
 }
@@ -67,7 +67,7 @@ export async function deleteColorHandler(req: Request, res: Response) {
 
     const color_id = req.params.colorId;
 
-    const color = await deleteColor(user, color_id);
+    const color = await deleteColor(user);
 
     return res.sendStatus(200).send(color);
 }
