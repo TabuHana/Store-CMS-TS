@@ -1,8 +1,9 @@
 import { Request, Response } from 'express';
 import { CreateStockInput, GetStockInput } from '../schema/stock.schema';
+import { createStock, deleteStock, getSingleStock, getStock, getStockAndUpdate } from '../service/stock.service';
 
-export async function createStockHandler(req: Request<{}, {}, CreateStockInput['body']>, res: Response) {
-    const user: string = res.locals.user.user_id;
+export async function createStockHandler(req: Request, res: Response) {
+    const user: string = res.locals.user;
 
     if (!user) {
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
@@ -10,7 +11,7 @@ export async function createStockHandler(req: Request<{}, {}, CreateStockInput['
 
     const body = req.body;
 
-    const stock = await createStock({ ...body, user_id: user });
+    const stock = await createStock({ ...body });
 
     return res.send(stock);
 }
