@@ -5,7 +5,7 @@ dotenv.config();
 import config from 'config';
 
 // Files
-import routes from './routes';
+import routes from './routes/index.routes';
 
 // Utils
 import logger from './utils/logger';
