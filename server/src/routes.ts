@@ -28,6 +28,34 @@ import {
     getCategorySchema,
     updateCategorySchema,
 } from './schema/category.schema';
+import {
+    createOrderHandler,
+    deleteOrderHandler,
+    getOrdersHandler,
+    getSingleOrderHandler,
+    updateOrderHandler,
+} from './controller/order.controller';
+import {
+    createStockHandler,
+    deleteStockHandler,
+    getSingleStockHandler,
+    getStocksHandler,
+    updateStockHandler,
+} from './controller/stock.controller';
+import {
+    createColorHandler,
+    deleteColorHandler,
+    getColorsHandler,
+    getSingleColorHandler,
+    updateColorHandler,
+} from './controller/color.controller';
+import {
+    createCategoryHandler,
+    deleteCategoryHandler,
+    getCategorysHandler,
+    getSingleCategoryHandler,
+    updateCategoryHandler,
+} from './controller/category.controller';
 
 function routes(app: Express) {
     app.get('/healthcheck', (req: Request, res: Response) => {
@@ -103,7 +131,7 @@ function routes(app: Express) {
     /**
      * Stock Routes
      */
-    app.get('/api/stock', requireUser, getStockHandler);
+    app.get('/api/stock', requireUser, getStocksHandler);
 
     app.get('/api/stock/:stockId', [requireUser, validateResource(getStockSchema)], getSingleStockHandler);
 
@@ -116,7 +144,7 @@ function routes(app: Express) {
     /**
      * Color Routes
      */
-    app.get('/api/color', requireUser, getColorHandler);
+    app.get('/api/color', requireUser, getColorsHandler);
 
     app.get('/api/color/:colorId', [requireUser, validateResource(getColorSchema)], getSingleColorHandler);
 
@@ -129,7 +157,7 @@ function routes(app: Express) {
     /**
      * Category Routes
      */
-    app.get('/api/category', requireUser, getCategoryHandler);
+    app.get('/api/category', requireUser, getCategorysHandler);
 
     app.get('/api/category/:categoryId', [requireUser, validateResource(getCategorySchema)], getSingleCategoryHandler);
 
