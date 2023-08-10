@@ -13,24 +13,17 @@ import { useForm } from 'react-hook-form';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-
-console.log(`env ${import.meta.env.VITE_SERVER_ENDPOINT}`);
+import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const createUserSchema = object({
-    name: string().nonempty({
-        message: 'Name is required',
-    }),
-    password: string().min(6, 'Password too short - must be 6 characters long').nonempty({
-        message: 'Password is required',
-    }),
-    passwordConfirmation: string({
-        required_error: 'Password confirmation is required',
-    }),
-    email: string({
-        required_error: 'Email is required',
-    })
-        .email('Not a valid email')
-        .nonempty({ message: 'Email is required' }),
+    name: string().nonempty({ message: 'Name is required' }),
+    password: string()
+        .min(6, 'Password too short - must be 6 characters long')
+        .nonempty({ message: 'Password is required' }),
+    passwordConfirmation: string().nonempty({ message: 'Password confirmation is required' }),
+    email: string().email('Not a valid email').nonempty({ message: 'Email is required' }),
 }).refine((data) => data.password === data.passwordConfirmation, {
     message: 'Passwords do not match',
     path: ['passwordConfirmation'],
@@ -39,14 +32,9 @@ const createUserSchema = object({
 type CreateUserInput = TypeOf<typeof createUserSchema>;
 
 const RegisterPage = () => {
-    const submitForm = async (values: CreateUserInput) => {
-        try {
-            await axios.post(`/api/users`, values);
-        } catch (e) {
-            console.log(e);
-        }
-        console.log({ values });
-    };
+    const navigate = useNavigate();
+
+    const notify = (msg: string) => toast(msg);
 
     const {
         register,
@@ -56,7 +44,18 @@ const RegisterPage = () => {
         resolver: zodResolver(createUserSchema),
     });
 
-    console.log(errors);
+    const formSubmit = async (values: CreateUserInput) => {
+        try {
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/users`, values);
+            notify('Success');
+            navigate('/dashboard');
+        } catch (e: any) {
+            notify('Fail');
+            // navigate('/');
+        }
+    };
+
+    console.log(errors)
 
     return (
         <Container maxWidth='xs'>
@@ -75,7 +74,7 @@ const RegisterPage = () => {
                 <Typography component='h1' variant='h5'>
                     Sign up
                 </Typography>
-                <Box component='form' onSubmit={handleSubmit(submitForm)} noValidate sx={{ mt: 1 }}>
+                <Box component='form' onSubmit={handleSubmit(formSubmit)} noValidate sx={{ mt: 1 }}>
                     <TextField
                         margin='normal'
                         required
@@ -125,6 +124,7 @@ const RegisterPage = () => {
                 </Box>
             </Box>
             <Footer />
+            <ToastContainer />
         </Container>
     );
 };

@@ -13,7 +13,7 @@ const Footer = () => {
                     underline='always'
                     color='inherit'
                 >
-                    Made with ❤️
+                    Made with ❤️ by Nathan Marcellous
                 </Link>
             </Typography>
         </footer>

@@ -10,11 +10,13 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const loginUserSchema = object({
     email: string().email('Not a valid email').nonempty({ message: 'Email is required' }),
@@ -32,9 +34,25 @@ const LoginPage = () => {
         resolver: zodResolver(loginUserSchema),
     });
 
+    const navigate = useNavigate()
+
+    const notify = () =>
+        toast('🦄 Wow so easy!', {
+            position: 'bottom-right',
+            autoClose: 2500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: false,
+            draggable: false,
+            progress: undefined,
+            theme: 'light',
+        });
+
     const formSubmit = async (values: LoginUserInput) => {
         try {
-            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/session`, values);
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, values);
+            notify()
+            navigate('/dashboard');
         } catch (e: any) {
             console.log(e);
         }
@@ -126,11 +144,9 @@ const LoginPage = () => {
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    {/* <Linker to='/register'> */}
                                     <Link component={RouterLink} to='/register' variant='body2'>
                                         Don't have an account? Sign Up
                                     </Link>
-                                    {/* </Linker> */}
                                 </Grid>
                             </Grid>
                         </Box>
@@ -138,7 +154,7 @@ const LoginPage = () => {
                 </Box>
                 <Box sx={{ m: 'auto', width: 200 }}>
                     <Button
-                        onSubmit={handleSubmit(formSubmit)}
+                        onClick={notify}
                         fullWidth
                         variant='contained'
                         sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
@@ -160,6 +176,7 @@ const LoginPage = () => {
                     backgroundPosition: 'center',
                 }}
             />
+            <ToastContainer />
         </Grid>
     );
 };
