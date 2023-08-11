@@ -8,7 +8,7 @@ import Box from '@mui/material/Box';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Footer from '../components/Footer';
+import Footer from '../../components/Footer';
 import { useForm } from 'react-hook-form';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -50,12 +50,12 @@ const RegisterPage = () => {
             notify('Success');
             navigate('/dashboard');
         } catch (e: any) {
-            notify('Fail');
+            notify(e.message);
             // navigate('/');
         }
     };
 
-    console.log(errors)
+    console.log(errors);
 
     return (
         <Container maxWidth='xs'>

@@ -7,14 +7,17 @@ import OrdersPage from './pages/orders';
 import StatsPage from './pages/statistics';
 import SettingsPage from './pages/settings';
 import AboutPage from './pages/about';
-import LoginPage from './pages/login';
-import RegisterPage from './pages/register';
+import LoginPage from './pages/auth/login';
+import RegisterPage from './pages/auth/register';
+import { ToastContainer, toast } from 'react-toastify';
+
+const notify = () => toast('Alert');
 
 const App = () => {
     return (
         <Router>
             <Routes>
-                <Route path='/' element={<LoginPage />} />
+                <Route path='/' element={<LoginPage alert={notify} />} />
                 <Route path='/register' element={<RegisterPage />} />
                 <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/products' element={<ProductsPage />} />
@@ -25,6 +28,18 @@ const App = () => {
                 <Route path='/about' element={<AboutPage />} />
                 <Route path='/*' element={<NotFoundPage />} />
             </Routes>
+            <ToastContainer
+                position='bottom-right'
+                autoClose={2500}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable={false}
+                pauseOnHover={false}
+                theme='light'
+            />
         </Router>
     );
 };

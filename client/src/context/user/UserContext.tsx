@@ -10,20 +10,20 @@ export type User = {
     updatedAt: Date;
 };
 
-export interface UserContextInterface {
+export type UserContextType = {
     user: User | undefined;
     setUser: Dispatch<SetStateAction<User | undefined>>;
-}
-
-const defaultState = {
-    user: {},
-} as UserContextInterface;
-
-export const UserContext = createContext(defaultState);
+};
 
 type UserProviderProps = {
     children: ReactNode;
 };
+
+const defaultState = {
+    user: {},
+} as UserContextType;
+
+export const UserContext = createContext(defaultState);
 
 const UserProvider = ({ children }: UserProviderProps) => {
     // State

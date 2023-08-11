@@ -15,46 +15,40 @@ import { useForm } from 'react-hook-form';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useState } from 'react';
 
-const loginUserSchema = object({
+const createSessionSchema = object({
     email: string().email('Not a valid email').nonempty({ message: 'Email is required' }),
     password: string().nonempty({ message: 'Password is required' }),
 });
 
-type LoginUserInput = TypeOf<typeof loginUserSchema>;
+type createSessionInput = TypeOf<typeof createSessionSchema>;
 
-const LoginPage = () => {
+type LoginProps = {
+    alert: () => void;
+};
+
+const LoginPage: React.FC<LoginProps> = ({ alert }) => {
+    const [loginError, setLoginError] = useState(null);
     const {
         register,
         formState: { errors },
         handleSubmit,
-    } = useForm<LoginUserInput>({
-        resolver: zodResolver(loginUserSchema),
+    } = useForm<createSessionInput>({
+        resolver: zodResolver(createSessionSchema),
     });
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
 
-    const notify = () =>
-        toast('🦄 Wow so easy!', {
-            position: 'bottom-right',
-            autoClose: 2500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: 'light',
-        });
-
-    const formSubmit = async (values: LoginUserInput) => {
+    const formSubmit = async (values: createSessionInput) => {
         try {
-            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, values);
-            notify()
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, values, { withCredentials: true });
+            alert();
             navigate('/dashboard');
         } catch (e: any) {
-            console.log(e);
+            alert();
+            setLoginError(e.message);
         }
     };
 
@@ -62,6 +56,8 @@ const LoginPage = () => {
         email: 'asdf@test.com',
         password: 'password123',
     };
+
+    console.log(loginError);
 
     return (
         <Grid container component='main' sx={{ height: '100vh' }}>
@@ -154,7 +150,7 @@ const LoginPage = () => {
                 </Box>
                 <Box sx={{ m: 'auto', width: 200 }}>
                     <Button
-                        onClick={notify}
+                        onClick={alert}
                         fullWidth
                         variant='contained'
                         sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
@@ -176,7 +172,6 @@ const LoginPage = () => {
                     backgroundPosition: 'center',
                 }}
             />
-            <ToastContainer />
         </Grid>
     );
 };
