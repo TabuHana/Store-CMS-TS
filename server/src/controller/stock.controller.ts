@@ -35,9 +35,8 @@ export async function getSingleStockHandler(req: Request<GetStockInput['params']
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
     }
 
-    const stock_id = req.params.stockId;
 
-    const stock = await getSingleStock(user, stock_id);
+    const stock = await getSingleStock(user);
 
     return res.send(stock);
 }
@@ -49,11 +48,8 @@ export async function updateStockHandler(req: Request, res: Response) {
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
     }
 
-    const stock_id = req.params.stockId;
 
-    const { update } = req.body;
-
-    const stock = await getStockAndUpdate(user, stock_id, update);
+    const stock = await getStockAndUpdate(user);
 
     return res.send(stock);
 }
@@ -65,9 +61,8 @@ export async function deleteStockHandler(req: Request, res: Response) {
         return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
     }
 
-    const stock_id = req.params.stockId;
 
-    const stock = await deleteStock(user, stock_id);
+    const stock = await deleteStock(user);
 
     return res.sendStatus(200).send(stock);
 }

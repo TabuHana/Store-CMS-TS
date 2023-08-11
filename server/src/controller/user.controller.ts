@@ -17,7 +17,7 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
     }
 }
 
-export async function getUserHandler(req: Request, res: Response) {
+export async function getCurrentUserHandler(req: Request, res: Response) {
     const user = res.locals.user.user_id;
 
     if (!user) {

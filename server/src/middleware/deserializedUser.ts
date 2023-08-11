@@ -4,9 +4,9 @@ import { verifyJwt } from '../utils/jwt.utils';
 import { reIssueAccessToken } from '../service/session.service';
 
 const deserializedUser = async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
+    const accessToken = get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
 
-    const refreshToken = get(req, 'headers.x-refresh') as string;
+    const refreshToken = get(req, 'cookies.refreshToken') || get(req, 'headers.x-refresh') as string;
 
     if (!accessToken) {
         return next();
@@ -24,6 +24,15 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
 
         if (newAccessToken) {
             res.setHeader('x-access-token', newAccessToken);
+
+            res.cookie('accessToken', newAccessToken, {
+                maxAge: 900000, // 15 mins
+                httpOnly: true,
+                domain: 'localhost',
+                path: '/',
+                sameSite: 'strict',
+                secure: false //set to true for prod
+            })
         }
 
         const result = verifyJwt(newAccessToken);
