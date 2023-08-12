@@ -20,9 +20,7 @@ import Customer from './customer.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
-const salty = config.get('saltWorkerFactor');
-
-console.log(salty);
+const salty = config.get<number>('saltWorkerFactor');
 
 type UserAttributes = {
     user_id: string;
@@ -102,7 +100,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
 
     @BeforeCreate
     static async beforeCreateHook(user: User) {
-        const salt = await bcrypt.genSalt(10);
+        // for some reason 'salty' doesnt wanna be a number...
+        const salt = await bcrypt.genSalt(Number(salty));
         const hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
     }
