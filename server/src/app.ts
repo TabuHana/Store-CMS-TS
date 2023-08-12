@@ -20,3 +20,6 @@ app.listen(port, async () => {
 
 
 // Later add ability to add employees, needs to have user permissions on viewing info etc etc
+
+
+// Gitmerge example, there are no changes!
