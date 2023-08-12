@@ -27,7 +27,7 @@ export const createUserSchema = object({
  * User Payload
  * This payload is only used for changing the user password
  */
-const payload = {
+export const updateUserSchema = object({
     body: object({
         password: string({
             required_error: 'Password is required',
@@ -39,37 +39,10 @@ const payload = {
         message: 'Passwords do not match',
         path: ['passwordConfirmation'],
     }),
-};
-
-/**
- * User Requested Params
- * Used for needed user id
- */
-const params = {
-    params: object({
-        user_id: string({
-            required_error: 'User_id is required',
-        }),
-    }),
-};
-
-/**
- * Find User Schema
- */
-export const findUserSchema = object({
-    ...params,
-});
-
-/**
- * Update User password Schema
- */
-export const updateUserSchema = object({
-    ...payload,
 });
 
 /**
  * User Types
  */
 export type CreateUserInput = Omit<TypeOf<typeof createUserSchema>, 'body.passwordConfirmation'>;
-export type FindUserInput = TypeOf<typeof findUserSchema>;
 export type UpdateUserInput = Omit<TypeOf<typeof updateUserSchema>, 'body.passwordConfirmation'>;

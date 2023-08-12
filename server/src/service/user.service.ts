@@ -1,7 +1,7 @@
 import { omit } from 'lodash';
 import User, { UserCreationAttributes } from '../models/user.model';
 import bcrypt from 'bcrypt';
-import Order from '../models/order.model';
+import Customer from '../models/customer.model';
 
 export async function createUser(input: UserCreationAttributes) {
     try {
@@ -12,12 +12,12 @@ export async function createUser(input: UserCreationAttributes) {
     }
 }
 
-export async function findUser(query: string) {
+export async function getUser(query: string) {
     const user = await User.findOne({
         where: {
             user_id: query,
         },
-        include: [{ model: Order }],
+        include: [{ model: Customer }],
     });
 
     if (!user) {
