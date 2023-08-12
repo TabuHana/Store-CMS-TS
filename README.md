@@ -142,8 +142,6 @@ Coming soon 😉
 <summary> View Server Details</summary>
 <br>
 Coming soon 😉
-
-Coming soon 😉
 </details>
 
 ## Testing
