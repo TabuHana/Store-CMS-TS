@@ -14,11 +14,15 @@ import {
 import { IsEmail, Min } from '@sequelize/validator.js';
 import { customAlphabet } from 'nanoid';
 import bcrypt from 'bcrypt';
-import { Order } from './order.model';
+import config from 'config';
 import { Session } from './session.model';
 import Customer from './customer.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
+
+const salty = config.get('saltWorkerFactor');
+
+console.log(salty);
 
 type UserAttributes = {
     user_id: string;
@@ -81,9 +85,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
      */
     @HasMany(() => Session, 'user_id')
     declare sessions: Session[];
-
-    @HasMany(() => Order, 'user_id')
-    declare orders: Order[];
 
     @HasMany(() => Customer, 'user_id')
     declare customer: Customer[];
