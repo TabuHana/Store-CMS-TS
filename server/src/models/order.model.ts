@@ -71,11 +71,6 @@ export class Order extends Model<InferAttributes<Order>, InferCreationAttributes
     /**
      * Associations
      */
-    @Attribute(DataTypes.STRING)
-    @ForeignKey
-    @NotNull
-    declare user_id: string;
-
     @Attribute(DataTypes.INTEGER)
     @ForeignKey
     @NotNull
