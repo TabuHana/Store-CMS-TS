@@ -5,7 +5,6 @@ import {
     Table,
     AutoIncrement, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import Item from './item.model';
 
 @Table({
     tableName: 'category',

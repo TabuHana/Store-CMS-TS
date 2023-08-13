@@ -1,8 +1,6 @@
 import { omit } from 'lodash';
 import User, { UserCreationAttributes } from '../models/user.model';
 import bcrypt from 'bcrypt';
-import Customer from '../models/customer.model';
-import Item from '../models/item.model';
 
 export async function createUser(input: UserCreationAttributes) {
     try {
@@ -18,10 +16,12 @@ export async function getUser(query: string) {
         where: {
             user_id: query,
         },
-        include: [{
-            association: 'customers', 
-            include: ['orders']
-        }]
+        include: [
+            {
+                association: 'customers',
+                include: ['orders'],
+            },
+        ],
     });
 
     if (!user) {

@@ -1,4 +1,4 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
+import { DataTypes, Model, CreationOptional } from '@sequelize/core';
 import {
     Attribute,
     PrimaryKey,

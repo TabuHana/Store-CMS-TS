@@ -18,7 +18,7 @@ import {
     ForeignKey, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { customAlphabet } from 'nanoid';
-import { Item } from './item.model';
+import { Product } from './product.model';
 
 const nanoid = customAlphabet('abcdefg0123456789', 10);
 
@@ -76,10 +76,10 @@ export class Order extends Model<InferAttributes<Order>, InferCreationAttributes
     @NotNull
     declare customer_id: number;
 
-    @BelongsToMany(() => Item, {
+    @BelongsToMany(() => Product, {
         through: 'order_cart',
     })
-    declare orderCart?: NonAttribute<Item[]>;
+    declare orderCart?: NonAttribute<Product[]>;
 }
 
 export default Order;

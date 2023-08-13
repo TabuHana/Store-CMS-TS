@@ -8,28 +8,26 @@ import {
     AutoIncrement,
     HasOne,
     BelongsToMany,
-    ForeignKey,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import { Order } from './order.model';
 import { Stock } from './stock.model';
 import Category from './category.model';
 import Color from './color.model';
 
 @Table({
-    tableName: 'item',
+    tableName: 'product',
     timestamps: true,
     freezeTableNames: true,
     underscored: true,
 })
-export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<Item>> {
+export class Product extends Model<InferAttributes<Product>, InferCreationAttributes<Product>> {
     /**
      * PK
      */
     @Attribute(DataTypes.INTEGER)
     @PrimaryKey
     @AutoIncrement
-    declare item_id: CreationOptional<number>;
+    declare product_id: CreationOptional<number>;
     
     /**
      * Attributes
@@ -61,19 +59,19 @@ export class Item extends Model<InferAttributes<Item>, InferCreationAttributes<I
     /**
      * Associations
      */
-    @HasOne(() => Stock, 'item_id')
+    @HasOne(() => Stock, 'product_id')
     declare stock: NonAttribute<Stock>;
 
     @BelongsToMany(() => Category, {
-        through: 'item_category',
+        through: 'product_category',
     })
-    declare item_category_id?: NonAttribute<Category[]>
+    declare product_category_id?: NonAttribute<Category[]>
 
     @BelongsToMany(() => Color, {
-        through: 'item_color',
+        through: 'product_color',
     })
-    declare item_color_id?: NonAttribute<Color[]>
+    declare product_color_id?: NonAttribute<Color[]>
     
 }
 
-export default Item
+export default Product

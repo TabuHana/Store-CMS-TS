@@ -4,7 +4,6 @@ import {
     InferAttributes,
     InferCreationAttributes,
     CreationOptional,
-    NonAttribute,
 } from '@sequelize/core';
 import {
     Attribute,
@@ -15,7 +14,6 @@ import {
     ForeignKey,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import { Item } from './item.model';
 
 @Table({
     tableName: 'stock',
@@ -61,8 +59,8 @@ export class Stock extends Model<InferAttributes<Stock>, InferCreationAttributes
     @Attribute(DataTypes.INTEGER)
     @ForeignKey
     @NotNull
-    declare item_id: number;
-    
+    declare product_id: number;
+
     @Attribute(DataTypes.INTEGER)
     @ForeignKey
     @NotNull
