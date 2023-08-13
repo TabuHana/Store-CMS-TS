@@ -34,24 +34,27 @@ export class Stock extends Model<InferAttributes<Stock>, InferCreationAttributes
      * Attributes
      */
     @Attribute(DataTypes.INTEGER)
-    @Default(0)
-    declare xs: number;
-
-    @Attribute(DataTypes.INTEGER)
-    @Default(0)
+    @Default(2)
     declare s: number;
 
     @Attribute(DataTypes.INTEGER)
-    @Default(0)
+    @Default(2)
     declare m: number;
 
     @Attribute(DataTypes.INTEGER)
-    @Default(0)
+    @Default(2)
     declare l: number;
 
     @Attribute(DataTypes.INTEGER)
-    @Default(0)
+    @Default(2)
     declare xl: number;
+
+    @Attribute(DataTypes.INTEGER)
+    @Default(2)
+    declare xxl: number;
+
+    @Attribute(DataTypes.STRING)
+    declare color: string;
 
     /**
      * Associations
@@ -60,11 +63,6 @@ export class Stock extends Model<InferAttributes<Stock>, InferCreationAttributes
     @ForeignKey
     @NotNull
     declare product_id: number;
-
-    @Attribute(DataTypes.INTEGER)
-    @ForeignKey
-    @NotNull
-    declare color_id: number;
 }
 
 export default Stock;

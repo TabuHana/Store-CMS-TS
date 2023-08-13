@@ -1,4 +1,11 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, NonAttribute } from '@sequelize/core';
+import {
+    DataTypes,
+    Model,
+    InferAttributes,
+    InferCreationAttributes,
+    CreationOptional,
+    NonAttribute,
+} from '@sequelize/core';
 import {
     Attribute,
     PrimaryKey,
@@ -6,7 +13,7 @@ import {
     CreatedAt,
     UpdatedAt,
     AutoIncrement,
-    HasOne,
+    HasMany,
     BelongsToMany,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
@@ -28,7 +35,7 @@ export class Product extends Model<InferAttributes<Product>, InferCreationAttrib
     @PrimaryKey
     @AutoIncrement
     declare product_id: CreationOptional<number>;
-    
+
     /**
      * Attributes
      */
@@ -59,19 +66,13 @@ export class Product extends Model<InferAttributes<Product>, InferCreationAttrib
     /**
      * Associations
      */
-    @HasOne(() => Stock, 'product_id')
-    declare stock: NonAttribute<Stock>;
+    @HasMany(() => Stock, 'product_id')
+    declare stock: Stock[];
 
     @BelongsToMany(() => Category, {
         through: 'product_category',
     })
-    declare product_category_id?: NonAttribute<Category[]>
-
-    @BelongsToMany(() => Color, {
-        through: 'product_color',
-    })
-    declare product_color_id?: NonAttribute<Color[]>
-    
+    declare product_category_id?: NonAttribute<Category[]>;
 }
 
-export default Product
+export default Product;

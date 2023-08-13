@@ -1,5 +1,4 @@
 export { default as Category } from './category.model';
-export { default as Color } from './color.model';
 export { default as Customers } from './customer.model';
 export { default as Product } from './product.model';
 export { default as Order } from './order.model';
