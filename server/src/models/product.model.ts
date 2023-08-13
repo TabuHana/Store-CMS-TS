@@ -19,7 +19,6 @@ import {
 } from '@sequelize/core/decorators-legacy';
 import { Stock } from './stock.model';
 import Category from './category.model';
-import Color from './color.model';
 
 @Table({
     tableName: 'product',

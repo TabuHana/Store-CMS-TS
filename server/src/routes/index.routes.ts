@@ -3,9 +3,8 @@ import userRoutes from './user.routes';
 import stockRoutes from './stock.routes';
 import sessionRoutes from './session.routes';
 import customerRoutes from './customer.routes';
-import itemRoutes from './item.routes';
+import productRoutes from './product.routes';
 import orderRoutes from './order.routes';
-import colorRoutes from './color.routes';
 import categoryRoutes from './category.routes';
 
 function routes(app: Express) {
@@ -31,15 +30,11 @@ function routes(app: Express) {
     /**
      * Metrics section for later
      */
-    itemRoutes(app);
+    productRoutes(app);
     /**
      * Metrics section for later
      */
     stockRoutes(app);
-    /**
-     * Metrics section for later
-     */
-    colorRoutes(app);
     /**
      * Metrics section for later
      */

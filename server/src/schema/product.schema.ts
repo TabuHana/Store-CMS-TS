@@ -25,24 +25,24 @@ const params = {
     }),
 };
 
-export const createColorSchema = object({
+export const createProductSchema = object({
     ...payload,
 });
 
-export const updateColorSchema = object({
+export const updateProductSchema = object({
     ...payload,
     ...params,
 });
 
-export const deleteColorSchema = object({
+export const deleteProductSchema = object({
     ...params,
 });
 
-export const getColorSchema = object({
+export const getProductSchema = object({
     ...params,
 });
 
-export type CreateColorInput = TypeOf<typeof createColorSchema>;
-export type UpdateColorInput = TypeOf<typeof updateColorSchema>;
-export type DeleteColorInput = TypeOf<typeof deleteColorSchema>;
-export type GetColorInput = TypeOf<typeof getColorSchema>;
+export type CreateProductInput = TypeOf<typeof createProductSchema>;
+export type UpdateProductInput = TypeOf<typeof updateProductSchema>;
+export type DeleteProductInput = TypeOf<typeof deleteProductSchema>;
+export type GetProductInput = TypeOf<typeof getProductSchema>;

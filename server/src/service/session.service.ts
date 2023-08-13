@@ -2,7 +2,7 @@ import { get } from 'lodash';
 import Session from '../models/session.model';
 import { filterSessionQuery } from '../schema/session.schema';
 import { signJwt, verifyJwt } from '../utils/jwt.utils';
-import { findUser } from './user.service';
+import { getUser } from './user.service';
 import config from 'config';
 
 export async function createSession(id: string, userAgent: string) {
@@ -39,7 +39,7 @@ export async function reIssueAccessToken({ refreshToken }: { refreshToken: strin
 
     if (!session || !session.valid) return false;
 
-    const user = await findUser(session.user_id);
+    const user = await getUser(session.user_id);
 
     if (!user) return false;
 
