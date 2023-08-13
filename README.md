@@ -11,12 +11,10 @@ A robust and user-friendly content management system (CMS) tailored for stores o
 | **Tabel of Contents**                           |
 | ----------------------------------------------- |
 | [Project Setup](#project-setup)                 |
-| [Folder Structure](#folder-structure)           |
-| [Database Architecture](#database-architecture) |
+| [Database](#database-architecture) |
 | [Client](#client)                               |
 | [Server](#server)                               |
 | [Testing](#testing)                             |
-| [Contributions](#contributions)                 |
 | [Additional Info](#additional-info)             |
 
 <a name="Project Setup"></a>
@@ -34,9 +32,18 @@ You will need to create a `.env` file for each folder. Check below for details!
 
 Finally to start the project simply run `npm run dev` and you'll have the development version of the application.
 
-<a name="Folder Structure"></a>
+<a name="Database"></a>
 
-## Folder Structure
+## Database
+
+Information Coming soon 😉
+
+<a name="Client"></a>
+
+## Client
+<details>
+    <summary>Client File Structure</summary>
+    <br>
 
 ```
 /client
@@ -66,6 +73,20 @@ Finally to start the project simply run `npm run dev` and you'll have the develo
             /settings
             /statistics
         /app.tsx
+```    
+<br>
+</details>
+
+<a name="Server"></a>
+
+## Server
+
+
+<details>
+<summary> Server File Structure</summary>
+<br>
+
+```
 /server
     /config
         /default.ts
@@ -121,36 +142,20 @@ Finally to start the project simply run `npm run dev` and you'll have the develo
             /category.croutests
             /color.routes.ts
         /app.ts
-    
 ```
-
-<a name="Database Architecture"></a>
-
-## Database Architecture
-
-Coming soon 😉
-
-## Client
-<details>
-<summary> View Client Details</summary>
 <br>
-Coming soon 😉
 </details>
 
-## Server
-<details>
-<summary> View Server Details</summary>
-<br>
-Coming soon 😉
-</details>
+<a name="Testing"></a>
 
 ## Testing
 
-Coming soon 😉
-
-## Contributions
-
-Coming soon 😉
+Information Coming soon 😉
 
 <a name="Additional Info"></a>
 
+## Additional Info
+
+This project is insipired by my buddy [Daniel Moore](https://github.com/daedadev). Check out his version [here](https://github.com/daedadev/Shop-CMS).
+
+Feel free to contact me [via email](nate31196@outlook.com) at nate31196@outlook.com for anymore information or for information on how to contribute. ❤️
