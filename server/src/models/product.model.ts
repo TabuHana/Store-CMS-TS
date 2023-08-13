@@ -8,10 +8,8 @@ import {
     AutoIncrement,
     HasOne,
     BelongsToMany,
-    ForeignKey,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
-import { Order } from './order.model';
 import { Stock } from './stock.model';
 import Category from './category.model';
 import Color from './color.model';
