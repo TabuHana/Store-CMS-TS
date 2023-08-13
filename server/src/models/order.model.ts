@@ -18,7 +18,7 @@ import {
     ForeignKey, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { customAlphabet } from 'nanoid';
-import { Item } from './item.model';
+import { Item } from './product.model';
 
 const nanoid = customAlphabet('abcdefg0123456789', 10);
 
