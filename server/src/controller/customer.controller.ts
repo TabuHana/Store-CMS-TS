@@ -6,7 +6,7 @@ import {
     getCustomers,
     getSingleCustomer,
 } from '../service/customer.service';
-import { CreateCustomerInput, GetCustomerInput } from '../schema/customer.schema';
+import { CreateCustomerInput, GetCustomerInput, UpdateCustomerInput } from '../schema/customer.schema';
 
 export async function createCustomerHandler(req: Request<{}, {}, CreateCustomerInput['body']>, res: Response) {
     const user: string = res.locals.user.user_id;
@@ -43,12 +43,15 @@ export async function getSingleCustomerHandler(req: Request<GetCustomerInput['pa
 
     const customer_id = req.params.customerId;
 
-    const customer = await getSingleCustomer(user, customer_id);
+    const customer = await getSingleCustomer({ user, customer_id });
 
     return res.send(customer);
 }
 
-export async function updateCustomerHandler(req: Request, res: Response) {
+export async function updateCustomerHandler(
+    req: Request<GetCustomerInput['params'], {}, UpdateCustomerInput['body']>,
+    res: Response
+) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
@@ -57,14 +60,16 @@ export async function updateCustomerHandler(req: Request, res: Response) {
 
     const customer_id = req.params.customerId;
 
-    const { update } = req.body;
+    const body = req.body;
 
-    const customer = await getCustomerAndUpdate(user, customer_id, update);
+    console.log(body);
+
+    const customer = await getCustomerAndUpdate({ user, customer_id, body });
 
     return res.send(customer);
 }
 
-export async function deleteCustomerHandler(req: Request, res: Response) {
+export async function deleteCustomerHandler(req: Request<GetCustomerInput['params']>, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
@@ -73,7 +78,7 @@ export async function deleteCustomerHandler(req: Request, res: Response) {
 
     const customer_id = req.params.customerId;
 
-    const customer = await deleteCustomer(user, customer_id);
+    await deleteCustomer(user, customer_id);
 
-    return res.sendStatus(200).send(customer);
+    return res.sendStatus(200);
 }

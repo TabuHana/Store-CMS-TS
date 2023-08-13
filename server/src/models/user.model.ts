@@ -85,7 +85,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     declare sessions: Session[];
 
     @HasMany(() => Customer, 'user_id')
-    declare customer: Customer[];
+    declare customers: Customer[];
 
     /**
      * Methods
