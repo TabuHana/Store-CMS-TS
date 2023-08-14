@@ -5,13 +5,11 @@ import {
     createCategoryHandler,
     deleteCategoryHandler,
     getCategorysHandler,
-    getSingleCategoryHandler,
     updateCategoryHandler,
 } from '../controller/category.controller';
 import {
     createCategorySchema,
     deleteCategorySchema,
-    getCategorySchema,
     updateCategorySchema,
 } from '../schema/category.schema';
 
@@ -21,9 +19,7 @@ function categoryRoutes(app: Express) {
      */
     app.get('/api/category', requireUser, getCategorysHandler);
 
-    app.get('/api/category/:categoryId', [requireUser, validateResource(getCategorySchema)], getSingleCategoryHandler);
-
-    app.post('/apicategory', [requireUser, validateResource(createCategorySchema)], createCategoryHandler);
+    app.post('/api/category', [requireUser, validateResource(createCategorySchema)], createCategoryHandler);
 
     app.put('/api/category/:categoryId', [requireUser, validateResource(updateCategorySchema)], updateCategoryHandler);
 
