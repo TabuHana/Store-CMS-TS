@@ -1,10 +1,11 @@
-import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional } from '@sequelize/core';
+import { DataTypes, Model, InferAttributes, InferCreationAttributes, CreationOptional, BelongsToManyGetAssociationsMixin, BelongsToManySetAssociationsMixin } from '@sequelize/core';
 import {
     Attribute,
     PrimaryKey,
     Table,
     AutoIncrement, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
+import Product from './product.model';
 
 @Table({
     tableName: 'category',
@@ -28,6 +29,9 @@ export class Category extends Model<InferAttributes<Category>, InferCreationAttr
     declare name: string;
 
     // Associations
+    declare getProducts: BelongsToManyGetAssociationsMixin<Product>
+
+    declare setProducts: BelongsToManySetAssociationsMixin<Product, Product['product_id']>
 }
 
 export default Category;

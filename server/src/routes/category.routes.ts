@@ -5,13 +5,9 @@ import {
     createCategoryHandler,
     deleteCategoryHandler,
     getCategorysHandler,
-    updateCategoryHandler,
+    updateCategoryNameHandler,
 } from '../controller/category.controller';
-import {
-    createCategorySchema,
-    deleteCategorySchema,
-    updateCategorySchema,
-} from '../schema/category.schema';
+import { createCategorySchema, deleteCategorySchema, updateCategorySchema } from '../schema/category.schema';
 
 function categoryRoutes(app: Express) {
     /**
@@ -21,7 +17,13 @@ function categoryRoutes(app: Express) {
 
     app.post('/api/category', [requireUser, validateResource(createCategorySchema)], createCategoryHandler);
 
-    app.put('/api/category/:categoryId', [requireUser, validateResource(updateCategorySchema)], updateCategoryHandler);
+    app.put(
+        '/api/category/:categoryId',
+        [requireUser, validateResource(updateCategorySchema)],
+        updateCategoryNameHandler
+    );
+
+    app.get('/api/category/temp', requireUser, updateCategoryNameHandler);
 
     app.delete(
         '/api/category/:categoryId',
