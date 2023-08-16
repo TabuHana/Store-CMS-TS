@@ -3,6 +3,7 @@ import { validatePassword } from '../service/user.service';
 import { createSession, findSessions, updateSession } from '../service/session.service';
 import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
+import { get } from 'lodash';
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body);
@@ -57,7 +58,32 @@ export async function getUserSessionHandler(req: Request, res: Response) {
 export async function deleteSessionHandler(req: Request, res: Response) {
     const session: number = res.locals.user.session;
 
+    console.log('-----------------controller')
+    console.log(session)
+
     await updateSession({ session_id: session }, { valid: false });
+
+    const accessToken = get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
+
+    const refreshToken = get(req, 'cookies.refreshToken') || get(req, 'headers.x-refresh') as string;
+
+    res.cookie('accessToken', accessToken, {
+        maxAge: 1, // 1 millisecond
+        httpOnly: true,
+        domain: 'localhost',
+        path: '/',
+        sameSite: 'strict',
+        secure: false //set to true for prod
+    })
+
+    res.cookie('refreshToken', refreshToken, {
+        maxAge: 1, // 1 millisecond
+        httpOnly: true,
+        domain: 'localhost',
+        path: '/',
+        sameSite: 'strict',
+        secure: false //set to true for prod
+    })
 
     return res.send({
         accessToken: null,

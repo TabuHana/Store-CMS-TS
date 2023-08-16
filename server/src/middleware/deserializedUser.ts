@@ -31,7 +31,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
                 domain: 'localhost',
                 path: '/',
                 sameSite: 'strict',
-                secure: false //set to true for prod
+                secure: false //set to true for production
             })
         }
 

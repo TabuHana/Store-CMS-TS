@@ -27,3 +27,5 @@ export function verifyJwt(token: string) {
         };
     }
 }
+
+// needs to set all previous tokens to invalid if password is changed
