@@ -36,8 +36,7 @@ export async function updateCategoryName(input: any) {
         await updatedCategory.update(body);
         return true;
     } catch (error: any) {
-        console.log(error);
-        return false;
+        throw new Error(error);
     }
 }
 
@@ -54,14 +53,11 @@ export async function updateCategoryProducts(input: any) {
         const categoryProducts = await updatedCategory.getProducts();
         return categoryProducts;
     } catch (error: any) {
-        console.log(error);
-        return false;
+        throw new Error(error);
     }
 }
 
 export async function deleteCategory(input: any) {
-
-
     const category = await Category.findByPk(input);
 
     if (!category) {

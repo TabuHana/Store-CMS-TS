@@ -56,12 +56,10 @@ export async function getCustomerAndUpdate(input: any) {
     }
 
     try {
-        console.log(body);
         await customer.update(body);
         return true;
     } catch (error: any) {
-        console.log(error);
-        return false;
+        throw new Error(error);
     }
 }
 

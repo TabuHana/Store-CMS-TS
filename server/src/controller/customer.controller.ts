@@ -62,8 +62,6 @@ export async function updateCustomerHandler(
 
     const body = req.body;
 
-    console.log(body);
-
     const customer = await getCustomerAndUpdate({ user, customer_id, body });
 
     return res.send(customer);

@@ -15,7 +15,6 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
         if (error.message === 'SequelizeUniqueConstraintError: Validation error') {
             return res.status(409).send({ status: 'Failure', message: 'Email already in use!' });
         } else {
-            console.log(error);
             return res.status(500).send({ status: 'Failure', message: 'Server Error' });
         }
     }

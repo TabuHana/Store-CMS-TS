@@ -48,9 +48,8 @@ export async function updateUserPassword(query: string, update: any) {
     try {
         await user.update({ password: hash });
         return true;
-    } catch (error) {
-        console.log(error);
-        return false;
+    } catch (error: any) {
+        throw new Error(error);
     }
 }
 

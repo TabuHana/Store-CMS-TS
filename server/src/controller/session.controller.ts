@@ -58,9 +58,6 @@ export async function getUserSessionHandler(req: Request, res: Response) {
 export async function deleteSessionHandler(req: Request, res: Response) {
     const session: number = res.locals.user.session;
 
-    console.log('-----------------controller')
-    console.log(session)
-
     await updateSession({ session_id: session }, { valid: false });
 
     const accessToken = get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');

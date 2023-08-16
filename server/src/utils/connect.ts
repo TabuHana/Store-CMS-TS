@@ -28,8 +28,8 @@ async function connect() {
         await sequelize.sync({ force: true });
         logger.info('Connection has been established successfully.');
     } catch (error: any) {
-        logger.info('Unable to connect to the database:', error);
-        console.error(error);
+        logger.info('Unable to connect to the database: ');
+        logger.info(error);
     }
 }
 
