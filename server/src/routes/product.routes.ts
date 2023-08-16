@@ -1,34 +1,33 @@
 import { Express } from 'express';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
-
 import {
-    createCustomerHandler,
-    deleteCustomerHandler,
-    getCustomersHandler,
-    getSingleCustomerHandler,
-    updateCustomerHandler,
-} from '../controller/customer.controller';
+    createProductHandler,
+    deleteProductHandler,
+    getProductsHandler,
+    getSingleProductHandler,
+    updateProductHandler,
+} from '../controller/product.controller';
 import {
-    createCustomerSchema,
-    deleteCustomerSchema,
-    getCustomerSchema,
-    updateCustomerSchema,
-} from '../schema/customer.schema';
+    createProductSchema,
+    deleteProductSchema,
+    getProductSchema,
+    updateProductSchema,
+} from '../schema/product.schema';
 
 function productRoutes(app: Express) {
     /**
      * Item Routes
      */
-    app.get('/api/product', requireUser, getCustomersHandler);
+    app.get('/api/products', requireUser, getProductsHandler);
 
-    app.get('/api/product/:productId', [requireUser, validateResource(getCustomerSchema)], getSingleCustomerHandler);
+    app.get('/api/products/:productId', [requireUser, validateResource(getProductSchema)], getSingleProductHandler);
 
-    app.post('/api/product', [requireUser, validateResource(createCustomerSchema)], createCustomerHandler);
+    app.post('/api/products', [requireUser, validateResource(createProductSchema)], createProductHandler);
 
-    app.put('/api/product/:productId', [requireUser, validateResource(updateCustomerSchema)], updateCustomerHandler);
+    app.put('/api/products/:productId', [requireUser, validateResource(updateProductSchema)], updateProductHandler);
 
-    app.delete('/api/product/:productId', [requireUser, validateResource(deleteCustomerSchema)], deleteCustomerHandler);
+    app.delete('/api/products/:productId', [requireUser, validateResource(deleteProductSchema)], deleteProductHandler);
 }
 
 export default productRoutes;
