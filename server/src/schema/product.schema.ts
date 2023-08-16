@@ -1,26 +1,26 @@
-import { TypeOf, object, string } from 'zod';
+import { TypeOf, number, object, string } from 'zod';
 
 const payload = {
     body: object({
         name: string({
-            required_error: 'Email is required',
+            required_error: 'Name is required',
         }),
-        email: string({
-            required_error: 'Password is required',
+        description: string({
+            required_error: 'Description is required',
         }),
-        billing_address: string({
-            required_error: 'Password is required',
+        price: number({
+            required_error: 'Price is required',
         }),
-        shipping_address: string({
-            required_error: 'Password is required',
+        price_per_unit: number({
+            required_error: 'Price per unit is required',
         }),
     }),
 };
 
 const params = {
     params: object({
-        customerId: string({
-            required_error: 'Customer_id is required',
+        productId: string({
+            required_error: 'Product_id is required',
         }),
     }),
 };

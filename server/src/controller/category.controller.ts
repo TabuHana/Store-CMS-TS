@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { createCategory, deleteCategory, getCategory, getCategoryAndUpdate } from '../service/category.service';
+import { createCategory, deleteCategory, getCategory, updateCategoryName, updateCategoryProducts } from '../service/category.service';
 import { CreateCategoryInput, DeleteCategoryInput, UpdateCategoryInput } from '../schema/category.schema';
 
 export async function createCategoryHandler(req: Request<{}, {}, CreateCategoryInput['body']>, res: Response) {
@@ -28,7 +28,7 @@ export async function getCategorysHandler(req: Request, res: Response) {
     return res.send(category);
 }
 
-export async function updateCategoryHandler(
+export async function updateCategoryNameHandler(
     req: Request<UpdateCategoryInput['params'], {}, UpdateCategoryInput['body']>,
     res: Response
 ) {
@@ -42,7 +42,23 @@ export async function updateCategoryHandler(
 
     const body = req.body;
 
-    const category = await getCategoryAndUpdate({ category_id, body });
+    const category = await updateCategoryName({ category_id, body });
+
+    return res.send(category);
+}
+
+export async function updateCategoryProductsHandler(req: Request, res: Response) {
+    const user: string = res.locals.user.user_id;
+
+    if (!user) {
+        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+    }
+
+    const category_id = req.params.categoryId;
+
+    // const body = req.body;
+
+    const category = await updateCategoryProducts({ category_id });
 
     return res.send(category);
 }

@@ -5,6 +5,8 @@ import {
     InferCreationAttributes,
     CreationOptional,
     NonAttribute,
+    BelongsToManyGetAssociationsMixin,
+    BelongsToManySetAssociationsMixin,
 } from '@sequelize/core';
 import {
     Attribute,
@@ -14,6 +16,7 @@ import {
     UpdatedAt,
     AutoIncrement,
     HasMany,
+    ForeignKey,
     BelongsToMany,
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
@@ -65,6 +68,11 @@ export class Product extends Model<InferAttributes<Product>, InferCreationAttrib
     /**
      * Associations
      */
+    @Attribute(DataTypes.STRING)
+    @ForeignKey
+    @NotNull
+    declare user_id: string;
+
     @HasMany(() => Stock, 'product_id')
     declare stock: Stock[];
 
@@ -72,6 +80,10 @@ export class Product extends Model<InferAttributes<Product>, InferCreationAttrib
         through: 'product_category',
     })
     declare product_category_id?: NonAttribute<Category[]>;
+
+    declare getCategories: BelongsToManyGetAssociationsMixin<Category>;
+
+    declare setCategories: BelongsToManySetAssociationsMixin<Category, Category['category_id']>;
 }
 
 export default Product;
