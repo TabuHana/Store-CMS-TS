@@ -1,29 +1,38 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import axios from 'axios';
+import { object, string, TypeOf } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Box from '@mui/material/Box';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Footer from '../../components/Footer';
-import { useForm } from 'react-hook-form';
-import { object, string, TypeOf } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../components/Footer';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 
 const createUserSchema = object({
-    name: string().nonempty({ message: 'Name is required' }),
-    password: string()
-        .min(6, 'Password too short - must be 6 characters long')
-        .nonempty({ message: 'Password is required' }),
-    passwordConfirmation: string().nonempty({ message: 'Password confirmation is required' }),
-    email: string().email('Not a valid email').nonempty({ message: 'Email is required' }),
+    name: string().nonempty({
+        message: 'Name is required',
+    }),
+    password: string().min(6, 'Password too short - should be 6 chars minimum').nonempty({
+        message: 'Password is required',
+    }),
+    passwordConfirmation: string().nonempty({
+        message: 'passwordConfirmation is required',
+    }),
+    email: string({
+        required_error: 'Email is required',
+    })
+        .email('Not a valid email')
+        .nonempty({
+            message: 'Password is required',
+        }),
 }).refine((data) => data.password === data.passwordConfirmation, {
     message: 'Passwords do not match',
     path: ['passwordConfirmation'],
@@ -31,10 +40,13 @@ const createUserSchema = object({
 
 type CreateUserInput = TypeOf<typeof createUserSchema>;
 
-const RegisterPage = () => {
-    const navigate = useNavigate();
+type RegisterProps = {
+    alert: (message: string) => void;
+};
 
-    const notify = (msg: string) => toast(msg);
+const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
+    const [registerError, setRegisterError] = useState('');
+    const navigate = useNavigate();
 
     const {
         register,
@@ -45,17 +57,19 @@ const RegisterPage = () => {
     });
 
     const formSubmit = async (values: CreateUserInput) => {
+        const signIn = { email: values.email, password: values.password };
+
         try {
-            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/users`, values);
-            notify('Success');
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/users`, values, { withCredentials: true });
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
+            alert('Welcome to Store-CMS!');
             navigate('/dashboard');
         } catch (e: any) {
-            notify(e.message);
-            // navigate('/');
+            console.log(errors);
+            setRegisterError(e.message);
+            alert(registerError);
         }
     };
-
-    console.log(errors);
 
     return (
         <Container maxWidth='xs'>
@@ -117,14 +131,14 @@ const RegisterPage = () => {
                         autoComplete='user-passwordConfirmation'
                         {...register('passwordConfirmation')}
                     />
-                    <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' />
+                    {/* This is a remember me button. Do not know how to use */}
+                    {/* <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' /> */} 
                     <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                         Sign Up
                     </Button>
                 </Box>
             </Box>
             <Footer />
-            <ToastContainer />
         </Container>
     );
 };

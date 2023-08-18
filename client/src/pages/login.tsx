@@ -1,36 +1,39 @@
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { object, string, TypeOf } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
-import { object, string, TypeOf } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import axios from 'axios';
-import 'react-toastify/dist/ReactToastify.css';
-import { useState } from 'react';
+// import FormControlLabel from '@mui/material/FormControlLabel';
+// import Checkbox from '@mui/material/Checkbox';
 
 const createSessionSchema = object({
-    email: string().email('Not a valid email').nonempty({ message: 'Email is required' }),
-    password: string().nonempty({ message: 'Password is required' }),
+    email: string().nonempty({
+        message: 'Email is required',
+    }),
+    password: string().nonempty({
+        message: 'Password is required',
+    }),
 });
 
 type createSessionInput = TypeOf<typeof createSessionSchema>;
 
 type LoginProps = {
-    alert: () => void;
+    alert: (message: string) => void;
 };
 
 const LoginPage: React.FC<LoginProps> = ({ alert }) => {
-    const [loginError, setLoginError] = useState(null);
+    const [loginError, setLoginError] = useState('');
     const {
         register,
         formState: { errors },
@@ -43,21 +46,17 @@ const LoginPage: React.FC<LoginProps> = ({ alert }) => {
 
     const formSubmit = async (values: createSessionInput) => {
         try {
-            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, values, { withCredentials: true });
-            alert();
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, values, {
+                withCredentials: true,
+            });
+            alert('Welcome Back!');
             navigate('/dashboard');
         } catch (e: any) {
-            alert();
+            console.log(errors);
             setLoginError(e.message);
+            alert(loginError);
         }
     };
-
-    const demoSubmit = {
-        email: 'asdf@test.com',
-        password: 'password123',
-    };
-
-    console.log(loginError);
 
     return (
         <Grid container component='main' sx={{ height: '100vh' }}>
@@ -126,10 +125,10 @@ const LoginPage: React.FC<LoginProps> = ({ alert }) => {
                                 autoComplete='current-password'
                                 {...register('password')}
                             />
-                            <FormControlLabel
+                            {/* <FormControlLabel
                                 control={<Checkbox value='remember' color='primary' />}
                                 label='Remember me'
-                            />
+                            /> */}
                             <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                                 Sign In
                             </Button>
@@ -148,16 +147,7 @@ const LoginPage: React.FC<LoginProps> = ({ alert }) => {
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ m: 'auto', width: 200 }}>
-                    <Button
-                        onClick={alert}
-                        fullWidth
-                        variant='contained'
-                        sx={{ mt: 3, mb: 2, bgcolor: 'secondary.main' }}
-                    >
-                        Demo the Site!
-                    </Button>
-                </Box>
+                <Box sx={{ m: 'auto', width: 200 }}></Box>
             </Grid>
             <Grid
                 item

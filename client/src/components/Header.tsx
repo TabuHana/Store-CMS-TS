@@ -1,4 +1,4 @@
-import {  IconButton, Toolbar, Typography, styled } from '@mui/material';
+import { IconButton, Toolbar, Typography, styled } from '@mui/material';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
 
@@ -29,9 +29,10 @@ const AppBar = styled(MuiAppBar, {
 type HeaderProps = {
     open: boolean;
     toggle: () => void;
+    name: string;
 };
 
-const Header: React.FC<HeaderProps> = ({ open, toggle }) => {
+const Header: React.FC<HeaderProps> = ({ open, toggle, name }) => {
     return (
         <AppBar position='absolute' open={open}>
             <Toolbar
@@ -52,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ open, toggle }) => {
                     <MenuIcon />
                 </IconButton>
                 <Typography component='h1' variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
-                    Welcome
+                    Welcome {name}
                 </Typography>
             </Toolbar>
         </AppBar>

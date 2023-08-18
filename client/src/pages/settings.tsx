@@ -16,7 +16,7 @@ const SettingsPage = () => {
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Header open={open} toggle={toggleDrawer} />
+            {/* <Header open={open} toggle={toggleDrawer} /> */}
             <Nav open={open} toggle={toggleDrawer} />
             <Box
                 component='main'

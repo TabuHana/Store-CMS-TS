@@ -4,9 +4,16 @@ import { verifyJwt } from '../utils/jwt.utils';
 import { reIssueAccessToken } from '../service/session.service';
 
 const deserializedUser = async (req: Request, res: Response, next: NextFunction) => {
-    const accessToken = get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
+    console.log('Deserialed User Accessed');
 
-    const refreshToken = get(req, 'cookies.refreshToken') || get(req, 'headers.x-refresh') as string;
+    const accessToken =
+        get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
+
+    const refreshToken = get(req, 'cookies.refreshToken') || (get(req, 'headers.x-refresh') as string);
+
+    console.log({ accessToken });
+    console.log({ refreshToken });
+    console.log('==========================================================================');
 
     if (!accessToken) {
         return next();
@@ -20,7 +27,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
     }
 
     if (expired && refreshToken) {
-        const newAccessToken = (await reIssueAccessToken({ refreshToken })) as string;
+        const newAccessToken = await reIssueAccessToken({ refreshToken });
 
         if (newAccessToken) {
             res.setHeader('x-access-token', newAccessToken);
@@ -31,11 +38,11 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
                 domain: 'localhost',
                 path: '/',
                 sameSite: 'strict',
-                secure: false //set to true for production
-            })
+                secure: false, //set to true for production
+            });
         }
 
-        const result = verifyJwt(newAccessToken);
+        const result = verifyJwt(newAccessToken as string);
 
         res.locals.user = result.decoded;
         return next();

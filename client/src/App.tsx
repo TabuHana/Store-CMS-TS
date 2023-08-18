@@ -7,18 +7,20 @@ import OrdersPage from './pages/orders';
 import StatsPage from './pages/statistics';
 import SettingsPage from './pages/settings';
 import AboutPage from './pages/about';
-import LoginPage from './pages/auth/login';
-import RegisterPage from './pages/auth/register';
+import LoginPage from './pages/login';
+import RegisterPage from './pages/register';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const notify = () => toast('Alert');
+
+const notify = (message: string) => toast(message);
 
 const App = () => {
     return (
         <Router>
             <Routes>
                 <Route path='/' element={<LoginPage alert={notify} />} />
-                <Route path='/register' element={<RegisterPage />} />
+                <Route path='/register' element={<RegisterPage alert={notify} />} />
                 <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/products' element={<ProductsPage />} />
                 <Route path='/customers' element={<CustomersPage />} />
@@ -26,7 +28,7 @@ const App = () => {
                 <Route path='/statistics' element={<StatsPage />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} />
-                <Route path='/*' element={<NotFoundPage />} />
+                <Route path='/*' element={<NotFoundPage />} /> 
             </Routes>
             <ToastContainer
                 position='bottom-right'

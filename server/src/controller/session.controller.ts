@@ -4,6 +4,7 @@ import { createSession, findSessions, updateSession } from '../service/session.s
 import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
 import { get } from 'lodash';
+import { access } from 'fs';
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body);
@@ -31,8 +32,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         domain: 'localhost',
         path: '/',
         sameSite: 'strict',
-        secure: false //set to true for prod
-    })
+        secure: false, //set to true for prod
+    });
 
     res.cookie('refreshToken', refreshToken, {
         maxAge: 3.154e10, // 1 year
@@ -40,8 +41,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         domain: 'localhost',
         path: '/',
         sameSite: 'strict',
-        secure: false //set to true for prod
-    })
+        secure: false, //set to true for prod
+    });
 
     // Return access & refresh Token
     return res.status(200).send({ accessToken, refreshToken });
@@ -56,31 +57,13 @@ export async function getUserSessionHandler(req: Request, res: Response) {
 }
 
 export async function deleteSessionHandler(req: Request, res: Response) {
+    console.log('delete called');
     const session: number = res.locals.user.session;
 
     await updateSession({ session_id: session }, { valid: false });
 
-    const accessToken = get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
-
-    const refreshToken = get(req, 'cookies.refreshToken') || get(req, 'headers.x-refresh') as string;
-
-    res.cookie('accessToken', accessToken, {
-        maxAge: 1, // 1 millisecond
-        httpOnly: true,
-        domain: 'localhost',
-        path: '/',
-        sameSite: 'strict',
-        secure: false //set to true for prod
-    })
-
-    res.cookie('refreshToken', refreshToken, {
-        maxAge: 1, // 1 millisecond
-        httpOnly: true,
-        domain: 'localhost',
-        path: '/',
-        sameSite: 'strict',
-        secure: false //set to true for prod
-    })
+    res.clearCookie('accessToken');
+    res.clearCookie('refreshToken');
 
     return res.send({
         accessToken: null,
