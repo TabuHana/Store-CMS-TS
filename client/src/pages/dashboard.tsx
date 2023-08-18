@@ -31,14 +31,10 @@ const DashboardPage = () => {
 
     const { data, error } = useSWR<User | null>(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/me`, fetcher);
 
-    // function capitalizeFirstLetter(name: string) {
-    //     return name.charAt(0).toUpperCase() + name.slice(1);
-    // }
-
     if (data) {
-        // const userName = capitalizeFirstLetter(data.name);
 
         console.log(`returned from server data ${data}`);
+        console.log(`returned from server data's name ${data.name}`);
         console.log(`returned from server error ${error}`);
         return (
             <Box sx={{ display: 'flex' }}>
