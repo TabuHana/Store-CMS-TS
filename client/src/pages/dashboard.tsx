@@ -29,19 +29,21 @@ const DashboardPage = () => {
         setOpen(!open);
     };
 
-    const { data } = useSWR<User | null>(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/me`, fetcher);
+    const { data, error } = useSWR<User | null>(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/me`, fetcher);
 
-    function capitalizeFirstLetter(name: string) {
-        return name.charAt(0).toUpperCase() + name.slice(1);
-    }
+    // function capitalizeFirstLetter(name: string) {
+    //     return name.charAt(0).toUpperCase() + name.slice(1);
+    // }
 
     if (data) {
-        const userName = capitalizeFirstLetter(data.name);
+        // const userName = capitalizeFirstLetter(data.name);
 
+        console.log(`returned from server data ${data}`);
+        console.log(`returned from server error ${error}`);
         return (
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <Header open={open} toggle={toggleDrawer} name={userName} />
+                <Header open={open} toggle={toggleDrawer} name={data.name} />
                 <Nav open={open} toggle={toggleDrawer} />
                 <Box
                     component='main'
