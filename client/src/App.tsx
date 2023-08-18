@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import DashboardPage from './pages/dashboard';
-import NotFoundPage from './pages/notFound';
+// import NotFoundPage from './pages/notFound';
 import ProductsPage from './pages/products';
 import CustomersPage from './pages/customers';
 import OrdersPage from './pages/orders';
@@ -28,7 +28,7 @@ const App = () => {
                 <Route path='/statistics' element={<StatsPage />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} />
-                <Route path='/*' element={<NotFoundPage />} /> 
+                {/* <Route path='/*' element={<NotFoundPage />} />  */}
             </Routes>
             <ToastContainer
                 position='bottom-right'
