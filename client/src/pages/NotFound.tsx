@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import Footer from '../components/Footer';
-import Header from '../components/Header';
+// import Header from '../components/Header';
 import Nav from '../components/Nav';
 import { Button } from '@mui/material';
 import { Link as Linker } from 'react-router-dom';
