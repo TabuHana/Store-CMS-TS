@@ -1,4 +1,5 @@
 export default {
+    test:'',
     origin: '',
     port: '',
     username: '',
