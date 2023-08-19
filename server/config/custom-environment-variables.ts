@@ -10,5 +10,4 @@ export default {
     accessTokenTtl: 'ACCESS_TOKEN_TTL',
     refreshTokenTtl: 'REFRESH_TOKEN_TTL',
     saltWorkerFactor: 'SALT_WORKER_FACTOR',
-    origin: 'ORIGIN',
 }
