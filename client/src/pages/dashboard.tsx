@@ -11,8 +11,10 @@ import Orders from '../components/Orders';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import useSWR from 'swr';
-import { fetcher } from '../utils/fetcher';
+// import { fetcher } from '../utils/fetcher';
+import { useQuery } from '@tanstack/react-query';
+// import axios from 'axios';
+import { getUser } from '../utils/fetcher';
 
 type User = {
     user_id: string;
@@ -29,10 +31,11 @@ const DashboardPage = () => {
         setOpen(!open);
     };
 
-    const { data, error } = useSWR<User | null>(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/me`, fetcher);
+    const { data, error } = useQuery<User | null>(['user'], getUser);
+
+    // const { data, error } = useSWR<User | null>(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/me`, fetcher);
 
     if (data) {
-
         console.log(`returned from server data ${data}`);
         console.log(`returned from server data's name ${data.name}`);
         console.log(`returned from server error ${error}`);
