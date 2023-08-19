@@ -39,6 +39,7 @@ const DashboardPage = () => {
         console.log(`returned from server data ${data}`);
         console.log(`returned from server data's name ${data.name}`);
         console.log(`returned from server error ${error}`);
+        console.log(`${import.meta.env.VITE_SERVER_ENDPOINT}`)
         return (
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
