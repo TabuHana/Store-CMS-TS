@@ -3,8 +3,7 @@ import { validatePassword } from '../service/user.service';
 import { createSession, findSessions, updateSession } from '../service/session.service';
 import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
-import { get } from 'lodash';
-import { access } from 'fs';
+
 
 export async function createUserSessionHandler(req: Request, res: Response) {
     const user = await validatePassword(req.body);
