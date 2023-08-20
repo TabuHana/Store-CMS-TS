@@ -16,6 +16,8 @@ const app = createServer();
 app.listen(port, async () => {
     logger.info(`App is running at http://localhost:${port}`);
 
+    console.log(`running node -> ${process.version}`)
+
     logger.info(`Testing Server port ${test}`);
 
     await connect();
