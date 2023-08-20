@@ -7,9 +7,9 @@ import validateResource from '../middleware/validateResource';
 function userRoutes(app: Express) {
     app.get('/api/me', requireUser, getCurrentUserHandler);
 
-    app.post('/api/users', validateResource(createUserSchema), createUserHandler);
+    app.post('/api/user', validateResource(createUserSchema), createUserHandler);
 
-    app.put('/api/users', [requireUser, validateResource(updateUserSchema)], updateUserPasswordHandler);
+    app.put('/api/user', [requireUser, validateResource(updateUserSchema)], updateUserPasswordHandler);
 }
 
 export default userRoutes;

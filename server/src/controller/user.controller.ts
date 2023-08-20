@@ -10,6 +10,9 @@ import { createUser, getUser, updateUserPassword } from '../service/user.service
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
     try {
         const user = await createUser(req.body);
+        
+        console.log(`user created = ${user}`);
+
         return res.send(omit(user, 'password'));
     } catch (error: any) {
         if (error.message === 'SequelizeUniqueConstraintError: Validation error') {
@@ -39,8 +42,6 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
             .status(409)
             .send({ status: 'Failure', message: 'Current user is not in the database! Error with server!' });
     }
-
-    console.log(`user created = ${FullUser}`);
 
     return res.send(omit(FullUser, 'password'));
 }
