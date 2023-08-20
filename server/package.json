@@ -12,8 +12,7 @@
   "author": "tabuHana",
   "license": "ISC",
   "engines": {
-    "node":
-     "18"
+    "node": "18"
     },
   "dependencies": {
     "@sequelize/core": "^7.0.0-alpha.27",
