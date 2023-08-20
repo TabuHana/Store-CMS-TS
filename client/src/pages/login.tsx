@@ -44,6 +44,8 @@ const LoginPage: React.FC<LoginProps> = ({ alert }) => {
 
     const navigate = useNavigate();
 
+    console.log(`checking correct end point = ${import.meta.env.VITE_SERVER_ENDPOINT}`)
+
     const formSubmit = async (values: createSessionInput) => {
         try {
             await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, values, {

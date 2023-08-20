@@ -59,9 +59,11 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     const formSubmit = async (values: CreateUserInput) => {
         const signIn = { email: values.email, password: values.password };
 
+        console.log(`checking correct end point = ${import.meta.env.VITE_SERVER_ENDPOINT}`)
+
         try {
             await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/users`, values, { withCredentials: true });
-            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
+            // await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
             alert('Welcome to Store-CMS!');
             navigate('/dashboard');
         } catch (e: any) {
