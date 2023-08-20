@@ -57,7 +57,7 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     });
 
     const formSubmit = async (values: CreateUserInput) => {
-        const signIn = { email: values.email, password: values.password };
+        // const signIn = { email: values.email, password: values.password };
 
         console.log(`checking correct end point = ${import.meta.env.VITE_SERVER_ENDPOINT}`)
 
