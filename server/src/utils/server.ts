@@ -3,7 +3,6 @@ import deserializedUser from '../middleware/deserializedUser';
 import cookieParser from 'cookie-parser';
 import routes from '../routes/index.routes';
 import config from 'config';
-
 import cors from 'cors';
 
 function createServer() {

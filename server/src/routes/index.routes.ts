@@ -9,6 +9,7 @@ import categoryRoutes from './category.routes';
 
 function routes(app: Express) {
     app.get('/healthcheck', (req: Request, res: Response) => {
+        console.log('SERVER HEALTH CHECKED');
         res.status(200).json({
             status: 'Success',
             message: 'Service is online',

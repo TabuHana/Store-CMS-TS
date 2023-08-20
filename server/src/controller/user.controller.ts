@@ -10,8 +10,8 @@ import { createUser, getUser, updateUserPassword } from '../service/user.service
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
     try {
         const user = await createUser(req.body);
-        
-        console.log(`user created = ${user}`);
+
+        console.log(`USER CREATED = ${{ user }}`);
 
         return res.send(omit(user, 'password'));
     } catch (error: any) {

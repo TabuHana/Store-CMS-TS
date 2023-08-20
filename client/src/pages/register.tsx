@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { object, string, TypeOf } from 'zod';
@@ -12,9 +12,13 @@ import Box from '@mui/material/Box';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Footer from '../components/Footer';
+// import Footer from '../components/Footer';
 // import FormControlLabel from '@mui/material/FormControlLabel';
 // import Checkbox from '@mui/material/Checkbox';
+
+import Link from '@mui/material/Link';
+import { Link as RouterLink } from 'react-router-dom';
+
 
 const createUserSchema = object({
     name: string().nonempty({
@@ -46,7 +50,7 @@ type RegisterProps = {
 
 const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     const [registerError, setRegisterError] = useState('');
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     const {
         register,
@@ -59,15 +63,17 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     const formSubmit = async (values: CreateUserInput) => {
         // const signIn = { email: values.email, password: values.password };
 
-        console.log(`checking correct end point = ${import.meta.env.VITE_SERVER_ENDPOINT}`)
+        console.log(`SERVER ENDPOINT = ${import.meta.env.VITE_SERVER_ENDPOINT}`);
 
         try {
-            const user = await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/user`, values, { withCredentials: true });
+            const user = await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/user`, values, {
+                withCredentials: true,
+            });
 
-            console.log(`user create = ${user}`)
+            console.log(`user create = ${{ user }}`);
             // await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
             alert('Welcome to Store-CMS!');
-            navigate('/dashboard');
+            // navigate('/dashboard');
         } catch (e: any) {
             console.log(errors);
             setRegisterError(e.message);
@@ -136,13 +142,16 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
                         {...register('passwordConfirmation')}
                     />
                     {/* This is a remember me button. Do not know how to use */}
-                    {/* <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' /> */} 
+                    {/* <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' /> */}
                     <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                         Sign Up
                     </Button>
                 </Box>
             </Box>
-            <Footer />
+            <Link component={RouterLink} to='/' variant='body2'>
+                Don't have an account? Sign Up
+            </Link>
+            {/* <Footer /> */}
         </Container>
     );
 };
