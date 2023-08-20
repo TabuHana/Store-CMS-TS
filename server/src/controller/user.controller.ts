@@ -40,6 +40,8 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
             .send({ status: 'Failure', message: 'Current user is not in the database! Error with server!' });
     }
 
+    console.log(`user created = ${FullUser}`);
+
     return res.send(omit(FullUser, 'password'));
 }
 
