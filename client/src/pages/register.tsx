@@ -1,5 +1,5 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import { object, string, TypeOf } from 'zod';
@@ -18,7 +18,6 @@ import Container from '@mui/material/Container';
 
 import Link from '@mui/material/Link';
 import { Link as RouterLink } from 'react-router-dom';
-
 
 const createUserSchema = object({
     name: string().nonempty({
@@ -50,7 +49,7 @@ type RegisterProps = {
 
 const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     const [registerError, setRegisterError] = useState('');
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -61,19 +60,19 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     });
 
     const formSubmit = async (values: CreateUserInput) => {
-        // const signIn = { email: values.email, password: values.password };
+        const signIn = { email: values.email, password: values.password };
 
         console.log(`SERVER ENDPOINT = ${import.meta.env.VITE_SERVER_ENDPOINT}`);
 
         try {
-            const user = await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/user`, values, {
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/user`, values, {
                 withCredentials: true,
             });
 
-            console.log(`user create = ${{ user }}`);
-            // await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
+            // console.log(`user create = ${{ user }}`);
+            await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
             alert('Welcome to Store-CMS!');
-            // navigate('/dashboard');
+            navigate('/dashboard');
         } catch (e: any) {
             console.log(errors);
             setRegisterError(e.message);
