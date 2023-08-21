@@ -13,7 +13,8 @@ type User = {
 const Display = () => {
     const { data, error } = useQuery<User | null>(['user'], getUser);
 
-    console.log(error);
+    console.log('data', data);
+    console.log('error', error);
 
     if (data) {
         return (
