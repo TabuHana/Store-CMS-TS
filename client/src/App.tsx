@@ -7,11 +7,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import StatsPage from './pages/statistics';
 // import SettingsPage from './pages/settings';
 // import AboutPage from './pages/about';
+import { ToastContainer, toast } from 'react-toastify';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
-import { ToastContainer, toast } from 'react-toastify';
 import Dashboard from './pages/dashboard';
 import 'react-toastify/dist/ReactToastify.css';
+import NotFound from './pages/notfound';
 
 
 const notify = (message: string) => toast(message);
@@ -30,7 +31,7 @@ const App = () => {
                 <Route path='/statistics' element={<StatsPage />} />
                 <Route path='/settings' element={<SettingsPage />} />
                 <Route path='/about' element={<AboutPage />} /> */}
-                {/* <Route path='/*' element={<NotFoundPage />} />  */}
+                <Route path='/*' element={<NotFound />} /> 
             </Routes>
             <ToastContainer
                 position='bottom-right'
