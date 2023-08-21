@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link as RouterLink } from 'react-router-dom'; //useNavigate
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,7 +42,7 @@ const LoginPage: React.FC<LoginProps> = ({ alert }) => {
         resolver: zodResolver(createSessionSchema),
     });
 
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     console.log(`checking correct end point = ${import.meta.env.VITE_SERVER_ENDPOINT}`)
 
@@ -52,7 +52,7 @@ const LoginPage: React.FC<LoginProps> = ({ alert }) => {
                 withCredentials: true,
             });
             console.log('session created')
-            // navigate('/dashboard');
+            navigate('/dashboard');
         } catch (e: any) {
             console.log(errors);
             setLoginError(e.message);

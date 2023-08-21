@@ -11,6 +11,7 @@ import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Display from './pages/display';
 
 
 const notify = (message: string) => toast(message);
@@ -21,6 +22,7 @@ const App = () => {
             <Routes>
                 <Route path='/' element={<LoginPage alert={notify} />} />
                 <Route path='/register' element={<RegisterPage alert={notify} />} />
+                <Route path='/dashboard' element={<Display />} />
                 {/* <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/products' element={<ProductsPage />} />
                 <Route path='/customers' element={<CustomersPage />} />
