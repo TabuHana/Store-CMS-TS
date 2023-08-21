@@ -35,28 +35,25 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         { expiresIn: config.get<string>('refreshTokenTtl') }
     );
 
-    console.log('accessTK', accessToken);
-    console.log('refreshTK', refreshToken);
-
     res.cookie('accessToken', accessToken, {
         maxAge: 900000, // 15 mins
         httpOnly: true,
-        domain: config.get('origin'),
+        // domain: config.get('origin'),
         path: '/',
         sameSite: 'strict',
-        secure: true, //set to true for prod
+        secure: false, //set to true for prod
     });
 
     res.cookie('refreshToken', refreshToken, {
         maxAge: 3.154e10, // 1 year
         httpOnly: true,
-        domain: config.get('origin'),
+        // domain: config.get('origin'),
         path: '/',
         sameSite: 'strict',
-        secure: true, //set to true for prod
+        secure: false, //set to true for prod
     });
 
-    console.log('Cookies should be set now');
+    console.log(req.cookies)
     // Return access & refresh Token
     return res.status(200).send({ accessToken, refreshToken });
 }
