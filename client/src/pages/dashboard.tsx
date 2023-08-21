@@ -8,11 +8,11 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Navbar from '../components/navbar';
+import Header from '../components/header';
+import Footer from '../components/footer';
 // import Stats from '../components/Stats';
 // import Deposits from '../components/Deposits';
 // import Orders from '../components/Orders';
-// import Footer from '../components/Footer';
-// import Header from '../components/Header';
 
 type User = {
     user_id: string;
@@ -31,14 +31,11 @@ const Dashboard = () => {
 
     const { data, error } = useQuery<User | null>(['user'], getUser);
 
-    console.log('data', data);
-    console.log('error', error);
-
     if (data) {
         return (
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                {/* <Header open={open} toggle={toggleDrawer} name={data.name} /> */}
+                <Header open={open} toggle={toggleDrawer} name={data.name} />
                 <Navbar open={open} toggle={toggleDrawer} />
                 <Box
                     component='main'
@@ -89,7 +86,7 @@ const Dashboard = () => {
                                 </Paper>
                             </Grid>
                         </Grid>
-                        {/* <Footer /> */}
+                        <Footer />
                     </Container>
                 </Box>
             </Box>
