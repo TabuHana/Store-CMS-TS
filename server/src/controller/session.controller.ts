@@ -35,8 +35,8 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         { expiresIn: config.get<string>('refreshTokenTtl') }
     );
 
-    console.log(`expected cookie access = ${accessToken}`);
-    console.log(`expected cookie access = ${refreshToken}`);
+    console.log('accessTK', accessToken);
+    console.log('refreshTK', refreshToken);
 
     res.cookie('accessToken', accessToken, {
         maxAge: 900000, // 15 mins
