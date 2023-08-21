@@ -16,12 +16,6 @@ export async function getUser(query: string) {
         where: {
             user_id: query,
         },
-        include: [
-            {
-                association: 'customers',
-                include: ['orders'],
-            },
-        ],
     });
 
     if (!user) {

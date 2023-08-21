@@ -1,5 +1,4 @@
 import Customer, { CustomerCreationAttributes, CustomerUpdate } from '../models/customer.model';
-import Order from '../models/order.model';
 
 export async function createCustomer(input: CustomerCreationAttributes) {
     try {
@@ -35,7 +34,6 @@ export async function getSingleCustomer(input: any) {
                 customer_id: customer_id,
                 user_id: user,
             },
-            include: { model: Order },
         });
 
         return customer;

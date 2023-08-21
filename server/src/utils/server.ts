@@ -7,16 +7,8 @@ import cors from 'cors';
 
 function createServer() {
     const app = express();
-    const check = config.get('origin');
 
-    console.log(`this should be client's internal port ============= ${check}`);
-
-    app.use(
-        cors({
-            origin: config.get('origin'),
-            credentials: true,
-        })
-    );
+    app.use(cors({ origin: config.get('origin'), credentials: true }));
     app.use(cookieParser());
     app.use(express.json());
     app.use(deserializedUser);

@@ -16,9 +16,6 @@ import {
 } from '../schema/customer.schema';
 
 function customerRoutes(app: Express) {
-    /**
-     * Customer Routes
-     */
     app.get('/api/customers', requireUser, getCustomersHandler);
 
     app.get('/api/customers/:customerId', [requireUser, validateResource(getCustomerSchema)], getSingleCustomerHandler);

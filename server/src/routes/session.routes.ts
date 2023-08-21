@@ -9,9 +9,6 @@ import {
 import { createSessionSchema } from '../schema/session.schema';
 
 function sessionRoutes(app: Express) {
-    /**
-     * Session Routes
-     */
     app.get('/api/sessions', requireUser, getUserSessionHandler);
 
     app.post('/api/sessions', validateResource(createSessionSchema), createUserSessionHandler);

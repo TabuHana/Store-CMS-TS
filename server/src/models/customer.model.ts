@@ -12,7 +12,6 @@ import {
     HasMany, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { IsEmail } from '@sequelize/validator.js';
-import { Order } from './order.model';
 
 export type CustomerUpdate = {
     name: string;
@@ -85,9 +84,6 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     @ForeignKey
     @NotNull
     declare user_id: string;
-
-    @HasMany(() => Order, 'customer_id')
-    declare orders: Order[];
 }
 
 export default Customer;
