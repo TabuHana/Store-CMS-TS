@@ -31,6 +31,8 @@ const Dashboard = () => {
 
     const { data, error } = useQuery<User | null>(['user'], getUser);
 
+    console.log(error);
+
     if (data) {
         return (
             <Box sx={{ display: 'flex' }}>
