@@ -37,7 +37,7 @@ const Dashboard = () => {
         return (
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <Header open={open} toggle={toggleDrawer} name={data.name} />
+                <Header open={open} toggle={toggleDrawer} msg={`Welcome ${data.name} !`} />
                 <Navbar open={open} toggle={toggleDrawer} />
                 <Box
                     component='main'

@@ -29,10 +29,10 @@ const AppBar = styled(MuiAppBar, {
 type HeaderProps = {
     open: boolean;
     toggle: () => void;
-    name: string;
+    msg: string;
 };
 
-const Header: React.FC<HeaderProps> = ({ open, toggle, name }) => {
+const Header: React.FC<HeaderProps> = ({ open, toggle, msg }) => {
     return (
         <AppBar position='absolute' open={open}>
             <Toolbar
@@ -53,7 +53,7 @@ const Header: React.FC<HeaderProps> = ({ open, toggle, name }) => {
                     <MenuIcon />
                 </IconButton>
                 <Typography component='h1' variant='h6' color='inherit' noWrap sx={{ flexGrow: 1 }}>
-                    Welcome {name}
+                    {msg}
                 </Typography>
             </Toolbar>
         </AppBar>
