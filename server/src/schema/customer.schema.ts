@@ -34,15 +34,10 @@ export const updateCustomerSchema = object({
     ...params,
 });
 
-export const deleteCustomerSchema = object({
-    ...params,
-});
-
 export const getCustomerSchema = object({
     ...params,
 });
 
 export type CreateCustomerInput = TypeOf<typeof createCustomerSchema>;
 export type UpdateCustomerInput = TypeOf<typeof updateCustomerSchema>;
-export type DeleteCustomerInput = TypeOf<typeof deleteCustomerSchema>;
 export type GetCustomerInput = TypeOf<typeof getCustomerSchema>;
