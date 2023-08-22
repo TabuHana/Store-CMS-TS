@@ -148,7 +148,7 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
                 </Box>
             </Box>
             <Link component={RouterLink} to='/' variant='body2'>
-                Don't have an account? Sign Up
+                Already have an account? Login
             </Link>
             {/* <Footer /> */}
         </Container>

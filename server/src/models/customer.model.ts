@@ -57,6 +57,9 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     declare name: string;
 
     @Attribute(DataTypes.STRING)
+    declare phone: string;
+
+    @Attribute(DataTypes.STRING)
     @IsEmail
     @Unique
     declare email: string;

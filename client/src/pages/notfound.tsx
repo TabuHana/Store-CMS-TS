@@ -1,23 +1,16 @@
-import { useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Container from '@mui/material/Container';
 import { Button } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-import Footer from '../components/footer';
-import Navbar from '../components/navbar';
 
 const NotFound = () => {
-    const [open, setOpen] = useState(true);
-    const toggleDrawer = () => {
-        setOpen(!open);
-    };
+
 
     return (
         <Box sx={{ display: 'flex' }}>
             <CssBaseline />
-            <Navbar open={open} toggle={toggleDrawer} />
             <Box
                 component='main'
                 sx={{
@@ -32,12 +25,11 @@ const NotFound = () => {
                 <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
                     <div className='not-found'>
                         <h1>Page Not Found!</h1>
-                        <RouterLink to='/dashboard'>
-                            <Button variant='contained'>Return Home</Button>
+                        <RouterLink to='/'>
+                            <Button variant='contained'>Return to Login</Button>
                         </RouterLink>
                     </div>
                 </Container>
-                <Footer />
             </Box>
         </Box>
     );

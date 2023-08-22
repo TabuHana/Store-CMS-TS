@@ -37,7 +37,7 @@ const Dashboard = () => {
         return (
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
-                <Header open={open} toggle={toggleDrawer} msg={`Welcome ${data.name} !`} />
+                <Header open={open} toggle={toggleDrawer} msg={`Welcome ${data.name}!`} />
                 <Navbar open={open} toggle={toggleDrawer} />
                 <Box
                     component='main'
@@ -51,9 +51,6 @@ const Dashboard = () => {
                 >
                     <Toolbar />
                     <Container maxWidth='lg' sx={{ mt: 4, mb: 4 }}>
-                        {`Username: ${data.name}`}
-                        {`Email: ${data.email}`}
-                        {`User_id: ${data.user_id}`}
                         <Grid container spacing={3}>
                             {/* Chart */}
                             <Grid item xs={12} md={8} lg={9}>

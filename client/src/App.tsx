@@ -6,13 +6,13 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 // import OrdersPage from './pages/orders';
 // import StatsPage from './pages/statistics';
 // import SettingsPage from './pages/settings';
-// import AboutPage from './pages/about';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import LoginPage from './pages/login';
 import RegisterPage from './pages/register';
 import Dashboard from './pages/dashboard';
-import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './pages/notfound';
+import Customers from './pages/customer';
 
 
 const notify = (message: string) => toast(message);
@@ -24,6 +24,7 @@ const App = () => {
                 <Route path='/' element={<LoginPage alert={notify} />} />
                 <Route path='/register' element={<RegisterPage alert={notify} />} />
                 <Route path='/dashboard' element={<Dashboard />} />
+                <Route path='/customers' element={<Customers />} />
                 {/* <Route path='/dashboard' element={<DashboardPage />} />
                 <Route path='/products' element={<ProductsPage />} />
                 <Route path='/customers' element={<CustomersPage />} />

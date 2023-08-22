@@ -5,8 +5,6 @@ import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import SettingsIcon from '@mui/icons-material/Settings';
 import LogoutIcon from '@mui/icons-material/Logout';
 import InventoryIcon from '@mui/icons-material/Inventory';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -58,14 +56,6 @@ export const navigationItems = (
 
 export const userItems = (
     <>
-        <Link component={RouterLink} to='/settings' underline='none' color='inherit'>
-            <ListItemButton>
-                <ListItemIcon>
-                    <SettingsIcon />
-                </ListItemIcon>
-                <ListItemText primary='Settings' />
-            </ListItemButton>
-        </Link>
         <Link
             component={RouterLink}
             to='/'
@@ -83,19 +73,6 @@ export const userItems = (
                     <LogoutIcon />
                 </ListItemIcon>
                 <ListItemText primary='Logout' />
-            </ListItemButton>
-        </Link>
-    </>
-);
-
-export const appItems = (
-    <>
-        <Link component={RouterLink} to='/aboutme' underline='none' color='inherit'>
-            <ListItemButton>
-                <ListItemIcon>
-                    <AssignmentIcon />
-                </ListItemIcon>
-                <ListItemText primary='About' />
             </ListItemButton>
         </Link>
     </>
