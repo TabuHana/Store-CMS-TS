@@ -5,14 +5,14 @@ const payload = {
         name: string({
             required_error: 'Email is required',
         }),
+        phone: string({
+            required_error: 'Phone Number is required',
+        }),
         email: string({
             required_error: 'Password is required',
         }),
-        billing_address: string({
-            required_error: 'Password is required',
-        }),
-        shipping_address: string({
-            required_error: 'Password is required',
+        address: string({
+            required_error: 'Address is required',
         }),
     }),
 };

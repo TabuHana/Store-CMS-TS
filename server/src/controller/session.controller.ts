@@ -13,8 +13,6 @@ export async function createUserSessionHandler(req: Request, res: Response) {
         return res.status(401).send('Invalid email or password');
     }
 
-    console.log(`USER = ${user}`);
-
     // Create a session
     const session = await createSession(user.user_id, req.get('user-agent') || '');
 

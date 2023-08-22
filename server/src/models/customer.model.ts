@@ -13,25 +13,24 @@ import {
 } from '@sequelize/core/decorators-legacy';
 import { IsEmail } from '@sequelize/validator.js';
 
-export type CustomerUpdate = {
-    name: string;
-    email: string;
-    billing_address: string;
-    shipping_address: string;
-}
+// export type CustomerUpdate = {
+//     name: string;
+//     email: string;
+//     address: string;
+// }
 
 type CustomerAttributes = {
-    customer_id: number
+    id: number
     name: string;
+    phone: string;
     email: string;
-    billing_address: string;
-    shipping_address: string;
+    address: string;
     user_id: string
     createdAt: Date;
     updatedAt: Date;
 };
 
-export type CustomerCreationAttributes = Omit<CustomerAttributes, 'customer_id' | 'createdAt' | 'updatedAt'>;
+export type CustomerCreationAttributes = Omit<CustomerAttributes, 'id' | 'createdAt' | 'updatedAt'>;
 
 @Table({
     tableName: 'customer',
@@ -47,7 +46,7 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     @Attribute(DataTypes.INTEGER)
     @PrimaryKey
     @AutoIncrement
-    declare customer_id: CreationOptional<number>;
+    declare id: CreationOptional<number>;
 
     /**
      * Attributes
@@ -66,11 +65,7 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
 
     @Attribute(DataTypes.STRING)
     @NotNull
-    declare billing_address: string;
-
-    @Attribute(DataTypes.STRING)
-    @NotNull
-    declare shipping_address: string;
+    declare address: string;
 
     @Attribute(DataTypes.DATE)
     @CreatedAt
