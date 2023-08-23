@@ -2,7 +2,7 @@ import { Divider, IconButton, List, Toolbar, styled } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import MuiDrawer from '@mui/material/Drawer';
 import { navigationItems, userItems } from '../utils/ListItems';
-import AboutMe from './bob'
+import AboutMe from './aboutMe'
 
 type NavProps = {
     open: boolean;

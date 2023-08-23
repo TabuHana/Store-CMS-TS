@@ -3,29 +3,25 @@ import {
     Attribute,
     PrimaryKey,
     NotNull,
-    AutoIncrement,
+    Default,
     Table,
     CreatedAt,
     UpdatedAt,
     Unique,
-    ForeignKey,
-    HasMany, //@ts-expect-error
+    ForeignKey, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { IsEmail } from '@sequelize/validator.js';
+import { customAlphabet } from 'nanoid';
 
-// export type CustomerUpdate = {
-//     name: string;
-//     email: string;
-//     address: string;
-// }
+const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
 type CustomerAttributes = {
-    id: number
+    id: string;
     name: string;
     phone: string;
     email: string;
     address: string;
-    user_id: string
+    user_id: string;
     createdAt: Date;
     updatedAt: Date;
 };
@@ -43,10 +39,12 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     /**
      * PK
      */
-    @Attribute(DataTypes.INTEGER)
+    @Attribute(DataTypes.STRING)
     @PrimaryKey
-    @AutoIncrement
-    declare id: CreationOptional<number>;
+    @NotNull
+    @Unique
+    @Default(() => nanoid())
+    declare id: CreationOptional<string>;
 
     /**
      * Attributes
