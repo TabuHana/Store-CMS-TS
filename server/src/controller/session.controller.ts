@@ -5,7 +5,6 @@ import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
 
 export async function createUserSessionHandler(req: Request, res: Response) {
-    console.log('========= CREATE SESSION ==========');
     const user = await validatePassword(req.body);
 
     // Validate the user's password
@@ -15,11 +14,6 @@ export async function createUserSessionHandler(req: Request, res: Response) {
 
     // Create a session
     const session = await createSession(user.user_id, req.get('user-agent') || '');
-
-    console.log(`SESSION = ${session}`);
-
-    console.log(`token ttl = ${config.get<string>('accessTokenTtl')}`);
-    console.log(`token type = ${typeof config.get<string>('accessTokenTtl')}`);
 
     // Create an access Token
     const accessToken = signJwt(

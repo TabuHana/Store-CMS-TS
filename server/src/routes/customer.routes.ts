@@ -7,11 +7,7 @@ import {
     getCustomersHandler,
     updateCustomerHandler,
 } from '../controller/customer.controller';
-import {
-    createCustomerSchema,
-    getCustomerSchema,
-    updateCustomerSchema,
-} from '../schema/customer.schema';
+import { createCustomerSchema, getCustomerSchema, updateCustomerSchema } from '../schema/customer.schema';
 
 function customerRoutes(app: Express) {
     app.get('/api/customers', requireUser, getCustomersHandler);
@@ -20,11 +16,7 @@ function customerRoutes(app: Express) {
 
     app.put('/api/customers/:customerId', [requireUser, validateResource(updateCustomerSchema)], updateCustomerHandler);
 
-    app.delete(
-        '/api/customers/:customerId',
-        [requireUser, validateResource(getCustomerSchema)],
-        deleteCustomerHandler
-    );
+    app.delete('/api/customers/:customerId', [requireUser, validateResource(getCustomerSchema)], deleteCustomerHandler);
 }
 
 export default customerRoutes;

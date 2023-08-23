@@ -12,14 +12,12 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
     try {
         const user = await createUser(req.body);
 
-        console.log(`USER CREATED = ${{ user }}`);
-
-        return res.send(omit(user, 'password'));
+        return res.status(201).send(omit(user, 'password'));
     } catch (error: any) {
         if (error.message === 'SequelizeUniqueConstraintError: Validation error') {
-            return res.status(409).send({ status: 'Failure', message: 'Email already in use!' });
+            return res.status(409).send({ message: 'Email in use' });
         } else {
-            return res.status(500).send({ status: 'Failure', message: 'Server Error' });
+            return res.status(500).send({ message: 'Server Error' });
         }
     }
 }
@@ -33,18 +31,16 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
     const user = res.locals.user.user_id;
 
     if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+        return res.status(401).send({ message: 'Login Required' });
     }
 
     const FullUser = await getUser(user);
 
     if (!FullUser) {
-        return res
-            .status(409)
-            .send({ status: 'Failure', message: 'Current user is not in the database! Error with server!' });
+        return res.status(404).send({ message: 'User not found' });
     }
 
-    return res.send(omit(FullUser, 'password'));
+    return res.status(200).send(omit(FullUser, 'password'));
 }
 
 /**
@@ -56,13 +52,13 @@ export async function updateUserPasswordHandler(req: Request<{}, {}, UpdateUserI
     const user = res.locals.user.user_id;
 
     if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+        return res.status(401).send({ message: 'Login Required' });
     }
 
     const updatedPassword = await updateUserPassword(user, req.body);
 
     if (!updateUserPassword) {
-        return res.status(409).send({ status: 'Failure' });
+        return res.status(409).send({ message: 'Failed to update password' });
     }
 
     return res.status(200).send(updatedPassword);

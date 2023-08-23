@@ -1,0 +1,19 @@
+[
+    {
+            "email": "tabu@hana.com",
+            "password": "flowerChild",
+            "passwordConfirmation": "flowerChild",
+            "name": "Tabu Hana"
+    },
+    {
+    
+            "email": "tabu@hana.com",
+            "password": "flowerChild"
+    },
+    {
+            "name": "puppy gurr",
+            "phone": "123-123-1234",
+            "email": "puppygurr@navexz.net",
+            "address": "1010 Street St CA 12345"
+    }
+]

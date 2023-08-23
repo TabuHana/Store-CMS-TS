@@ -8,7 +8,6 @@ import {
     CreatedAt,
     UpdatedAt,
     Unique,
-    ValidateAttribute,
     ForeignKey, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { IsEmail } from '@sequelize/validator.js';
@@ -55,14 +54,6 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     declare name: string;
 
     @Attribute(DataTypes.STRING)
-    @ValidateAttribute({
-        phoneValidation: (customer: Customer) => {
-            const phoneNumberRegex = /^\d{3}-\d{3}-\d{4}$/;
-            if (phoneNumberRegex.test(customer.phone)) {
-                throw new Error('Must be valid phone number format');
-            }
-        },
-    })
     declare phone: string;
 
     @Attribute(DataTypes.STRING)

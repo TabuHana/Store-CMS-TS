@@ -1,31 +1,34 @@
 import { Request, Response } from 'express';
-import {
-    createCustomer,
-    deleteCustomer,
-    getCustomerAndUpdate,
-    getCustomers,
-} from '../service/customer.service';
+import { createCustomer, deleteCustomer, getCustomerAndUpdate, getCustomers } from '../service/customer.service';
 import { CreateCustomerInput, GetCustomerInput, UpdateCustomerInput } from '../schema/customer.schema';
 
 export async function createCustomerHandler(req: Request<{}, {}, CreateCustomerInput['body']>, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+        return res.status(401).send({ message: 'Login Required' });
     }
 
     const body = req.body;
 
-    const customer = await createCustomer({ ...body, user_id: user });
+    try {
+        const customer = await createCustomer({ ...body, user_id: user });
 
-    return res.send(customer);
+        return res.send(customer);
+    } catch (error: any) {
+        if (error.message === 'SequelizeForeignKeyConstraintError') {
+            return res.status(409).send({ message: 'User does not exist' });
+        } else {
+            return res.status(500).send({ message: 'Server Error' });
+        }
+    }
 }
 
 export async function getCustomersHandler(req: Request, res: Response) {
     const user: string = res.locals.user.user_id;
 
     if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+        return res.status(401).send({ message: 'Login Required' });
     }
 
     const customers = await getCustomers(user);
@@ -40,7 +43,7 @@ export async function updateCustomerHandler(
     const user: string = res.locals.user.user_id;
 
     if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+        return res.status(401).send({ message: 'Login Required' });
     }
 
     const customer_id = req.params.customerId;
@@ -56,7 +59,7 @@ export async function deleteCustomerHandler(req: Request<GetCustomerInput['param
     const user: string = res.locals.user.user_id;
 
     if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
+        return res.status(401).send({ message: 'Login Required' });
     }
 
     const customer_id = req.params.customerId;
