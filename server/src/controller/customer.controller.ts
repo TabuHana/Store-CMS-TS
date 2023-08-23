@@ -16,7 +16,11 @@ export async function createCustomerHandler(req: Request<{}, {}, CreateCustomerI
 
         return res.send(customer);
     } catch (error: any) {
-        return res.status(500).send({ message: `Server Error: ${error.message}` });
+        if (error.message === 'SequelizeUniqueConstraintError: Validation error') {
+            return res.status(409).send({ message: 'Email in use' });
+        } else {
+            return res.status(500).send({ message: `Server Error: ${error.message}` });
+        }
     }
 }
 
