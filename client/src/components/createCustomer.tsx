@@ -1,6 +1,7 @@
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { TypeOf, object, string } from 'zod';
@@ -50,53 +51,58 @@ const NewCustomer = () => {
         },
     });
 
-    console.log('errors: ', errors);
-
     return (
-        <Box component='form' noValidate onSubmit={handleSubmit(formSubmit)}>
-            <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='name'
-                label='Name'
-                autoComplete='name'
-                autoFocus
-                {...register('name')}
-            />
-            <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='phone'
-                label='Phone Number'
-                autoComplete='phone'
-                autoFocus
-                {...register('phone')}
-            />
-            <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='email'
-                label='Email'
-                autoComplete='email'
-                autoFocus
-                {...register('email')}
-            />
-            <TextField
-                margin='normal'
-                required
-                fullWidth
-                id='address'
-                label='Address'
-                autoComplete='address'
-                autoFocus
-                {...register('address')}
-            />
-            <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
-                Add Customer
-            </Button>
+        <Box component={Paper} sx={{ my: 4 }}>
+            <Box component='form' sx={{ p: 2 }} noValidate onSubmit={handleSubmit(formSubmit)}>
+                <TextField
+                    margin='dense'
+                    required
+                    fullWidth
+                    id='name'
+                    label='Name'
+                    autoComplete='name'
+                    autoFocus
+                    {...register('name')}
+                />
+                <>{errors?.name?.message}</>
+                <TextField
+                    margin='dense'
+                    required
+                    fullWidth
+                    id='phone'
+                    label='Phone Number'
+                    autoComplete='phone'
+                    autoFocus
+                    {...register('phone')}
+                />
+                <>{errors?.phone?.message}</>
+                <TextField
+                    margin='dense'
+                    required
+                    fullWidth
+                    id='email'
+                    label='Email'
+                    autoComplete='email'
+                    autoFocus
+                    {...register('email')}
+                />
+                <>{errors?.email?.message}</>
+                <TextField
+                    margin='dense'
+                    required
+                    fullWidth
+                    id='address'
+                    label='Address'
+                    autoComplete='address'
+                    autoFocus
+                    {...register('address')}
+                />
+                <>{errors?.address?.message}</>
+                <Button type='submit' variant='contained' sx={{ m: 'auto', my: 1, display: 'block', width: 300 }}>
+                    Add Customer
+                </Button>
+                <div></div>
+            </Box>
         </Box>
     );
 };

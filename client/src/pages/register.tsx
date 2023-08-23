@@ -62,23 +62,20 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
     const formSubmit = async (values: CreateUserInput) => {
         const signIn = { email: values.email, password: values.password };
 
-        console.log(`SERVER ENDPOINT = ${import.meta.env.VITE_SERVER_ENDPOINT}`);
-
         try {
             await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/user`, values, {
                 withCredentials: true,
             });
-
-            // console.log(`user create = ${{ user }}`);
             await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/sessions`, signIn, { withCredentials: true });
             alert('Welcome to Store-CMS!');
             navigate('/dashboard');
         } catch (e: any) {
-            console.log(errors);
             setRegisterError(e.message);
             alert(registerError);
         }
     };
+
+    console.log(errors);
 
     return (
         <Container maxWidth='xs'>
@@ -109,6 +106,7 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
                         autoFocus
                         {...register('name')}
                     />
+                    <>{errors?.name?.message}</>
                     <TextField
                         margin='normal'
                         required
@@ -120,6 +118,7 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
                         autoFocus
                         {...register('email')}
                     />
+                    <>{errors?.email?.message}</>
                     <TextField
                         margin='normal'
                         required
@@ -130,6 +129,7 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
                         autoComplete='user-password'
                         {...register('password')}
                     />
+                    <>{errors?.password?.message}</>
                     <TextField
                         margin='normal'
                         required
@@ -140,6 +140,8 @@ const RegisterPage: React.FC<RegisterProps> = ({ alert }) => {
                         autoComplete='user-passwordConfirmation'
                         {...register('passwordConfirmation')}
                     />
+                    <>{errors?.passwordConfirmation?.message}</>
+
                     {/* This is a remember me button. Do not know how to use */}
                     {/* <FormControlLabel control={<Checkbox value='remember' color='primary' />} label='Remember me' /> */}
                     <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>

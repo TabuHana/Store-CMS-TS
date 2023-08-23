@@ -19,27 +19,33 @@ import { getCustomers } from '../utils/fetcher';
 
 const columns: GridColDef[] = [
     {
+        field: 'id',
+        headerName: 'ID',
+        editable: false,
+        width: 150,
+    },
+    {
         field: 'name',
         headerName: 'Name',
-        width: 210,
+        width: 200,
         editable: true,
     },
     {
         field: 'email',
         headerName: 'Email',
-        width: 210,
+        width: 200,
         editable: true,
     },
     {
         field: 'phone',
         headerName: 'Phone Number',
-        width: 210,
+        width: 180,
         editable: true,
     },
     {
         field: 'address',
         headerName: 'Address',
-        width: 400,
+        width: 350,
         editable: true,
     },
 ];
@@ -56,10 +62,11 @@ const Customers = () => {
 
     if (data) {
         rows = data;
-
     }
 
-    console.log('erorr:', error);
+    if (error) {
+        console.log(error);
+    }
 
     return (
         <Box sx={{ display: 'flex' }}>
@@ -94,11 +101,10 @@ const Customers = () => {
                                     },
                                 },
                             }}
-                            processRowUpdate={(updatedRow, originalRow) =>
-                                console.log(updatedRow, originalRow)
-                              }
+                            processRowUpdate={(updatedRow) => console.log(updatedRow)}
+                            onProcessRowUpdateError={(error) => console.log(error)}
                             pageSizeOptions={[5]}
-                            checkboxSelection={false}
+                            checkboxSelection
                             disableRowSelectionOnClick={false}
                         />
                     </Box>

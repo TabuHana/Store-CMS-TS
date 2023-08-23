@@ -4,8 +4,6 @@ import { verifyJwt } from '../utils/jwt.utils';
 import { reIssueAccessToken } from '../service/session.service';
 
 const deserializedUser = async (req: Request, res: Response, next: NextFunction) => {
-    console.log('Deserialed User Accessed');
-
     const accessToken =
         get(req, 'cookies.accessToken') || get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
 
