@@ -97,10 +97,8 @@ export class User extends Model<UserAttributes, UserCreationAttributes> {
     /**
      * Hooks
      */
-
     @BeforeCreate
     static async beforeCreateHook(user: User) {
-        // for some reason 'salty' doesnt wanna be a number...
         const salt = await bcrypt.genSalt(Number(salty));
         const hash = bcrypt.hashSync(user.password, salt);
         user.password = hash;
