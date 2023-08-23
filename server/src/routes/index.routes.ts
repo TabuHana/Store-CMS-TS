@@ -1,25 +1,21 @@
 import { Express, Request, Response } from 'express';
 import userRoutes from './user.routes';
-import sessionRoutes from './session.routes';
 import customerRoutes from './customer.routes';
 
 function routes(app: Express) {
-    app.get('/healthcheck', (req: Request, res: Response) => {
-        console.log('SERVER HEALTH CHECKED');
-        res.status(200).json({
-            status: 'Success',
-            message: 'Service is online',
-        });
+    /**
+     * @description     Healthcheck
+     * @route           /
+     * @access          Public
+     */
+    app.get('/', (req: Request, res: Response) => {
+        res.sendStatus(200);
     });
 
     /**
      * Metrics section for later
      */
     userRoutes(app);
-    /**
-     * Metrics section for later
-     */
-    sessionRoutes(app);
     /**
      * Metrics section for later
      */

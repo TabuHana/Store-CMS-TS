@@ -12,4 +12,5 @@ export default {
     accessTokenTtl: '',
     refreshTokenTtl: '',
     saltWorkerFactor: '',
+    app_env: ''
 };
