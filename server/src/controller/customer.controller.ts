@@ -16,11 +16,7 @@ export async function createCustomerHandler(req: Request<{}, {}, CreateCustomerI
 
         return res.send(customer);
     } catch (error: any) {
-        if (error.message === 'SequelizeForeignKeyConstraintError') {
-            return res.status(409).send({ message: 'User does not exist' });
-        } else {
-            return res.status(500).send({ message: 'Server Error' });
-        }
+        return res.status(500).send({ message: `Server Error: ${error.message}` });
     }
 }
 
@@ -31,9 +27,13 @@ export async function getCustomersHandler(req: Request, res: Response) {
         return res.status(401).send({ message: 'Login Required' });
     }
 
-    const customers = await getCustomers(user);
+    try {
+        const customers = await getCustomers(user);
 
-    return res.send(customers);
+        return res.send(customers);
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error ${error.message}` });
+    }
 }
 
 export async function updateCustomerHandler(
@@ -50,9 +50,13 @@ export async function updateCustomerHandler(
 
     const body = req.body;
 
-    const customer = await getCustomerAndUpdate({ user, customer_id, body });
+    try {
+        const customer = await getCustomerAndUpdate({ user, customer_id, body });
 
-    return res.send(customer);
+        return res.send(customer);
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error ${error.message}` });
+    }
 }
 
 export async function deleteCustomerHandler(req: Request<GetCustomerInput['params']>, res: Response) {
@@ -64,7 +68,11 @@ export async function deleteCustomerHandler(req: Request<GetCustomerInput['param
 
     const customer_id = req.params.customerId;
 
-    await deleteCustomer(user, customer_id);
+    try {
+        await deleteCustomer(user, customer_id);
 
-    return res.sendStatus(200);
+        return res.sendStatus(200);
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error ${error.message}` });
+    }
 }
