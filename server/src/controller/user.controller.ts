@@ -28,19 +28,23 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
  * @access          Private
  */
 export async function getCurrentUserHandler(req: Request, res: Response) {
-    const user = res.locals.user.user_id;
+    try {
+        const user = res.locals.user.user_id;
 
-    if (!user) {
-        return res.status(401).send({ message: 'Login Required' });
+        if (!user) {
+            return res.status(401).send({ message: 'Login Required' });
+        }
+
+        const FullUser = await getUser(user);
+
+        if (!FullUser) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+
+        return res.status(200).send(omit(FullUser, 'password'));
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error: ${error.message}` });
     }
-
-    const FullUser = await getUser(user);
-
-    if (!FullUser) {
-        return res.status(404).send({ message: 'User not found' });
-    }
-
-    return res.status(200).send(omit(FullUser, 'password'));
 }
 
 /**
@@ -49,17 +53,21 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
  * @access          Private
  */
 export async function updateUserPasswordHandler(req: Request<{}, {}, UpdateUserInput['body']>, res: Response) {
-    const user = res.locals.user.user_id;
+    try {
+        const user = res.locals.user.user_id;
 
-    if (!user) {
-        return res.status(401).send({ message: 'Login Required' });
+        if (!user) {
+            return res.status(401).send({ message: 'Login Required' });
+        }
+
+        const updatedPassword = await updateUserPassword(user, req.body);
+
+        if (!updateUserPassword) {
+            return res.status(409).send({ message: 'Failed to update password' });
+        }
+
+        return res.status(200).send(updatedPassword);
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error: ${error.message}` });
     }
-
-    const updatedPassword = await updateUserPassword(user, req.body);
-
-    if (!updateUserPassword) {
-        return res.status(409).send({ message: 'Failed to update password' });
-    }
-
-    return res.status(200).send(updatedPassword);
 }
