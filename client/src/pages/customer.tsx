@@ -54,8 +54,6 @@ const Customers = () => {
 
     const { data, error } = useQuery({ queryKey: ['customers'], queryFn: getCustomers });
 
-    console.log(data);
-
     if (data) {
         rows = data;
 
@@ -96,9 +94,12 @@ const Customers = () => {
                                     },
                                 },
                             }}
+                            processRowUpdate={(updatedRow, originalRow) =>
+                                console.log(updatedRow, originalRow)
+                              }
                             pageSizeOptions={[5]}
-                            checkboxSelection
-                            disableRowSelectionOnClick
+                            checkboxSelection={false}
+                            disableRowSelectionOnClick={false}
                         />
                     </Box>
                     <NewCustomer />
