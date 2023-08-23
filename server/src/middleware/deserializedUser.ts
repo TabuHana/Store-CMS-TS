@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { get } from 'lodash';
 import { verifyJwt } from '../utils/jwt.utils';
 import { reIssueAccessToken } from '../service/session.service';
-import config from 'config'
+import config from 'config';
 
 const deserializedUser = async (req: Request, res: Response, next: NextFunction) => {
     console.log('Deserialed User Accessed');
@@ -16,7 +16,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
     console.log({ refreshToken });
     console.log('==========================================================================');
 
-    if (!accessToken && !refreshToken) {
+    if (!accessToken) {
         return next();
     }
 
@@ -31,7 +31,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
         return next();
     }
 
-    if (expired && refreshToken) {
+    if ((expired && refreshToken) || (refreshToken && accessToken === '')) {
         const newAccessToken = await reIssueAccessToken({ refreshToken });
 
         if (newAccessToken) {
