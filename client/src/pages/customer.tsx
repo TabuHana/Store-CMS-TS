@@ -12,10 +12,10 @@ import { DataGrid, GridColDef, GridRowsProp } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
 import { getCustomers } from '../utils/fetcher';
 
-// function isValidPhoneNumber(input: string) {
-//     const phoneNumberRegex = /^\d{3}-\d{3}-\d{4}$/;
-//     return phoneNumberRegex.test(input);
-// }
+function isValidPhoneNumber(input: string) {
+    const phoneNumberRegex = /^\d{3}-\d{3}-\d{4}$/;
+    return phoneNumberRegex.test(input);
+}
 
 const columns: GridColDef[] = [
     {

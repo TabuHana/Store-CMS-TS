@@ -4,8 +4,9 @@ import { CreateUserInput, UpdateUserInput } from '../schema/user.schema';
 import { createUser, getUser, updateUserPassword } from '../service/user.service';
 
 /**
- * Public Route
- * @returns User
+ * @description     Create a user
+ * @route           POST /api/user
+ * @access          Public
  */
 export async function createUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
     try {
@@ -24,9 +25,9 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
 }
 
 /**
- * Private Route
- * @requires User
- * @returns User
+ * @description     Get current user
+ * @route           GET /api/me
+ * @access          Private
  */
 export async function getCurrentUserHandler(req: Request, res: Response) {
     const user = res.locals.user.user_id;
@@ -47,8 +48,9 @@ export async function getCurrentUserHandler(req: Request, res: Response) {
 }
 
 /**
- * Private Route
- * @requires User
+ * @description     Update user password
+ * @route           PUT /api/user
+ * @access          Private
  */
 export async function updateUserPasswordHandler(req: Request<{}, {}, UpdateUserInput['body']>, res: Response) {
     const user = res.locals.user.user_id;
