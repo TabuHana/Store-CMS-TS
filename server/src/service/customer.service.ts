@@ -1,4 +1,5 @@
-import Customer, { CustomerCreationAttributes, CustomerUpdate } from '../models/customer.model';
+import Customer, { CustomerCreationAttributes } from '../models/customer.model';
+//CustomerUpdate
 
 export async function createCustomer(input: CustomerCreationAttributes) {
     try {
@@ -15,9 +16,6 @@ export async function getCustomers(input: any) {
             where: {
                 user_id: input,
             },
-            include: {
-                association: 'orders',
-            },
         });
 
         return customers;
@@ -31,7 +29,7 @@ export async function getSingleCustomer(input: any) {
     try {
         const customer = await Customer.findOne({
             where: {
-                customer_id: customer_id,
+                id: customer_id,
                 user_id: user,
             },
         });
@@ -46,7 +44,7 @@ export async function getCustomerAndUpdate(input: any) {
     const { user, customer_id, body } = input;
 
     const customer = await Customer.findOne({
-        where: { user_id: user, customer_id: customer_id },
+        where: { user_id: user, id: customer_id },
     });
 
     if (!customer) {
@@ -65,7 +63,7 @@ export async function deleteCustomer(user_id: string, customer_id: string) {
     const customer = await Customer.findOne({
         where: {
             user_id: user_id,
-            customer_id: customer_id,
+            id: customer_id,
         },
     });
 

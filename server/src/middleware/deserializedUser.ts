@@ -16,7 +16,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
     console.log({ refreshToken });
     console.log('==========================================================================');
 
-    if (!accessToken) {
+    if (!accessToken && !refreshToken) {
         return next();
     }
 

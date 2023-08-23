@@ -1,4 +1,3 @@
-import { getUser } from '../utils/fetcher';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -10,6 +9,7 @@ import Paper from '@mui/material/Paper';
 import Navbar from '../components/navbar';
 import Header from '../components/header';
 import Footer from '../components/footer';
+import axios from 'axios';
 // import Stats from '../components/Stats';
 // import Deposits from '../components/Deposits';
 // import Orders from '../components/Orders';
@@ -29,9 +29,23 @@ const Dashboard = () => {
         setOpen(!open);
     };
 
-    const { data, error } = useQuery<User | null>(['user'], getUser);
+    const { data, isError, isLoading, error } = useQuery<User | null>({
+        queryKey: ['user'],
+        queryFn: async () =>
+            await axios
+                .get(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/me`, { withCredentials: true })
+                .then((res) => res.data),
+    });
 
-    console.log(error);
+    console.log('error: ', error);
+
+    if (isError) {
+        return <pre>Login Error</pre>;
+    }
+
+    if (isLoading) {
+        return <h1>Loading...</h1>;
+    }
 
     if (data) {
         return (
@@ -92,6 +106,6 @@ const Dashboard = () => {
         );
     }
 
-    return <div>Login failed</div>;
+    return <h1>System Error</h1>;
 };
 export default Dashboard;

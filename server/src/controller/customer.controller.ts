@@ -4,7 +4,6 @@ import {
     deleteCustomer,
     getCustomerAndUpdate,
     getCustomers,
-    getSingleCustomer,
 } from '../service/customer.service';
 import { CreateCustomerInput, GetCustomerInput, UpdateCustomerInput } from '../schema/customer.schema';
 
@@ -32,20 +31,6 @@ export async function getCustomersHandler(req: Request, res: Response) {
     const customers = await getCustomers(user);
 
     return res.send(customers);
-}
-
-export async function getSingleCustomerHandler(req: Request<GetCustomerInput['params']>, res: Response) {
-    const user: string = res.locals.user.user_id;
-
-    if (!user) {
-        return res.status(401).send({ status: 'Failure', message: 'You must be logged in!' });
-    }
-
-    const customer_id = req.params.customerId;
-
-    const customer = await getSingleCustomer({ user, customer_id });
-
-    return res.send(customer);
 }
 
 export async function updateCustomerHandler(
