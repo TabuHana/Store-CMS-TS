@@ -6,8 +6,6 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import CssBaseline from '@mui/material/CssBaseline';
-
 import { mainNavbarItems } from './consts/listItems';
 
 type NavbarProps = {
@@ -66,7 +64,7 @@ const Navbar: React.FC<NavbarProps> = ({ open }) => {
 
     return (
         <>
-            <CssBaseline />
+            {/* <CssBaseline /> */}
             <Drawer variant='permanent' open={open}>
                 <DrawerHeader></DrawerHeader>
                 <List>
