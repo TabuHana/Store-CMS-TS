@@ -27,5 +27,3 @@ app.listen(PORT, async () => {
     await connect();
 });
 
-//asdf
-
