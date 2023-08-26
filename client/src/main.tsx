@@ -14,6 +14,8 @@ import Products from './pages/Products/Products.tsx';
 import Orders from './pages/Orders/Orders.tsx';
 import Register from './pages/auth/Register.tsx';
 import Login from './pages/auth/Login.tsx';
+import { AuthProvider } from './context/AuthContext.tsx';
+import SplitScreen from './components/SplitScreen/SplitScreen.tsx';
 
 const queryClient = new QueryClient();
 
@@ -42,7 +44,8 @@ const router = createBrowserRouter([
         ],
     },
     {
-        path:'/auth',
+        path: '/auth',
+        element: <SplitScreen />,
         children: [
             {
                 path: 'register',
@@ -50,18 +53,20 @@ const router = createBrowserRouter([
             },
             {
                 path: 'login',
-                element: <Login />
-            }
-        ]
-    }
+                element: <Login />,
+            },
+        ],
+    },
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
         <QueryClientProvider client={queryClient}>
             <ThemeProvider theme={theme}>
-                <RouterProvider router={router} />
-                <ReactQueryDevtools />
+                <AuthProvider>
+                    <RouterProvider router={router} />
+                    <ReactQueryDevtools />
+                </AuthProvider>
             </ThemeProvider>
         </QueryClientProvider>
     </React.StrictMode>
