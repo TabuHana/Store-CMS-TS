@@ -5,7 +5,9 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LayersIcon from '@mui/icons-material/Layers';
 import Typography from '@mui/material/Typography';
-import ListItemButton from '@mui/material/ListItemButton';
+import Link from '@mui/material/Link';
+
+import { Link as RouterLink } from 'react-router-dom';
 
 // onSubmit={handleSubmit(formSubmit)}
 
@@ -23,7 +25,10 @@ const Register = () => {
             <Typography component='h2' variant='h6' sx={{ mt: 1, mx: 'auto' }}>
                 Elevate your online business today
             </Typography>
-            <Box component='section' sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 6 }}>
+            <Box
+                component='section'
+                sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', my: 6, mx: '3rem' }}
+            >
                 <Typography component='h3' sx={{ display: 'flex', alignItems: 'center' }}>
                     <Box sx={{ height: 1, width: 135, mr: 1 }}>
                         <hr />
@@ -36,48 +41,33 @@ const Register = () => {
 
                 {/* Form */}
                 <Box component='form' noValidate>
-                    <TextField
-                        margin='normal'
-                        required
-                        fullWidth
-                        id='name'
-                        label='Name'
-                        autoComplete='name'
-                        autoFocus
-                    />
+                    <TextField margin='normal' required fullWidth id='name' type='text' label='Name' autoFocus />
                     <TextField
                         margin='normal'
                         required
                         fullWidth
                         id='email'
+                        type='email'
                         label='Email Address'
-                        autoComplete='email'
-                        autoFocus
                     />
-                    <TextField
-                        margin='normal'
-                        required
-                        fullWidth
-                        label='Password'
-                        type='password'
-                        id='password'
-                        autoComplete='current-password'
-                    />
+                    <TextField margin='normal' required fullWidth label='Password' type='password' id='password' />
                     <TextField
                         margin='normal'
                         required
                         fullWidth
                         label='Confirm Password'
                         type='password'
-                        id='password-confirmation'
-                        autoComplete='password-confirmation'
+                        id='passwordConfirmation'
                     />
                     <Button type='submit' fullWidth variant='contained' sx={{ mt: 3, mb: 2 }}>
                         Sign Up
                     </Button>
                     <Grid container>
-                        <Grid item xs>
-                            <ListItemButton>Already have an account? Sign In!</ListItemButton>
+                        <Grid item xs />
+                        <Grid item>
+                            <Link color='inherit' component={RouterLink} to='/auth/login'>
+                                Already have an account? Sign in!
+                            </Link>
                         </Grid>
                     </Grid>
                 </Box>
