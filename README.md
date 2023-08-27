@@ -40,11 +40,11 @@ Finally, you're ready to run the application by running `npm run dev` in the roo
 
 If you wish to host your own version, make sure to not skip this section!
 
-<strong>Server</strong>
+<strong>Server</strong>\
 Create a `.env` file in the root of `/server`. You will need to match the names on the right in `/server/config/custom-environment-variables.ts` with the names in your `.env` file.
 You can generate your own public and private RSA keys [here](https://travistidwell.com/jsencrypt/demo/). If you wish to encode your keys, please be sure to add in a buffer in `/server/src/middleware/deserializedUser.ts`. An encoding tool can be found [here](https://www.base64encode.org/), but feel free to use an encoding tool of your choice. Be aware, you do not need to encode your keys in order for the application to run.
 
-<strong>Client</strong>
+<strong>Client</strong>\
 Create a `.env.local`. in the root of `/client`. You only need to add `VITE_SERVER_ENDPOINT=http://localhost:5000` into the file. If you are using another port to run your server, please be sure to match it or else your client will not be able to connect to your server!
 
 Finally to start the project run `npm run dev`.
