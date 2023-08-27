@@ -2,14 +2,22 @@ import { createContext, useContext, useState } from 'react';
 
 type User = {
     email: string;
-    name: string;
+    password: string;
 };
+
+type RegisterType = {
+    name: string;
+    email: string;
+    password: string;
+    passwordConfirmation: string;
+}
 
 export type AuthContextType = {
     user: any;
     setUser: any;
     login: (user: User) => void;
     logout: () => void;
+    register: (data: RegisterType) => void
 };
 
 type AuthProviderType = {
@@ -22,14 +30,18 @@ export const AuthProvider = ({ children }: AuthProviderType) => {
     const [user, setUser] = useState<User | null>(null);
 
     const login = (user: User) => {
-        setUser(user);
+        console.log(user)
     };
 
     const logout = () => {
         setUser(null);
     };
 
-    return <AuthContext.Provider value={{ user, setUser, login, logout }}>{children}</AuthContext.Provider>;
+    const register = (data: RegisterType) => {
+        console.log(data)
+    }
+
+    return <AuthContext.Provider value={{ user, setUser, login, logout, register }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {
