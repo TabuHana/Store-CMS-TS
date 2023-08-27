@@ -16,13 +16,18 @@ import Register from './pages/auth/Register.tsx';
 import Login from './pages/auth/Login.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
 import SplitScreen from './components/SplitScreen/SplitScreen.tsx';
+import RequireAuth from './utils/RequireAuth.tsx';
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <App />,
+        element: [
+            <RequireAuth>
+                <App />
+            </RequireAuth>,
+        ],
         errorElement: <ErrorPage />,
         children: [
             {
