@@ -73,14 +73,14 @@ const Header: React.FC<HeaderProps> = ({ handleDrawer }) => {
                         open={Boolean(anchorEl)}
                         onClose={handleClose}
                     >
-                        {/* <MenuList>
+                        <MenuList>
                             {headerListItems.map((item) => (
                                 <MenuItem key={item.id} onClick={handleClose} color='primary'>
                                     <ListItemIcon color='black'>{item.icon}</ListItemIcon>
                                     <ListItemText primary={item.label} />
                                 </MenuItem>
                             ))}
-                        </MenuList> */}
+                        </MenuList>
                     </Menu>
                 </div>
             </Toolbar>

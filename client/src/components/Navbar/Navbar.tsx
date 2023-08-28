@@ -67,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ open }) => {
             {/* <CssBaseline /> */}
             <Drawer variant='permanent' open={open}>
                 <DrawerHeader></DrawerHeader>
-                {/* <List>
+                <List>
                     {mainNavbarItems.map((item) => (
                         <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ open }) => {
                             </ListItemButton>
                         </ListItem>
                     ))}
-                </List> */}
+                </List>
             </Drawer>
         </>
     );
