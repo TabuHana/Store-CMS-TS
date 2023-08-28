@@ -23,15 +23,15 @@ const App = () => {
     };
 
     return (
-        <Box sx={{ display: 'flex' }}>
-            <CssBaseline />
-            <Header handleDrawer={handleDrawer} />
-            <Navbar open={open} />
-            <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-                <DrawerHeader />
-                <Outlet />
+            <Box sx={{ display: 'flex' }}>
+                <CssBaseline />
+                <Header handleDrawer={handleDrawer} />
+                <Navbar open={open} />
+                <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+                    <DrawerHeader />
+                    <Outlet />
+                </Box>
             </Box>
-        </Box>
     );
 };
 

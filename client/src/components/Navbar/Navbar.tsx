@@ -6,7 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { mainNavbarItems } from './consts/listItems';
+import { mainNavbarItems } from './consts/navbarListItems';
 
 type NavbarProps = {
     open: boolean;
@@ -67,7 +67,7 @@ const Navbar: React.FC<NavbarProps> = ({ open }) => {
             {/* <CssBaseline /> */}
             <Drawer variant='permanent' open={open}>
                 <DrawerHeader></DrawerHeader>
-                <List>
+                {/* <List>
                     {mainNavbarItems.map((item) => (
                         <ListItem key={item.id} disablePadding sx={{ display: 'block' }}>
                             <ListItemButton
@@ -91,7 +91,7 @@ const Navbar: React.FC<NavbarProps> = ({ open }) => {
                             </ListItemButton>
                         </ListItem>
                     ))}
-                </List>
+                </List> */}
             </Drawer>
         </>
     );

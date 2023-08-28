@@ -79,22 +79,3 @@ export const customers: Customer[] = [
         address: '5461 West Shades Valley Drive, Montgomery AL',
     },
 ];
-
-
-    // console.log(errors);
-
-    // const [customerError, setCustomerError] = useState('');
-
-    // const formSubmit = async (values: createCustomerInput) => {
-    //     try {
-    //         await axios.post(`${import.meta.env.VITE_SERVER_ENDPOINT}/api/customers`, values, {
-    //             withCredentials: true,
-    //         });
-    //         console.log('Customer Created');
-    //     } catch (e: any) {
-    //         console.log(errors);
-    //         setCustomerError(e.message);
-    //         alert(customerError);
-    //     }
-    // };
-

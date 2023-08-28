@@ -8,7 +8,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Link as RouterLink } from 'react-router-dom';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useAuth } from '../../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const registerUserSchema = object({
     name: string().nonempty({
@@ -37,7 +37,7 @@ type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 // ======================================== //
 
 const Register = () => {
-    const auth = useAuth();
+    const navigate = useNavigate();
 
     const {
         register,
@@ -48,7 +48,8 @@ const Register = () => {
     });
 
     const formSubmit: SubmitHandler<RegisterUserInput> = async (data) => {
-        auth.register(data);
+        console.log(data);
+        navigate('/dashboard');
     };
 
     return (
