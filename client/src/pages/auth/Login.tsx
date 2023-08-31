@@ -102,5 +102,3 @@ const Login = () => {
     );
 };
 export default Login;
-
-// oops

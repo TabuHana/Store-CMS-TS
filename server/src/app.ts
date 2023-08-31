@@ -26,6 +26,3 @@ app.listen(PORT, async () => {
 
     await connect();
 });
-
-
-// 1
