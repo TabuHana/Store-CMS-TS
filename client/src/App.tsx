@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
 import { Outlet } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
+import RequireAuth from './components/auth/RequireAuth';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -23,6 +24,7 @@ const App = () => {
     };
 
     return (
+        <RequireAuth>
             <Box sx={{ display: 'flex' }}>
                 <CssBaseline />
                 <Header handleDrawer={handleDrawer} />
@@ -32,6 +34,7 @@ const App = () => {
                     <Outlet />
                 </Box>
             </Box>
+        </RequireAuth>
     );
 };
 

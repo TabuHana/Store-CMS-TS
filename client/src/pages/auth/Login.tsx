@@ -9,6 +9,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
 
 const loginUserSchema = object({
     email: string({
@@ -27,6 +28,8 @@ type loginUserInput = TypeOf<typeof loginUserSchema>;
 
 // ======================================== //
 
+const LOGIN_URL = '/api/user';
+
 const Login = () => {
     const navigate = useNavigate();
 
@@ -39,7 +42,10 @@ const Login = () => {
     });
 
     const formSubmit: SubmitHandler<loginUserInput> = async (data) => {
-        console.log(data)
+        console.log(data);
+
+        const response = await axios.post(LOGIN_URL, data, { withCredentials: true });
+        console.log(response);
         navigate('/dashboard');
     };
     return (
