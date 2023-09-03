@@ -75,6 +75,11 @@ export async function updateUserPasswordHandler(req: Request<{}, {}, UpdateUserI
     }
 }
 
+/**
+ * @description     Register new user
+ * @route           POST /api/user/register
+ * @access          Public
+ */
 export async function registerUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
     const email = req.body.email;
 

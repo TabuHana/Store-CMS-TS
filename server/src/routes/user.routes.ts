@@ -7,6 +7,7 @@ import {
     createUserSessionHandler,
     deleteSessionHandler,
     getUserSessionHandler,
+    loginUserHandler,
 } from '../controller/session.controller';
 import { createSessionSchema } from '../schema/session.schema';
 
@@ -24,6 +25,8 @@ function userRoutes(app: Express) {
     app.delete('/api/sessions', requireUser, deleteSessionHandler);
 
     app.post('/api/user/register', validateResource(createUserSchema), registerUserHandler)
+
+    app.post('/api/user/login', validateResource(createSessionSchema), loginUserHandler)
 }
 
 export default userRoutes;
