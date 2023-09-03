@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { omit } from 'lodash';
 import { CreateUserInput, UpdateUserInput } from '../schema/user.schema';
-import { createUser, getUser, updateUserPassword } from '../service/user.service';
+import { createUser, findUser, getUser, updateUserPassword } from '../service/user.service';
+import { createSession } from '../service/session.service';
+import { signJwt } from '../utils/jwt.utils';
+import config from 'config';
 
 /**
  * @description     Create a user
@@ -70,4 +73,46 @@ export async function updateUserPasswordHandler(req: Request<{}, {}, UpdateUserI
     } catch (error: any) {
         return res.status(500).send({ message: `Server Error: ${error.message}` });
     }
+}
+
+/**
+ * @description     Register new user
+ * @route           POST /api/user/register
+ * @access          Public
+ */
+export async function registerUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
+    const email = req.body.email;
+
+    const userExists = await findUser(email);
+
+    if (userExists) {
+        return res.status(409).send({ message: 'Email is already in use' });
+    }
+
+    const newUser = await createUser(req.body);
+
+    // Create a session
+    const session = await createSession(newUser.user_id, req.get('user-agent') || '');
+
+    // Create an access Token
+    const accessToken = signJwt(
+        { ...newUser, session: session.session_id },
+        { expiresIn: config.get<string>('accessTokenTtl') }
+    );
+
+    // Create a refresh Token
+    const refreshToken = signJwt(
+        { ...newUser, session: session.session_id },
+        { expiresIn: config.get<string>('refreshTokenTtl') }
+    );
+
+    res.cookie('refreshToken', refreshToken, {
+        maxAge: 3.154e10, // 1 year
+        httpOnly: true,
+        sameSite: 'strict',
+        secure: false, //set to true for prod
+    });
+
+    // Return access & refresh Token
+    return res.status(200).send({ user: newUser, accessToken });
 }

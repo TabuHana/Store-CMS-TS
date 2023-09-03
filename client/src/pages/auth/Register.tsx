@@ -36,6 +36,8 @@ type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 
 // ======================================== //
 
+// /api/user/register 
+
 const Register = () => {
     const navigate = useNavigate();
 
