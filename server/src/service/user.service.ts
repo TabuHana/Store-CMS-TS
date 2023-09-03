@@ -62,3 +62,17 @@ export async function validatePassword({ email, password }: { email: string; pas
 
     return omit(user.toJSON(), 'password');
 }
+
+export async function findUser(query: string) {
+    const user = await User.findOne({
+        where: {
+            email: query,
+        },
+    });
+
+    if (!user) {
+        return false;
+    }
+
+    return omit(user.toJSON(), 'password');
+}
