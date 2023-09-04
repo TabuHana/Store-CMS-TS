@@ -2,9 +2,9 @@ import { Navigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
 const RequireAuth = ({ children }: any) => {
-    const { user } = useAuth();
+    const { auth } = useAuth();
 
-    if (!user) {
+    if (!auth) {
         return <Navigate to='/auth/login' />;
     }
 

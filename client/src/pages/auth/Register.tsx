@@ -9,6 +9,8 @@ import { Link as RouterLink } from 'react-router-dom';
 import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
+import axios from '../../api/axios';
+import useAuth from '../../hooks/useAuth';
 
 const registerUserSchema = object({
     name: string().nonempty({
@@ -36,10 +38,12 @@ type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 
 // ======================================== //
 
-// /api/user/register 
+// /api/user/register
 
 const Register = () => {
     const navigate = useNavigate();
+    const { setAuth } = useAuth();
+
 
     const {
         register,
@@ -50,7 +54,10 @@ const Register = () => {
     });
 
     const formSubmit: SubmitHandler<RegisterUserInput> = async (data) => {
-        console.log(data);
+        const response = await axios.post('/api/user/register', data, { withCredentials: true });
+
+        setAuth(response.data)
+
         navigate('/dashboard');
     };
 
