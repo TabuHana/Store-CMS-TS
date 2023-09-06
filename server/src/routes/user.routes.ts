@@ -1,7 +1,13 @@
 import { Express } from 'express';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
-import { createUserHandler, getCurrentUserHandler, registerUserHandler, updateUserPasswordHandler } from '../controller/user.controller';
+import {
+    createUserHandler,
+    getCurrentUserHandler,
+    getRefresh,
+    registerUserHandler,
+    updateUserPasswordHandler,
+} from '../controller/user.controller';
 import { createUserSchema, updateUserSchema } from '../schema/user.schema';
 import {
     createUserSessionHandler,
@@ -24,9 +30,11 @@ function userRoutes(app: Express) {
 
     app.delete('/api/sessions', requireUser, deleteSessionHandler);
 
-    app.post('/api/user/register', validateResource(createUserSchema), registerUserHandler)
+    app.post('/api/user/register', validateResource(createUserSchema), registerUserHandler);
 
-    app.post('/api/user/login', validateResource(createSessionSchema), loginUserHandler)
+    app.post('/api/user/login', validateResource(createSessionSchema), loginUserHandler);
+
+    app.get('/api/user/refresh', requireUser, getRefresh);
 }
 
 export default userRoutes;

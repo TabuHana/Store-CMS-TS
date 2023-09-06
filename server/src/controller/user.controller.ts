@@ -116,3 +116,23 @@ export async function registerUserHandler(req: Request<{}, {}, CreateUserInput['
     // Return access & refresh Token
     return res.status(200).send({ user: newUser, accessToken });
 }
+
+/**
+ * @description     Get current user
+ * @route           GET /api/me
+ * @access          Private
+ */
+export async function getRefresh(req: Request, res: Response) {
+    try {
+        const user = res.locals.user;
+        const newToken = res.locals.auth;
+
+        if (!newToken) {
+            return res.status(200).send({ message: 'No new Token' });
+        }
+
+        return res.status(200).send({ user, newAccessToken: newToken });
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error: ${error.message}` });
+    }
+}
