@@ -78,3 +78,5 @@ export async function deleteCustomerHandler(req: Request<GetCustomerInput['param
         return res.status(500).send({ message: `Server Error ${error.message}` });
     }
 }
+
+// random, working in branch
