@@ -1,10 +1,10 @@
 import { Navigate } from 'react-router-dom';
-import useAuth from '../../hooks/useAuth';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const RequireAuth = ({ children }: any) => {
-    const { auth } = useAuth();
+    const { auth } = useAuthContext();
 
-    if (!auth) {
+    if (!auth?.accessToken) {
         return <Navigate to='/auth/login' />;
     }
 

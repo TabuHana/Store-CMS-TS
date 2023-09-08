@@ -10,7 +10,7 @@ import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const loginUserSchema = object({
     email: string({
@@ -31,7 +31,7 @@ type loginUserInput = TypeOf<typeof loginUserSchema>;
 
 const Login = () => {
     const navigate = useNavigate();
-    const { setAuth } = useAuth();
+    const { setAuth } = useAuthContext();
 
     const {
         register,

@@ -1,8 +1,8 @@
 import axios from '../api/axios';
-import useAuth from './useAuth';
+import useAuthContext from './useAuthContext';
 
 const useRefreshToken = () => {
-    const { setAuth } = useAuth();
+    const { setAuth } = useAuthContext();
 
     const refresh = async () => {
         const response = await axios.get('/api/user/refresh', {
@@ -17,5 +17,3 @@ const useRefreshToken = () => {
     return refresh;
 };
 export default useRefreshToken;
-
-// working in separate branch

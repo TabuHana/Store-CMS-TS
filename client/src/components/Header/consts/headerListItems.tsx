@@ -1,6 +1,5 @@
 import PersonIcon from '@mui/icons-material/Person';
 import LockIcon from '@mui/icons-material/Lock';
-import LogoutIcon from '@mui/icons-material/Logout';
 
 export const headerListItems = [
     {
@@ -15,10 +14,4 @@ export const headerListItems = [
         label: 'Change Password',
         route: 'change-password',
     },
-    {
-        id: 2,
-        icon: <LogoutIcon />,
-        label: 'Sign Out',
-        route: 'sign-out'
-    }
 ];

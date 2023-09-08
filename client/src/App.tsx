@@ -6,6 +6,7 @@ import { styled } from '@mui/material/styles';
 import { Outlet } from 'react-router-dom';
 import { CssBaseline } from '@mui/material';
 import RequireAuth from './components/auth/RequireAuth';
+import PersistedLogin from './components/auth/PersistedLogin';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -24,17 +25,19 @@ const App = () => {
     };
 
     return (
-        <RequireAuth>
-            <Box sx={{ display: 'flex' }}>
-                <CssBaseline />
-                <Header handleDrawer={handleDrawer} />
-                <Navbar open={open} />
-                <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
-                    <DrawerHeader />
-                    <Outlet />
+        <PersistedLogin>
+            <RequireAuth>
+                <Box sx={{ display: 'flex' }}>
+                    <CssBaseline />
+                    <Header handleDrawer={handleDrawer} />
+                    <Navbar open={open} />
+                    <Box component='main' sx={{ flexGrow: 1, p: 3 }}>
+                        <DrawerHeader />
+                        <Outlet />
+                    </Box>
                 </Box>
-            </Box>
-        </RequireAuth>
+            </RequireAuth>
+        </PersistedLogin>
     );
 };
 

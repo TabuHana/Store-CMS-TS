@@ -66,12 +66,11 @@ export async function deleteSessionHandler(req: Request, res: Response) {
 
         await updateSession({ session_id: session }, { valid: false });
 
-        res.clearCookie('accessToken');
-        res.clearCookie('refreshToken');
+        res.clearCookie('refreshToken')
 
         return res.send({
+            user: null,
             accessToken: null,
-            refreshToken: null,
         });
     } catch (error: any) {
         return res.status(500).send({ message: `Server Error: ${error.message}` });
