@@ -1,9 +1,9 @@
-import useAuth from '../../hooks/useAuth';
+import useAuthContext from '../../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
 import useRefreshToken from '../../hooks/useRefreshToken';
 
 const PersistedLogin = ({ children }: any) => {
-    const { auth } = useAuth();
+    const { auth } = useAuthContext();
     const refresh = useRefreshToken();
 
     const [isLoading, setIsLoading] = useState(true);

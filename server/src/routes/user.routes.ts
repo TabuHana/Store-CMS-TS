@@ -34,7 +34,7 @@ function userRoutes(app: Express) {
 
     app.post('/api/user/login', validateResource(createSessionSchema), loginUserHandler);
 
-    app.get('/api/user/refresh', requireUser, getRefresh);
+    app.get('/api/user/refresh', getRefresh);
 }
 
 export default userRoutes;

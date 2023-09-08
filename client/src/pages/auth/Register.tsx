@@ -10,7 +10,7 @@ import { object, string, TypeOf } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../api/axios';
-import useAuth from '../../hooks/useAuth';
+import useAuthContext from '../../hooks/useAuthContext';
 
 const registerUserSchema = object({
     name: string().nonempty({
@@ -42,8 +42,7 @@ type RegisterUserInput = TypeOf<typeof registerUserSchema>;
 
 const Register = () => {
     const navigate = useNavigate();
-    const { setAuth } = useAuth();
-
+    const { setAuth } = useAuthContext();
 
     const {
         register,
@@ -56,7 +55,7 @@ const Register = () => {
     const formSubmit: SubmitHandler<RegisterUserInput> = async (data) => {
         const response = await axios.post('/api/user/register', data, { withCredentials: true });
 
-        setAuth(response.data)
+        setAuth(response.data);
 
         navigate('/dashboard');
     };
