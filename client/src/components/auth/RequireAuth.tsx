@@ -4,7 +4,7 @@ import useAuthContext from '../../hooks/useAuthContext';
 const RequireAuth = ({ children }: any) => {
     const { auth } = useAuthContext();
 
-    if (!auth) {
+    if (!auth?.accessToken) {
         return <Navigate to='/auth/login' />;
     }
 

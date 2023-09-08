@@ -18,8 +18,8 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
         console.log('no access tk but refresh tk exist')
         const { expired } = verifyJwt(refreshToken);
 
-        if (expired) {
-            console.log('token is expired')
+        if (!expired) {
+            console.log('token is not expired, re-issuing access tk')
             const newAccessToken = await reIssueAccessToken({ refreshToken });
 
             if (newAccessToken) {

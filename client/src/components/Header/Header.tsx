@@ -12,6 +12,9 @@ import Button from '@mui/material/Button';
 import { headerListItems } from './consts/headerListItems';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import LogoutIcon from '@mui/icons-material/Logout';
+import axios from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
 
 type HeaderProps = {
     handleDrawer: () => void;
@@ -27,6 +30,8 @@ const Header: React.FC<HeaderProps> = ({ handleDrawer }) => {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const navigate = useNavigate();
 
     return (
         <AppBar position='fixed' sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}>
@@ -80,6 +85,19 @@ const Header: React.FC<HeaderProps> = ({ handleDrawer }) => {
                                     <ListItemText primary={item.label} />
                                 </MenuItem>
                             ))}
+                            {/* Logout */}
+                            <MenuItem
+                                color='primary'
+                                onClick={() => {
+                                    axios.delete('/api/sesssions/delete');
+                                    navigate('/auth/login');
+                                }}
+                            >
+                                <ListItemIcon color='black'>
+                                    <LogoutIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={`Sign Out`} />
+                            </MenuItem>
                         </MenuList>
                     </Menu>
                 </div>

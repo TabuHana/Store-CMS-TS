@@ -128,10 +128,11 @@ export async function getRefresh(req: Request, res: Response) {
         const newToken = res.locals.auth;
 
         if (!newToken) {
-            return res.status(200).send({ message: 'No new Token' });
+            console.log('no new token sent')
+            return 
         }
 
-        return res.status(200).send({ user, newAccessToken: newToken });
+        return res.status(200).send({ user, accessToken: newToken });
     } catch (error: any) {
         return res.status(500).send({ message: `Server Error: ${error.message}` });
     }
