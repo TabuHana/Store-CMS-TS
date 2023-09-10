@@ -1,4 +1,4 @@
-import { Express } from 'express';
+import { Express, Router } from 'express';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
 import {
@@ -17,24 +17,32 @@ import {
 } from '../controller/session.controller';
 import { createSessionSchema } from '../schema/session.schema';
 
-function userRoutes(app: Express) {
-    app.get('/api/me', requireUser, getCurrentUserHandler);
+const router = Router();
 
-    app.post('/api/user', validateResource(createUserSchema), createUserHandler);
+router.get('/me', getCurrentUserHandler);
 
-    app.put('/api/user', [requireUser, validateResource(updateUserSchema)], updateUserPasswordHandler);
+router.post('/register', validateResource(createUserSchema), registerUserHandler);
 
-    app.get('/api/sessions', requireUser, getUserSessionHandler);
+export default router;
 
-    app.post('/api/sessions', validateResource(createSessionSchema), createUserSessionHandler);
+// function userRoutes(app: Express) {
+//     app.get('/api/me', requireUser, getCurrentUserHandler);
 
-    app.delete('/api/sessions', requireUser, deleteSessionHandler);
+//     app.post('/api/user/register', validateResource(createUserSchema), registerUserHandler);
 
-    app.post('/api/user/register', validateResource(createUserSchema), registerUserHandler);
+//     app.post('/api/user/login', validateResource(createSessionSchema), loginUserHandler);
 
-    app.post('/api/user/login', validateResource(createSessionSchema), loginUserHandler);
+// app.get('/api/sessions', requireUser, getUserSessionHandler);
 
-    app.get('/api/user/refresh', getRefresh);
-}
+// app.post('/api/user', validateResource(createUserSchema), createUserHandler);
 
-export default userRoutes;
+// app.put('/api/user', [requireUser, validateResource(updateUserSchema)], updateUserPasswordHandler);
+
+// app.post('/api/sessions', validateResource(createSessionSchema), createUserSessionHandler);
+
+// app.delete('/api/sessions', requireUser, deleteSessionHandler);
+
+// app.get('/api/user/refresh', getRefresh);
+// }
+
+// export default userRoutes;

@@ -31,23 +31,25 @@ export async function createUserHandler(req: Request<{}, {}, CreateUserInput['bo
  * @access          Private
  */
 export async function getCurrentUserHandler(req: Request, res: Response) {
-    try {
-        const user = res.locals.user.user_id;
 
-        if (!user) {
-            return res.status(401).send({ message: 'Login Required' });
-        }
+    res.send('hello')
+    // try {
+    //     const user = res.locals.user.user_id;
 
-        const FullUser = await getUser(user);
+    //     if (!user) {
+    //         return res.status(401).send({ message: 'Login Required' });
+    //     }
 
-        if (!FullUser) {
-            return res.status(404).send({ message: 'User not found' });
-        }
+    //     const FullUser = await getUser(user);
 
-        return res.status(200).send(omit(FullUser, 'password'));
-    } catch (error: any) {
-        return res.status(500).send({ message: `Server Error: ${error.message}` });
-    }
+    //     if (!FullUser) {
+    //         return res.status(404).send({ message: 'User not found' });
+    //     }
+
+    //     return res.status(200).send(omit(FullUser, 'password'));
+    // } catch (error: any) {
+    //     return res.status(500).send({ message: `Server Error: ${error.message}` });
+    // }
 }
 
 /**

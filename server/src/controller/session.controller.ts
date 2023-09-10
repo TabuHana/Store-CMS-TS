@@ -28,21 +28,16 @@ export async function createUserSessionHandler(req: Request, res: Response) {
             { expiresIn: config.get<string>('refreshTokenTtl') }
         );
 
-        res.cookie('accessToken', accessToken, {
-            maxAge: 900000, // 15 mins
-            httpOnly: true,
-            sameSite: 'strict',
-            secure: false, //set to true for prod
-        });
-
-        res.cookie('refreshToken', refreshToken, {
+        res.cookie('jwt', refreshToken, {
             maxAge: 3.154e10, // 1 year
             httpOnly: true,
             sameSite: 'strict',
-            secure: false, //set to true for prod
+            secure: true,
         });
+
         // Return access & refresh Token
-        return res.status(200).send({ accessToken, refreshToken });
+        return res.status(200).send({ accessToken });
+
     } catch (error: any) {
         return res.status(500).send({ message: `Server Error: ${error.message}` });
     }

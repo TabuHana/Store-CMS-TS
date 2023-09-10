@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import routes from './routes/index.routes';
 import logger from './utils/logger';
+import userRoutes from './routes/user.routes';
 
 const APP_ENV = config.get<string>('app_env');
 const PORT = config.get<number>('port') || 5000;
@@ -19,7 +20,9 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(deserializedUser);
 
-routes(app);
+app.use('/api/user', userRoutes)
+
+// routes(app);
 
 app.listen(PORT, async () => {
     logger.info(`App is running in ${APP_ENV} mode on http://localhost:${PORT}`);
