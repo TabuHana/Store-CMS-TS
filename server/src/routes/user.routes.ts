@@ -1,4 +1,4 @@
-import { Express, Router } from 'express';
+import { Router } from 'express';
 import requireUser from '../middleware/requireUser';
 import validateResource from '../middleware/validateResource';
 import {

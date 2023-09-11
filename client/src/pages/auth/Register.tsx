@@ -53,7 +53,7 @@ const Register = () => {
     });
 
     const formSubmit: SubmitHandler<RegisterUserInput> = async (data) => {
-        const response = await axios.post('/api/user/register', data, { withCredentials: true });
+        const response = await axios.post('/api/auth/register', data, { withCredentials: true });
 
         setAuth(response.data);
 

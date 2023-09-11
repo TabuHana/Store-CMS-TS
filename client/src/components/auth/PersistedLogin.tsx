@@ -11,6 +11,7 @@ const PersistedLogin = ({ children }: any) => {
     useEffect(() => {
         const verifyRefreshToken = async () => {
             try {
+                console.log('trying refresh')
                 await refresh();
             } catch (error) {
                 console.error(error);
@@ -19,7 +20,7 @@ const PersistedLogin = ({ children }: any) => {
             }
         };
 
-        !auth ? verifyRefreshToken() : setIsLoading(false);
+        !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     }, []);
 
     return <>{isLoading ? <p>Loading...</p> : children}</>;

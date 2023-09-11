@@ -31,7 +31,14 @@ export async function updateSession(query: any, update: any) {
 }
 
 export async function reIssueAccessToken({ refreshToken }: { refreshToken: string }) {
-    const { decoded } = verifyJwt(refreshToken);
+    const { decoded, expired } = verifyJwt(refreshToken);
+
+    if (expired) {
+        console.log('token is expired');
+        return false;
+    }
+
+    console.log('token is not expired');
 
     if (!decoded || !get(decoded, 'session')) return false;
 

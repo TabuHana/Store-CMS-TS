@@ -1,15 +1,14 @@
 import { createContext, useState } from 'react';
 
-type User = {
-    user_id: string;
-    name: string;
-    email: string;
-    createdAt: Date;
-    updatedAt: Date;
-};
+// type User = {
+//     user_id: string;
+//     name: string;
+//     email: string;
+//     createdAt: Date;
+//     updatedAt: Date;
+// };
 
 type Auth = {
-    user: User;
     accessToken: string;
 };
 

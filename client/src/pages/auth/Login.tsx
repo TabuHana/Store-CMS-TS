@@ -44,7 +44,7 @@ const Login = () => {
     const formSubmit: SubmitHandler<loginUserInput> = async (data) => {
         // console.log(data);
 
-        const response = await axios.post('/api/user/login', data);
+        const response = await axios.post('/api/auth/login', data);
 
         setAuth(response.data);
 
