@@ -1,14 +1,13 @@
 import { Request, Response } from 'express';
-import { omit } from 'lodash';
-import { CreateUserInput, UpdateUserInput } from '../schema/user.schema';
-import { createUser, findUser, getUser, updateUserPassword, validatePassword } from '../service/user.service';
-import { createSession } from '../service/session.service';
+import { CreateUserInput } from '../schema/user.schema';
+import { createUser, findUser, validatePassword } from '../service/user.service';
+import { createSession, updateSession } from '../service/session.service';
 import { signJwt } from '../utils/jwt.utils';
 import config from 'config';
 
 /**
  * @description     Register new user
- * @route           POST /api/user/register
+ * @route           POST /api/auth/register
  * @access          Public
  */
 export async function registerUserHandler(req: Request<{}, {}, CreateUserInput['body']>, res: Response) {
@@ -49,8 +48,8 @@ export async function registerUserHandler(req: Request<{}, {}, CreateUserInput['
 }
 
 /**
- * @description     Login user password
- * @route           POST /api/user/login
+ * @description     Login user
+ * @route           POST /api/auth/login
  * @access          Public
  */
 export async function loginUserHandler(req: Request, res: Response) {
@@ -88,8 +87,27 @@ export async function loginUserHandler(req: Request, res: Response) {
 }
 
 /**
- * @description     Get current user
- * @route           GET /api/me
+ * @description     Logout user
+ * @route           POST /api/auth/logout
+ * @access          Public
+ */
+export async function logoutUserHandler(req: Request, res: Response) {
+    try {
+        const session: number = res.locals.user.session;
+
+        await updateSession({ session_id: session }, { valid: false });
+
+        res.clearCookie('refreshToken');
+
+        return res.status(200).send({ accessToken: null });
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error: ${error.message}` });
+    }
+}
+
+/**
+ * @description     Get new accessToken
+ * @route           GET /api/auth/refresh
  * @access          Private
  */
 export async function handleRefreshToken(req: Request, res: Response) {

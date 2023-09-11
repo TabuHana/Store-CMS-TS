@@ -10,7 +10,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
 
     if (refreshToken) {
 
-        console.log('deserialized user')
+        console.log('================ deserialized user ================')
 
         if (!accessToken) {
             console.log('access token doesnt exist');
@@ -26,7 +26,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
             return next();
         }
 
-        console.log('access token does exist')
+        console.log('access token exist')
 
         const { decoded, expired } = verifyJwt(accessToken);
 
@@ -36,6 +36,7 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
         }
 
         if (expired) {
+            console.log('access token expired')
             const newAccessToken = await reIssueAccessToken({ refreshToken });
 
             if (newAccessToken) {
@@ -53,58 +54,3 @@ const deserializedUser = async (req: Request, res: Response, next: NextFunction)
 };
 
 export default deserializedUser;
-
-// old
-
-// const accessToken = get(req, 'headers.authorization', '').replace(/^Bearer\s/, '');
-
-// const refreshToken = get(req, 'cookies.refreshToken');
-
-// if (!accessToken && !refreshToken) {
-//     console.log('neither exist')
-//     return next();
-// }
-
-// if (!accessToken && refreshToken) {
-//     console.log('no access tk but refresh tk exist')
-//     const { expired } = verifyJwt(refreshToken);
-
-//     if (!expired) {
-//         console.log('token is not expired, re-issuing access tk')
-//         const newAccessToken = await reIssueAccessToken({ refreshToken });
-
-//         if (newAccessToken) {
-//             res.setHeader('x-access-token', newAccessToken);
-//             res.locals.auth = newAccessToken;
-
-//             const { decoded } = verifyJwt(newAccessToken as string);
-
-//             res.locals.user = decoded;
-//             return next();
-//         }
-//     }
-// }
-
-// const { decoded, expired } = verifyJwt(accessToken);
-
-// if (decoded && !expired) {
-//     console.log('token is not expired')
-//     res.locals.user = decoded;
-// }
-
-// if (expired && refreshToken) {
-//     console.log('expired and refresh tk exists')
-//     const newAccessToken = await reIssueAccessToken({ refreshToken });
-
-//     if (newAccessToken) {
-//         res.setHeader('x-access-token', newAccessToken);
-//         res.locals.auth = newAccessToken;
-
-//         const result = verifyJwt(newAccessToken as string);
-
-//         res.locals.user = result.decoded;
-//         return next();
-//     }
-// }
-
-// return next();

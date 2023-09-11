@@ -34,11 +34,11 @@ export async function reIssueAccessToken({ refreshToken }: { refreshToken: strin
     const { decoded, expired } = verifyJwt(refreshToken);
 
     if (expired) {
-        console.log('token is expired');
+        console.log('refresh token expired');
         return false;
     }
 
-    console.log('token is not expired');
+    console.log('refresh token not expired');
 
     if (!decoded || !get(decoded, 'session')) return false;
 
