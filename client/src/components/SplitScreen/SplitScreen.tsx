@@ -7,12 +7,11 @@ import Avatar from '@mui/material/Avatar';
 import LayersIcon from '@mui/icons-material/Layers';
 import CssBaseline from '@mui/material/CssBaseline';
 
-// import { useState } from 'react';
-// import { useAuth } from '../../context/AuthContext';
+
+
 
 const SplitScreen = () => {
-    // const [user, setUser] = useState('');
-    // const auth = useAuth();
+
     return (
         <Grid container component='main' sx={{ height: '100vh' }}>
             <CssBaseline />

@@ -1,6 +1,7 @@
 import useAuthContext from '../../hooks/useAuthContext';
 import { useEffect, useState } from 'react';
 import useRefreshToken from '../../hooks/useRefreshToken';
+import Spinner from '../Spinner/Spinner';
 
 const PersistedLogin = ({ children }: any) => {
     const { auth } = useAuthContext();
@@ -23,6 +24,6 @@ const PersistedLogin = ({ children }: any) => {
         !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false);
     }, []);
 
-    return <>{isLoading ? <p>Loading...</p> : children}</>;
+    return <>{isLoading ? <Spinner /> : children}</>;
 };
 export default PersistedLogin;
