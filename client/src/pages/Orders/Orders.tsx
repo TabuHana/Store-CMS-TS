@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import DataTable from '../../components/DataTable/DataTable';
 import { GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
-import { getCustomers } from '../../utils/fetchers';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const rows: GridRowsProp = [];
 
@@ -18,16 +18,16 @@ const orderTableStyles = {
 };
 
 const Orders = () => {
-    const query = useQuery({ queryKey: ['orders'], queryFn: getCustomers });
+    const axiosPrivate = useAxiosPrivate()
+    const { data, isLoading } = useQuery({ queryKey: ['orders'], queryFn: async () => {
+        const orders = await axiosPrivate.get('/api/orders')
+
+        return orders.data
+    } });
 
     return (
         <Box sx={{ height: 400, width: '100%' }}>
-            <DataTable
-                rows={rows}
-                columns={columns}
-                loading={!query.data}
-                sx={orderTableStyles}
-            />
+            <DataTable rows={data ? data : rows} columns={columns} loading={isLoading} sx={orderTableStyles} />
         </Box>
     );
 };

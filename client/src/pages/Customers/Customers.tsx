@@ -2,7 +2,9 @@ import { Box } from '@mui/material';
 import DataTable from '../../components/DataTable/DataTable';
 import { GridRowsProp, GridColDef } from '@mui/x-data-grid';
 import { useQuery } from '@tanstack/react-query';
-import { getCustomers } from '../../utils/fetchers';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const rows: GridRowsProp = [];
 
@@ -18,16 +20,28 @@ const customerTableStyles = {
 };
 
 const Customers = () => {
-    const query = useQuery({ queryKey: ['customers'], queryFn: getCustomers });
+    const axiosPrivate = useAxiosPrivate();
+    const { data, isLoading } = useQuery({
+        queryKey: ['customers'],
+        queryFn: async () => {
+            const customers = await axiosPrivate.get('/api/customers');
+
+            return customers.data;
+        },
+    });
+    const navigate = useNavigate();
+
+    console.log(data);
 
     return (
         <Box sx={{ height: 400, width: '100%' }}>
-            <DataTable
-                rows={query.data ? query.data : rows}
-                columns={columns}
-                loading={!query.data}
-                sx={customerTableStyles}
-            />
+            <Box>
+                Test
+                <Button variant='contained' onClick={() => navigate('/customers/new')}>
+                    new
+                </Button>
+            </Box>
+            <DataTable rows={data ? data : rows} columns={columns} loading={isLoading} sx={customerTableStyles} />
         </Box>
     );
 };

@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import { getUser } from '../../utils/fetchers';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 const Dashboard = () => {
-    const query = useQuery({ queryKey: ['user'], queryFn: getUser });
+    const axiosPrivate = useAxiosPrivate()
+    const { data } = useQuery({ queryKey: ['user'], queryFn: async () => {
+        const user = await axiosPrivate.get('/api/user/me')
 
-    console.log(query.data);
+        return user.data
+    } });
+
+    console.log(data);
 
     return <div>dashboard</div>;
 };

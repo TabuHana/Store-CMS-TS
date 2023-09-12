@@ -16,6 +16,7 @@ import Register from './pages/auth/Register.tsx';
 import Login from './pages/auth/Login.tsx';
 import SplitScreen from './components/SplitScreen/SplitScreen.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
+import NewCustomer from './pages/Customers/newCustomer.tsx';
 
 const queryClient = new QueryClient();
 
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             {
                 path: 'customers',
                 element: <Customers />,
+            },
+            {
+                path: 'customers/new',
+                element: <NewCustomer />,
             },
             {
                 path: 'products',
