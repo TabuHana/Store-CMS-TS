@@ -89,7 +89,7 @@ const Header: React.FC<HeaderProps> = ({ handleDrawer }) => {
                             <MenuItem
                                 color='primary'
                                 onClick={() => {
-                                    axios.delete('/api/sesssions/delete');
+                                    axios.delete('/api/auth/logout', { withCredentials: true });
                                     navigate('/auth/login');
                                 }}
                             >
