@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import BasicCard from '../../components/BasicCard/BasicCard';
+import AddIcon from '@mui/icons-material/Add';
 
 const rows: GridRowsProp = [];
 
@@ -35,13 +37,28 @@ const Customers = () => {
 
     return (
         <Box sx={{ height: 400, width: '100%' }}>
-            <Box>
-                Test
-                <Button variant='contained' onClick={() => navigate('/customers/new')}>
-                    new
-                </Button>
-            </Box>
-            <DataTable rows={data ? data : rows} columns={columns} loading={isLoading} sx={customerTableStyles} />
+            <BasicCard
+                header={'Customers'}
+                action={
+                    <Button
+                        variant='contained'
+                        size='small'
+                        endIcon={<AddIcon />}
+                        onClick={() => navigate('/customers/new')}
+                        sx={{fontSize: '.8rem'}}
+                    >
+                        new
+                    </Button>
+                }
+                content={
+                    <DataTable
+                        rows={data ? data : rows}
+                        columns={columns}
+                        loading={isLoading}
+                        sx={customerTableStyles}
+                    />
+                }
+            />
         </Box>
     );
 };

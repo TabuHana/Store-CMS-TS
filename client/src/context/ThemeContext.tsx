@@ -14,24 +14,25 @@ export const theme = createTheme({
         },
     },
     palette: {
-        primary: {
-            main: '#2A2932',
-        },
-        secondary: {
-            main: '#313C41',
-        },
-        background: {
-            default: '#15161E',
-            paper: '#141414',
-        },
-        text: {
-            primary: '#fff',
-            secondary: '#fff',
-            disabled: '#fff'
-        },
-        action: {
-            active: '#fff',
-            hover: '#313C41',
-        }
+        mode: 'dark',
+        // primary: {
+        //     main: '#2A2932',
+        // },
+        // secondary: {
+        //     main: '#313C41',
+        // },
+        // background: {
+        //     default: '#15161E',
+        //     paper: '#141414',
+        // },
+        // text: {
+        //     primary: '#fff',
+        //     secondary: '#fff',
+        //     disabled: '#fff'
+        // },
+        // action: {
+        //     active: '#fff',
+        //     hover: '#313C41',
+        // }
     },
 });
