@@ -14,6 +14,7 @@ export const theme = createTheme({
         },
     },
     palette: {
+        // using dark theme
         mode: 'dark',
         // primary: {
         //     main: '#2A2932',
