@@ -21,7 +21,7 @@ const registerUserSchema = object({
     })
         .email('Not a valid email')
         .nonempty({
-            message: 'Password is required',
+            message: 'Email is required',
         }),
     password: string().min(6, 'Password too short - should be 6 chars minimum').nonempty({
         message: 'Password is required',
