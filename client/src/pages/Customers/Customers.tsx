@@ -11,10 +11,11 @@ import AddIcon from '@mui/icons-material/Add';
 const rows: GridRowsProp = [];
 
 const columns: GridColDef[] = [
-    { field: 'id', headerName: 'User ID', width: 150 },
+    // { field: 'id', headerName: 'ID', width: 100 },
     { field: 'name', headerName: 'Name', width: 150 },
-    { field: 'username', headerName: 'Username', width: 150 },
     { field: 'email', headerName: 'E-mail', width: 150 },
+    { field: 'phone', headerName: 'Phone Number', width: 150 },
+    { field: 'address', headerName: 'Address', width: 150 },
 ];
 
 const customerTableStyles = {

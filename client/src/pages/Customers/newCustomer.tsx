@@ -5,17 +5,60 @@ import Box from '@mui/material/Box';
 import SaveIcon from '@mui/icons-material/Save';
 import InputAdornment from '@mui/material/InputAdornment';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { object, string, TypeOf } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { axiosPrivate } from '../../api/axios';
+import { useNavigate } from 'react-router-dom';
+
+const newCustomerSchema = object({
+    name: string().nonempty({
+        message: 'Name is required',
+    }),
+    email: string()
+        .nonempty({
+            message: 'Email is required',
+        })
+        .email('Not a valid Email'),
+    phone: string().nonempty({
+        message: 'Phone Number is required',
+    }),
+    address: string().nonempty({
+        message: 'Address is required',
+    }),
+});
+
+type newCustomerInput = TypeOf<typeof newCustomerSchema>;
 
 const NewCustomer = () => {
+    const queryClient = useQueryClient()
+    const navigate = useNavigate();
+
     const {
         register,
         handleSubmit,
         formState: { errors, isSubmitting },
-    } = useForm();
+    } = useForm<newCustomerInput>({
+        resolver: zodResolver(newCustomerSchema),
+    });
 
-    const formSubmit = () => {
-        console.log('hello');
+    const createCustomerMutation = useMutation({
+        mutationFn: async (data: newCustomerInput) => {
+            const newCustomer = await axiosPrivate.post('/api/customers', data);
+
+            return newCustomer.data;
+        },
+        onSuccess: () => {
+            queryClient.invalidateQueries(['customers'])
+        }
+    })
+
+    const formSubmit: SubmitHandler<newCustomerInput> = async (data) => {
+        createCustomerMutation.mutate(data)
+
+        navigate('/customers');
+
     };
 
     return (
@@ -26,7 +69,12 @@ const NewCustomer = () => {
                     <>
                         <Box
                             component='form'
-                            sx={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '2rem', padding: '.5rem 1rem'}}
+                            sx={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(2, 1fr)',
+                                gap: '2rem',
+                                padding: '.5rem 1rem',
+                            }}
                             noValidate
                             autoComplete='off'
                             onSubmit={handleSubmit(formSubmit)}
@@ -46,8 +94,8 @@ const NewCustomer = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                error={Boolean(errors.email)}
-                                {...register('email')}
+                                error={Boolean(errors.name)}
+                                {...register('name')}
                             />
 
                             <TextField
@@ -83,8 +131,8 @@ const NewCustomer = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                error={Boolean(errors.email)}
-                                {...register('email')}
+                                error={Boolean(errors.phone)}
+                                {...register('phone')}
                             />
                             <TextField
                                 margin='normal'
@@ -101,21 +149,20 @@ const NewCustomer = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                error={Boolean(errors.email)}
-                                {...register('email')}
+                                error={Boolean(errors.address)}
+                                {...register('address')}
                             />
                             <Button
-                            type='submit'
-                            variant='contained'
-                            startIcon={<SaveIcon />}
-                            size='small'
-                            sx={{ mt: 3, fontSize: '.8rem', width: '12ch' }}
-                            disabled={isSubmitting}
-                        >
-                            Save
-                        </Button>
+                                type='submit'
+                                variant='contained'
+                                startIcon={<SaveIcon />}
+                                size='small'
+                                sx={{ mt: 3, fontSize: '.8rem', width: '12ch' }}
+                                disabled={isSubmitting}
+                            >
+                                Save
+                            </Button>
                         </Box>
-                        
                     </>
                 }
             />
