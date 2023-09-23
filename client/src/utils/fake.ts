@@ -79,3 +79,5 @@ export const customers: Customer[] = [
         address: '5461 West Shades Valley Drive, Montgomery AL',
     },
 ];
+
+export default Customer

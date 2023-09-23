@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Box } from '@mui/material';
 import DataTable from '../../components/DataTable/DataTable';
 import {
-    GridRowsProp,
     GridColDef,
     GridActionsCellItem,
     GridRowModesModel,
@@ -10,9 +9,9 @@ import {
     GridRowModes,
     GridRowId,
     GridEventListener,
-    GridRowEditStopReasons
+    GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import { useQuery } from '@tanstack/react-query';
+import {  useQuery } from '@tanstack/react-query';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
@@ -23,15 +22,20 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 
-const initialRows: GridRowsProp = [];
 
-const customerTableStyles = {
-    height: '371px',
-};
+const initialRows = [{
+    id: 1,
+    name: '',
+    phone: '',
+    email: '',
+    address: '',
+}];
+
+// const customerTableStyles = {
+//     height: '371px',
+// };
 
 const Customers = () => {
-    const [rows, setRows] = useState(initialRows);
-    const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
     const axiosPrivate = useAxiosPrivate();
     const { isLoading } = useQuery({
         queryKey: ['customers'],
@@ -41,6 +45,16 @@ const Customers = () => {
             return customers.data;
         },
     });
+
+    const [rows, setRows] = useState(initialRows);
+    const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
+
+    // const addNewCustomer = useMutation({
+    //     mutationFn: (newCustomer) => {
+    //         return axiosPrivate.post('/todos', newCustomer);
+    //     },
+    // });
+
     const navigate = useNavigate();
 
     const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
@@ -50,35 +64,32 @@ const Customers = () => {
     };
 
     const handleEditClick = (id: GridRowId) => () => {
-        console.log(id);
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
 
     const handleSaveClick = (id: GridRowId) => () => {
-        console.log(id);
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     };
 
     const handleDeleteClick = (id: GridRowId) => () => {
         console.log(id);
+        console.log('handleDeleteClick');
         setRows(rows.filter((row) => row.id !== id));
     };
 
     const handleCancelClick = (id: GridRowId) => () => {
+        console.log('handleCancelClick');
         setRowModesModel({
             ...rowModesModel,
             [id]: { mode: GridRowModes.View, ignoreModifications: true },
         });
-
-        const editedRow = rows.find((row) => row.id === id);
-        if (editedRow!.isNew) {
-            setRows(rows.filter((row) => row.id !== id));
-        }
     };
 
     const processRowUpdate = (newRow: GridRowModel) => {
-        const updatedRow = { ...newRow, isNew: false };
-        setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+        const updatedRow = { ...newRow };
+        console.log('processRowUpdate');
+        console.log(updatedRow);
+        // setRows();
         return updatedRow;
     };
 
@@ -87,14 +98,16 @@ const Customers = () => {
     };
 
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'Name', width: 150 },
-        { field: 'email', headerName: 'E-mail', width: 150 },
-        { field: 'phone', headerName: 'Phone Number', width: 150 },
-        { field: 'address', headerName: 'Address', width: 150 },
+        { field: 'name', headerName: 'Name', width: 150, align: 'left', headerAlign: 'left', editable: true },
+        { field: 'email', headerName: 'E-mail', width: 150, editable: true },
+        { field: 'phone', headerName: 'Phone Number', width: 150, editable: true },
+        { field: 'address', headerName: 'Address', width: 150, editable: true },
         {
             field: 'actions',
             type: 'actions',
             headerName: 'Actions',
+            align: 'right',
+            headerAlign: 'right',
             width: 100,
             cellClassName: 'actions',
             getActions: ({ id }) => {
@@ -158,16 +171,12 @@ const Customers = () => {
                     <DataTable
                         rows={rows}
                         columns={columns}
-                        mode='row'
-                        loading={isLoading}
-                        sx={customerTableStyles}
+                        editMode='row'
                         rowModesModel={rowModesModel}
                         onRowModesModelChange={handleRowModesModelChange}
                         onRowEditStop={handleRowEditStop}
                         processRowUpdate={processRowUpdate}
-                        slotProps={{
-                            toolbar: { setRows, setRowModesModel },
-                        }}
+                        loading={isLoading}
                     />
                 }
             />
