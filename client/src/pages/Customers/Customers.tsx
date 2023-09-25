@@ -5,13 +5,12 @@ import {
     GridColDef,
     GridActionsCellItem,
     GridRowModesModel,
-    GridRowModel,
     GridRowModes,
     GridRowId,
     GridEventListener,
     GridRowEditStopReasons,
 } from '@mui/x-data-grid';
-import {  useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
@@ -21,23 +20,22 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
+import deepEqual from '../../utils/objectCompare';
 
-
-const initialRows = [{
-    id: 1,
-    name: '',
-    phone: '',
-    email: '',
-    address: '',
-}];
-
-// const customerTableStyles = {
-//     height: '371px',
-// };
+type Customer = {
+    id: number;
+    name: string;
+    phone: string;
+    email: string;
+    address: string;
+};
 
 const Customers = () => {
     const axiosPrivate = useAxiosPrivate();
-    const { isLoading } = useQuery({
+    const navigate = useNavigate();
+    const queryClient = useQueryClient();
+
+    const getCustomers = useQuery({
         queryKey: ['customers'],
         queryFn: async () => {
             const customers = await axiosPrivate.get('/api/customers');
@@ -46,16 +44,40 @@ const Customers = () => {
         },
     });
 
+    const deleteCustomer = useMutation({
+        mutationFn: async (id: GridRowId) => {
+            const deletedCustomer = await axiosPrivate.delete(`/api/customers/${id}`);
+            return deletedCustomer;
+        },
+
+        onSuccess: () => {
+            queryClient.invalidateQueries(['customers']);
+        },
+
+        onError: () => {
+            console.log('ERROR DELETING');
+        },
+    });
+
+    const updateCustomer = useMutation({
+        mutationFn: async (data: Customer) => {
+            const updatedCustomer = await axiosPrivate.put(`/api/customers/${data.id}`, data);
+            return updatedCustomer;
+        },
+
+        onSuccess: () => {
+            queryClient.invalidateQueries(['customers']);
+        },
+
+        onError: () => {
+            console.log('ERROR DELETING');
+        },
+    });
+
+    const initialRows: Customer[] = [];
+
     const [rows, setRows] = useState(initialRows);
     const [rowModesModel, setRowModesModel] = useState<GridRowModesModel>({});
-
-    // const addNewCustomer = useMutation({
-    //     mutationFn: (newCustomer) => {
-    //         return axiosPrivate.post('/todos', newCustomer);
-    //     },
-    // });
-
-    const navigate = useNavigate();
 
     const handleRowEditStop: GridEventListener<'rowEditStop'> = (params, event) => {
         if (params.reason === GridRowEditStopReasons.rowFocusOut) {
@@ -64,44 +86,46 @@ const Customers = () => {
     };
 
     const handleEditClick = (id: GridRowId) => () => {
+        console.log('edit');
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
     };
 
     const handleSaveClick = (id: GridRowId) => () => {
+        console.log('save');
         setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
     };
 
     const handleDeleteClick = (id: GridRowId) => () => {
         console.log(id);
-        console.log('handleDeleteClick');
+        console.log('delete');
+        deleteCustomer.mutate(id);
         setRows(rows.filter((row) => row.id !== id));
     };
 
     const handleCancelClick = (id: GridRowId) => () => {
-        console.log('handleCancelClick');
+        console.log('cancal');
         setRowModesModel({
             ...rowModesModel,
             [id]: { mode: GridRowModes.View, ignoreModifications: true },
         });
     };
 
-    const processRowUpdate = (newRow: GridRowModel) => {
-        const updatedRow = { ...newRow };
-        console.log('processRowUpdate');
-        console.log(updatedRow);
-        // setRows();
-        return updatedRow;
+    const processRowUpdate = (newRow: Customer) => {
+        updateCustomer.mutate(newRow);
+        setRows(rows.map((row) => (deepEqual(row, newRow) ? newRow : row)));
+        return newRow;
     };
 
     const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
+        console.log('mode');
         setRowModesModel(newRowModesModel);
     };
 
     const columns: GridColDef[] = [
-        { field: 'name', headerName: 'Name', width: 150, align: 'left', headerAlign: 'left', editable: true },
-        { field: 'email', headerName: 'E-mail', width: 150, editable: true },
-        { field: 'phone', headerName: 'Phone Number', width: 150, editable: true },
-        { field: 'address', headerName: 'Address', width: 150, editable: true },
+        { field: 'name', headerName: 'Name', width: 180, align: 'left', headerAlign: 'left', editable: true },
+        { field: 'email', headerName: 'E-mail', width: 180, editable: true },
+        { field: 'phone', headerName: 'Phone Number', width: 160, editable: true },
+        { field: 'address', headerName: 'Address', width: 220, editable: true },
         {
             field: 'actions',
             type: 'actions',
@@ -153,7 +177,18 @@ const Customers = () => {
     ];
 
     return (
-        <Box sx={{ height: 400, width: '100%' }}>
+        <Box
+            sx={{
+                height: 400,
+                width: '100%',
+                '& .actions': {
+                    color: 'text.secondary',
+                },
+                '& .textPrimary': {
+                    color: 'text.primary',
+                },
+            }}
+        >
             <BasicCard
                 header={'Customers'}
                 action={
@@ -164,19 +199,18 @@ const Customers = () => {
                         onClick={() => navigate('/customers/new')}
                         sx={{ fontSize: '.8rem' }}
                     >
-                        new
+                        new customer
                     </Button>
                 }
                 content={
                     <DataTable
                         rows={rows}
                         columns={columns}
-                        editMode='row'
-                        rowModesModel={rowModesModel}
-                        onRowModesModelChange={handleRowModesModelChange}
-                        onRowEditStop={handleRowEditStop}
-                        processRowUpdate={processRowUpdate}
-                        loading={isLoading}
+                        model={rowModesModel}
+                        modelModeChange={handleRowModesModelChange}
+                        modeEditStop={handleRowEditStop}
+                        processUpdate={processRowUpdate}
+                        loading={getCustomers.isLoading}
                     />
                 }
             />

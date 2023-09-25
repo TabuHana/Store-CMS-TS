@@ -11,6 +11,6 @@ const Dashboard = () => {
 
     console.log(data);
 
-    return <div>dashboard</div>;
+    return <div>Dashboard Quick View Coming Soon!</div>;
 };
 export default Dashboard;

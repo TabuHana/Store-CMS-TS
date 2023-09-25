@@ -6,8 +6,8 @@ import { handleRefreshToken, loginUserHandler, logoutUserHandler, registerUserHa
 import { getCurrentUserHandler } from './controller/user.controller';
 import requireUser from './middleware/requireUser';
 import { getUserSessionHandler } from './controller/session.controller';
-import { createCustomerHandler, deleteCustomerHandler, getCustomersHandler } from './controller/customer.controller';
-import { createCustomerSchema, getCustomerSchema } from './schema/customer.schema';
+import { createCustomerHandler, deleteCustomerHandler, getCustomersHandler, updateCustomerHandler } from './controller/customer.controller';
+import { createCustomerSchema, getCustomerSchema, updateCustomerSchema } from './schema/customer.schema';
 
 function routes(app: Express) {
     /**
@@ -30,6 +30,7 @@ function routes(app: Express) {
     // Customer Routes
     app.post('/api/customers', [requireUser, validate(createCustomerSchema)], createCustomerHandler)
     app.get('/api/customers', requireUser, getCustomersHandler)
+    app.put('/api/customers/:customerId', [requireUser, validate(updateCustomerSchema)], updateCustomerHandler)
     app.delete('/api/customers/:customerId', [requireUser, validate(getCustomerSchema)], deleteCustomerHandler)
 
 

@@ -17,6 +17,7 @@ import Login from './pages/auth/Login.tsx';
 import SplitScreen from './components/SplitScreen/SplitScreen.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
 import NewCustomer from './pages/Customers/newCustomer.tsx';
+// import FullFeaturedCrudGrid from './pages/Customers/FullFeaturedCrudGrid.tsx';
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ const router = createBrowserRouter([
             {
                 path: 'products',
                 element: <Products />,
+                // element: <FullFeaturedCrudGrid />
             },
             {
                 path: 'orders',

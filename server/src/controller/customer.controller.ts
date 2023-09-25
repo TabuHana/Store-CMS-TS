@@ -40,7 +40,7 @@ export async function getCustomersHandler(req: Request, res: Response) {
 }
 
 export async function updateCustomerHandler(
-    req: Request<GetCustomerInput['params'], {}, UpdateCustomerInput['body']>,
+    req: Request<UpdateCustomerInput['params'], {}, UpdateCustomerInput['body']>,
     res: Response
 ) {
     try {

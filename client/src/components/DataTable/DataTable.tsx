@@ -20,6 +20,7 @@ const DataTable = ({
             onRowModesModelChange={modelModeChange}
             onRowEditStop={modeEditStop}
             processRowUpdate={processUpdate}
+            pageSizeOptions={[5]}
         />
     );
 };
