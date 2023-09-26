@@ -2,12 +2,28 @@ import { Express, Request, Response } from 'express';
 import validate from './middleware/validateResource';
 import { createUserSchema } from './schema/user.schema';
 import { createSessionSchema } from './schema/session.schema';
-import { handleRefreshToken, loginUserHandler, logoutUserHandler, registerUserHandler } from './controller/auth.controller';
+import {
+    handleRefreshToken,
+    loginUserHandler,
+    logoutUserHandler,
+    registerUserHandler,
+} from './controller/auth.controller';
 import { getCurrentUserHandler } from './controller/user.controller';
 import requireUser from './middleware/requireUser';
-import { getUserSessionHandler } from './controller/session.controller';
-import { createCustomerHandler, deleteCustomerHandler, getCustomersHandler, updateCustomerHandler } from './controller/customer.controller';
+import {
+    createCustomerHandler,
+    deleteCustomerHandler,
+    getCustomersHandler,
+    updateCustomerHandler,
+} from './controller/customer.controller';
 import { createCustomerSchema, getCustomerSchema, updateCustomerSchema } from './schema/customer.schema';
+import { createProductSchema, getProductSchema, updateProductSchema } from './schema/product.schema';
+import {
+    createProductHandler,
+    deleteProductHandler,
+    getProductsHandler,
+    updateProductHandler,
+} from './controller/product.controller';
 
 function routes(app: Express) {
     /**
@@ -28,11 +44,16 @@ function routes(app: Express) {
     app.get('/api/user/me', requireUser, getCurrentUserHandler);
 
     // Customer Routes
-    app.post('/api/customers', [requireUser, validate(createCustomerSchema)], createCustomerHandler)
-    app.get('/api/customers', requireUser, getCustomersHandler)
-    app.put('/api/customers/:customerId', [requireUser, validate(updateCustomerSchema)], updateCustomerHandler)
-    app.delete('/api/customers/:customerId', [requireUser, validate(getCustomerSchema)], deleteCustomerHandler)
+    app.post('/api/customers', [requireUser, validate(createCustomerSchema)], createCustomerHandler);
+    app.get('/api/customers', requireUser, getCustomersHandler);
+    app.put('/api/customers/:customerId', [requireUser, validate(updateCustomerSchema)], updateCustomerHandler);
+    app.delete('/api/customers/:customerId', [requireUser, validate(getCustomerSchema)], deleteCustomerHandler);
 
+    // Product Routes
+    app.post('/api/products', [requireUser, validate(createProductSchema)], createProductHandler);
+    app.get('/api/products', requireUser, getProductsHandler);
+    app.put('/api/products/:productId', [requireUser, validate(updateProductSchema)], updateProductHandler);
+    app.delete('/api/products/:productId', [requireUser, validate(getProductSchema)], deleteProductHandler);
 
     /**
      * Catch-all Route

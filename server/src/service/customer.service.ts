@@ -1,5 +1,4 @@
 import Customer, { CustomerCreationAttributes } from '../models/customer.model';
-//CustomerUpdate
 
 export async function createCustomer(input: CustomerCreationAttributes) {
     try {

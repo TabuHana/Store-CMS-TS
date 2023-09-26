@@ -3,7 +3,7 @@ import config from 'config';
 import logger from './logger';
 
 // Models
-import { Customer, Session, User } from '../models/index.model';
+import { Customer, Product, Session, User } from '../models/index.model';
 // Category
 const user = config.get<string>('username');
 const pass = config.get<string>('password');
@@ -19,7 +19,7 @@ export const sequelize = new Sequelize({
     port: dbPort,
     dialect: 'mysql',
     logging: (msg) => logger.debug(msg),
-    models: [Customer, Session, User],
+    models: [Customer, Product, Session, User],
 });
 
 async function connect() {
