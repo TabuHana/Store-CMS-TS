@@ -1,5 +1,11 @@
 import { Request, Response } from 'express';
-import { createCustomer, deleteCustomer, getCustomerAndUpdate, getCustomers } from '../service/customer.service';
+import {
+    createCustomer,
+    deleteCustomer,
+    getCustomerAndUpdate,
+    getCustomers,
+    getSingleCustomer,
+} from '../service/customer.service';
 import { CreateCustomerInput, GetCustomerInput, UpdateCustomerInput } from '../schema/customer.schema';
 
 export async function createCustomerHandler(req: Request<{}, {}, CreateCustomerInput['body']>, res: Response) {
@@ -34,6 +40,26 @@ export async function getCustomersHandler(req: Request, res: Response) {
         const customers = await getCustomers(user);
 
         return res.send(customers);
+    } catch (error: any) {
+        return res.status(500).send({ message: `Server Error ${error.message}` });
+    }
+}
+
+export async function getSingleCustomerHandler(req: Request<GetCustomerInput['params']>, res: Response) {
+    try {
+        const user: string = res.locals.user.user_id;
+        const customer_id: string = req.params.customerId;
+
+        if (!user) {
+            return res.status(401).send({ message: 'Login Required' });
+        }
+
+        if (!customer_id) {
+            return res.status(400).send({ message: 'Customer_id is Required' });
+        }
+        const customer = await getSingleCustomer(user, customer_id);
+
+        return res.send(customer);
     } catch (error: any) {
         return res.status(500).send({ message: `Server Error ${error.message}` });
     }
@@ -78,5 +104,3 @@ export async function deleteCustomerHandler(req: Request<GetCustomerInput['param
         return res.status(500).send({ message: `Server Error ${error.message}` });
     }
 }
-
-// random, working in branch

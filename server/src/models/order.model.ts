@@ -19,8 +19,8 @@ type OrderAttributes = {
     id: string;
     sub_total: string;
     total: string;
-    shipping_address: number;
-    billing_address: number;
+    shipping_address: string;
+    billing_address: string;
     status: boolean;
     user_id: string;
     customer_id: string;

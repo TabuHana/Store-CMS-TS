@@ -23,15 +23,16 @@ export async function getCustomers(input: any) {
     }
 }
 
-export async function getSingleCustomer(input: any) {
-    const { user, customer_id } = input;
+export async function getSingleCustomer(user: string, customer_id: string) {
     try {
         const customer = await Customer.findOne({
-            where: {
-                id: customer_id,
-                user_id: user,
-            },
+            where: { user_id: user, id: customer_id },
+            include: ['orders']
         });
+
+        if (!customer) {
+            return false;
+        }
 
         return customer;
     } catch (error: any) {
@@ -42,15 +43,15 @@ export async function getSingleCustomer(input: any) {
 export async function getCustomerAndUpdate(input: any) {
     const { user, customer_id, body } = input;
 
-    const customer = await Customer.findOne({
-        where: { user_id: user, id: customer_id },
-    });
-
-    if (!customer) {
-        return false;
-    }
-
     try {
+        const customer = await Customer.findOne({
+            where: { user_id: user, id: customer_id },
+        });
+
+        if (!customer) {
+            return false;
+        }
+
         await customer.update(body);
         return true;
     } catch (error: any) {

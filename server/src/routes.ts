@@ -14,6 +14,7 @@ import {
     createCustomerHandler,
     deleteCustomerHandler,
     getCustomersHandler,
+    getSingleCustomerHandler,
     updateCustomerHandler,
 } from './controller/customer.controller';
 import { createCustomerSchema, getCustomerSchema, updateCustomerSchema } from './schema/customer.schema';
@@ -46,6 +47,7 @@ function routes(app: Express) {
     // Customer Routes
     app.post('/api/customers', [requireUser, validate(createCustomerSchema)], createCustomerHandler);
     app.get('/api/customers', requireUser, getCustomersHandler);
+    app.get('/api/customers/:customerId', [requireUser, validate(getCustomerSchema)], getSingleCustomerHandler)
     app.put('/api/customers/:customerId', [requireUser, validate(updateCustomerSchema)], updateCustomerHandler);
     app.delete('/api/customers/:customerId', [requireUser, validate(getCustomerSchema)], deleteCustomerHandler);
 
