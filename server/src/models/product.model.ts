@@ -3,6 +3,7 @@ import {
     Attribute,
     PrimaryKey,
     Table,
+    HasMany,
     CreatedAt,
     UpdatedAt,
     Unique,
@@ -11,6 +12,7 @@ import {
     NotNull, //@ts-expect-error
 } from '@sequelize/core/decorators-legacy';
 import { customAlphabet } from 'nanoid';
+import Stock from './stock.model'
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
@@ -78,6 +80,9 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     @ForeignKey
     @NotNull
     declare user_id: string;
+
+    @HasMany(() => Stock, 'id')
+    declare stock: Stock[];
 }
 
 export default Product;

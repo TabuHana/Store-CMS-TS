@@ -3,6 +3,7 @@ import {
     Attribute,
     PrimaryKey,
     NotNull,
+    HasMany,
     Default,
     Table,
     CreatedAt,
@@ -12,6 +13,7 @@ import {
 } from '@sequelize/core/decorators-legacy';
 import { IsEmail } from '@sequelize/validator.js';
 import { customAlphabet } from 'nanoid';
+import Order from './order.model';
 
 const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
@@ -80,6 +82,9 @@ export class Customer extends Model<CustomerAttributes, CustomerCreationAttribut
     @ForeignKey
     @NotNull
     declare user_id: string;
+
+    @HasMany(() => Order, 'id')
+    declare orders: Order[];
 }
 
 export default Customer;
