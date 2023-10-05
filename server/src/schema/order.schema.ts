@@ -2,11 +2,11 @@ import { TypeOf, object, number, string, boolean } from 'zod';
 
 const payload = {
     body: object({
-        sub_total: string({
+        sub_total: number({
             required_error: 'Sub_total is required',
             invalid_type_error: 'Sub_total must be a string',
         }),
-        total: string({
+        total: number({
             required_error: 'Total is required',
             invalid_type_error: 'Total must be a string',
         }),

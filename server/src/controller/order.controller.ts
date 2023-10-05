@@ -12,6 +12,8 @@ export async function createOrderHandler(req: Request<{}, {}, CreateOrderInput['
 
         const body = req.body;
 
+        console.log('before create')
+
         const order = await createOrder({ ...body, user_id: user });
 
         return res.send(order);

@@ -17,8 +17,8 @@ const nanoid = customAlphabet('abcdefghijklmnopqrstuvwxyz0123456789', 10);
 
 type OrderAttributes = {
     id: string;
-    sub_total: string;
-    total: string;
+    sub_total: number;
+    total: number;
     shipping_address: string;
     billing_address: string;
     status: boolean;
@@ -48,13 +48,13 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
     /**
      * Attributes
      */
-    @Attribute(DataTypes.FLOAT)
+    @Attribute(DataTypes.INTEGER)
     @NotNull
-    declare sub_total: string;
+    declare sub_total: number;
 
-    @Attribute(DataTypes.FLOAT)
+    @Attribute(DataTypes.INTEGER)
     @NotNull
-    declare total: string;
+    declare total: number;
 
     @Attribute(DataTypes.STRING)
     @NotNull
@@ -79,7 +79,7 @@ export class Order extends Model<OrderAttributes, OrderCreationAttributes> {
     /**
      * Associations
      */
-    @Attribute(DataTypes.INTEGER)
+    @Attribute(DataTypes.STRING)
     @ForeignKey
     @NotNull
     declare customer_id: string;

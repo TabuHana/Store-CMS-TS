@@ -57,11 +57,11 @@ export class Product extends Model<ProductAttributes, ProductCreationAttributes>
     @NotNull
     declare description: string;
 
-    @Attribute(DataTypes.FLOAT)
+    @Attribute(DataTypes.INTEGER)
     @NotNull
     declare price: number;
 
-    @Attribute(DataTypes.FLOAT)
+    @Attribute(DataTypes.INTEGER)
     @NotNull
     declare price_per_unit: number;
 
