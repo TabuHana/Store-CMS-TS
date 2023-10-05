@@ -21,6 +21,8 @@ import DeleteIcon from '@mui/icons-material/DeleteOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Close';
 import deepEqual from '../../utils/objectCompare';
+import Breadcrumbs from '@mui/material/Breadcrumbs';
+import Link from '@mui/material/Link';
 
 type Customer = {
     id: number;
@@ -121,6 +123,11 @@ const Customers = () => {
         setRowModesModel(newRowModesModel);
     };
 
+    function handleClick(event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        event.preventDefault();
+        console.info('You clicked a breadcrumb.');
+      }
+
     const columns: GridColDef[] = [
         { field: 'name', headerName: 'Name', width: 180, align: 'left', headerAlign: 'left', editable: true },
         { field: 'email', headerName: 'E-mail', width: 180, editable: true },
@@ -189,6 +196,24 @@ const Customers = () => {
                 },
             }}
         >
+            <div role='presentation' onClick={handleClick}>
+                <Breadcrumbs aria-label='breadcrumb'>
+                    <Link underline='hover' color='inherit' href='/'>
+                        MUI
+                    </Link>
+                    <Link underline='hover' color='inherit' href='/material-ui/getting-started/installation/'>
+                        Core
+                    </Link>
+                    <Link
+                        underline='hover'
+                        color='text.primary'
+                        href='/material-ui/react-breadcrumbs/'
+                        aria-current='page'
+                    >
+                        Breadcrumbs
+                    </Link>
+                </Breadcrumbs>
+            </div>
             <BasicCard
                 header={'Customers'}
                 action={
